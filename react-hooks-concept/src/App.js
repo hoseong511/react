@@ -2,15 +2,19 @@ import logo from './logo.svg';
 import './App.css';
 import React, { Component, useState } from 'react';
 import { useInput } from "./useInput"
+import { useTabs } from "./useTabs";
 
 const App = () => {
-  const maxLen = value => value.length <= 10;
-  const char = value => !value.includes("@");
-  const name = useInput("Mr.", char);
+  const contentMap = content.map((section,index) => (
+    <button key={index} onClick={() => changeItem(index)}>{section.tab}</button>
+    ));
+  const { currentItem, changeItem } = useTabs(0, content);
   return (
     <div className="App">
       <h1>hello</h1>
-      <input placeholder="Name" {...name} />
+      {contentMap}
+      <br></br>      
+      { currentItem.content }
     </div>
   )
 }
