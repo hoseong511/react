@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { Component, useState } from 'react';
+import React, { Component, useState } from 'react';
 
 // class App extends Component {
 //   state = {
@@ -40,4 +40,34 @@ const App = () => {
   )
 }
 
-export default App;
+class AppUgly extends Component {
+  state = {
+    item: 1
+  }
+  incrementItem = () => {
+    this.setState(state => {
+      return {
+        item: state.item +1
+      }
+    })
+  }
+  decrementItem = () => {
+    this.setState(state => {
+      return {
+        item: state.item -1
+      }
+    })
+  }
+  render(){
+    const  count  = this.state.item;
+    return (
+      <>
+      hello{ count }
+      <button onClick={this.incrementItem}>Increment</button>
+      <button onClick={this.decrementItem}>Decrement</button>
+      </>
+    )
+  }
+}
+
+export default AppUgly;
