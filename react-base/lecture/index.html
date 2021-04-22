@@ -16,11 +16,18 @@
     class LikeButton extends React.Component {
       constructor(props){
         super(props);
+        this.state = {
+          liked: false,
+        }
       }
       render() {
-        return e('button', null, "Like"); // <button>Like</button> 이런 태그를 만들겠다의 의미.
+        return e(
+          'button', 
+          { onClick: () => { console.log('clicked'); this.setState({liked: true})}, type: 'submit' },
+          this.state.liked === true ? "Liked" : 'Like'); // <button onClick="() => {console.log('clicked')}" type='submit'>Like</button> 이런 태그를 만들겠다의 의미.
       }
     }
+    // 바뀔 여지가 있는 부분을 상태(state)라고 한다.
   </script>
   <script>
     ReactDOM.render(e(LikeButton), document.querySelector('#root')); // 이런 원리로 작동됨
