@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+</head>
+<body>
+  <div id="root"></div> 
+  <!-- 결과: <div id="root"><button>Like</button></div> -->
+  <script>
+    const e = React.createElement;
+    class LikeButton extends React.Component {
+      constructor(props){
+        super(props);
+      }
+      render() {
+        return e('button', null, "Like"); // <button>Like</button> 이런 태그를 만들겠다의 의미.
+      }
+    }
+  </script>
+  <script>
+    ReactDOM.render(e(LikeButton), document.querySelector('#root')); // 이런 원리로 작동됨
+  </script>
+</body>
+</html>
