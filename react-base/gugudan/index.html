@@ -33,13 +33,19 @@
         e.preventDefault();
         console.log(this);
         if (parseInt(this.state.value) === this.state.first * this.state.second) {
-          this.setState({
-            result: '정답',
-            first: Math.ceil(Math.random()* 9),
-            second: Math.ceil(Math.random() * 9),
-            user: this.state.value,
-            value: ''
-          })
+          // this.setState({
+          //   result: '무'
+          // }) --> 이런식으로 값을 설정했는데 아래와 같이 하면 더욱 좋다 
+          this.setState((prevState) => { //예전 상태값을 다음 상태값에 활용할 수 있다.
+            console.log(prevState);
+            return {
+              result: '정답' + prevState.value,
+              first: Math.ceil(Math.random()* 9),
+              second: Math.ceil(Math.random() * 9),
+              user: this.state.value,
+              value: ''
+            } // 이렇게 사용하는게 더 좋음 비동기로 처리
+          }); // this.setState()를
         } else {
           this.setState({
             result: "땡",
