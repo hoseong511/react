@@ -27,8 +27,11 @@
         };
       }
 
+      // 화살표를 사용했을 때 this와 function의 this가 다르다.
+      // 
       onSubmit = (e) => {
         e.preventDefault();
+        console.log(this);
         if (parseInt(this.state.value) === this.state.first * this.state.second) {
           this.setState({
             result: '정답',
@@ -45,21 +48,24 @@
           });
         }
       };
+     
       onChange = (e) => this.setState({value: e.target.value})
 
       render() { 
+        // () 괄호 그룹연산자
         return (
-          <div>
+          <React.Fragment>
             <div>{this.state.first} 곱하기 {this.state.second}는?</div>
             <form onSubmit={this.onSubmit}>
               <input type='number' value={this.state.value} onChange={this.onChange}/>
               <button>입력</button>
-              </form>  
-              <div>
-                { this.state.user} { this.state.result}
-              </div>
-              
-          </div>
+            </form>              
+            <div>
+              { this.state.user} { this.state.result}
+            </div>
+               
+          </React.Fragment>
+          // <></>(fragment) 바벨이 지원을 안해서 react.fragment를 입력 원래는 <></>를 이용해서 div의 반복을 줄이자.
         );
       }
     }
