@@ -53,21 +53,26 @@
             value: '',
           });
         }
+        this.input.focus();
       };
      
       onChange = (e) => this.setState({value: e.target.value})
-
+      input;
+      onRefInput = (c) => this.input = c
       render() { 
+        // setState를 하면 render가 실행
         // () 괄호 그룹연산자
         return (
+          // XML과 메소드를 따로 분리하는 이유는 렌더링 될 시 매번 새로 생성하는 낭비가 발생함
+          // 그래서 메소드는 위로 올려 놓자
           <React.Fragment>
             <div>{this.state.first} 곱하기 {this.state.second}는?</div>
             <form onSubmit={this.onSubmit}>
-              <input type='number' value={this.state.value} onChange={this.onChange}/>
+              <input ref={(c) => { this.input = c}}type='number' value={this.state.value} onChange={this.onChange}/>
               <button>입력</button>
             </form>              
             <div>
-              { this.state.user} { this.state.result}
+              { this.state.result}
             </div>
                
           </React.Fragment>
