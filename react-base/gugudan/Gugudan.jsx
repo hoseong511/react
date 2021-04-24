@@ -17,7 +17,7 @@ class Gugudan extends Component {
   // 화살표를 사용했을 때 this와 function의 this가 다르다.
   // 
   onSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 팝업되어 새로고침되는 것을 막아준다.
     console.log(this);
     if (parseInt(this.state.value) === this.state.first * this.state.second) {
       // this.setState({

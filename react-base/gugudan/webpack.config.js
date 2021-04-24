@@ -20,8 +20,11 @@ module.exports = {
       options: {
         presets: [
           ['@babel/preset-env', {
+            // useBuiltIns: "entry",
             targets: { // 국내에서 점유율이 5% 이상인 브라우저 (browserslist)
-              browsers: ['> 1% in KR'] //이거는 작동되게 할 브라우저 선택!
+              browsers: [
+                '> 0.25% in KR'        // 작동이 안되는데??  --> package.json에 browserslist에 입력해주자
+              ] //이거는 작동되게 할 브라우저 선택!
             }, // browsersList를 검색해보기!
             debug: true,
           }],
