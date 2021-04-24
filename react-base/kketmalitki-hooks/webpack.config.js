@@ -1,4 +1,5 @@
 const path = require('path');//경로 조작
+const webpack = require('webpack');
 
 module.exports = {
   name: 'wordrealy-setting',
@@ -17,12 +18,19 @@ module.exports = {
       test: /\.jsx?/,
       loader: 'babel-loader',
       options: {
-        presets: ['@babel/preset-env', '@babel/preset-react'],
+        presets: [
+          ['@babel/preset-env', {
+            debug: true,
+          }], '@babel/preset-react'],
         plugins: ['@babel/plugin-proposal-class-properties']
       }
     }]
   },
-
+  plugins:[ 
+    new webpack.LoaderOptionsPlugin({
+      debug: true 
+   }),
+  ],
   output: {  // 출력
     path: path.join(__dirname, 'dist'), // C:\users\...를 만들어주는 기능이다.
     filename: 'app.js'
