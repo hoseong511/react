@@ -1,5 +1,6 @@
 const path = require('path');//경로 조작
 const webpack = require('webpack');
+const RefreshWebpackPlugin= require('@pmmmwh/react-refresh-webpack-plugin')
 
 module.exports = {
   name: 'wordrealy-setting',
@@ -22,19 +23,25 @@ module.exports = {
           ['@babel/preset-env', {
             debug: true,
           }], '@babel/preset-react'],
-        plugins: ['@babel/plugin-proposal-class-properties']
+        plugins: [
+          '@babel/plugin-proposal-class-properties',
+          'react-refresh/babel'
+        ],
       }
     }]
   },
   plugins:[ 
-    new webpack.LoaderOptionsPlugin({
-      debug: true 
-   }),
+    new RefreshWebpackPlugin()
   ],
   output: {  // 출력
     path: path.join(__dirname, 'dist'), // C:\users\...를 만들어주는 기능이다.
-    filename: 'app.js'
-  }
+    filename: 'app.js',
+    publicPath: '/dist'
+  },
+  devServer: {
+    publicPath: '/dist',
+    hot: true    
+  },
 };
 
 // 여기서 터미널에 webpack을 입력하면 알아서 app.js가 만들어진다.

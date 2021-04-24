@@ -4,7 +4,7 @@ const { Component } = React;
 
 class WordRelay extends Component {
   state = {
-    word: '호호',
+    word: '1121212312호호111111112311',
     value: '',
     result: '',
   };
@@ -13,7 +13,7 @@ class WordRelay extends Component {
     e.preventDefault();
     if (this.state.word[this.state.word.length - 1] === this.state.value[0]) {
       this.setState({
-        result: '딩동댕',
+        result: '11딩동댕',
         word: this.state.value,
         value: '',
       });
@@ -42,9 +42,11 @@ class WordRelay extends Component {
         <div>{this.state.word}</div>
         <form onSubmit={this.onSubmitForm}>
           <input ref={this.onRefInput} value={this.state.value} onChange={this.onChangeInput} />
-          <button>입력!!</button>
+          <button>1111111입력121121113!!</button>
         </form>
         <div>{this.state.result}</div>
+        왜sdfsssss
+
       </>
     )
   }
