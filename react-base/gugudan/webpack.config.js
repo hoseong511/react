@@ -1,9 +1,9 @@
 const path = require('path');//경로 조작
 
 module.exports = {
-  name: 'wordrealy-setting',
+  name: 'gugudan',
   mode: 'development', // 실서비스: production
-  devtool: 'eval',
+  devtool: 'eval', // 실서비스: hidden-source-map
   resolve: {
     extensions: ['.js', '.jsx'] // 확장자를 찾아주는 기능 entry 부분에 확장자를 입력하지 않아도 된다.
   },
@@ -19,7 +19,7 @@ module.exports = {
       options: {
         presets: ['@babel/preset-env', '@babel/preset-react'],
         plugins: ['@babel/plugin-proposal-class-properties']
-      }
+      },
     }]
   },
 

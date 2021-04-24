@@ -1,4 +1,4 @@
-const React = requrie('react');
+const React = require('react');
 const ReactDom = require('react-dom');
 const Gugudan = require('./Gugudan')
 

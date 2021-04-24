@@ -68,3 +68,5 @@ class Gugudan extends Component {
   }
 }
 // 바뀔 여지가 있는 부분을 상태(state)라고 한다.
+
+module.exports = Gugudan;
