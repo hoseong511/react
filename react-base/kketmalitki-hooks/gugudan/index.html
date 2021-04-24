@@ -21,13 +21,24 @@
     const [result, setResult] = React.useState('');
     const inputRef = React.useRef(null);
 
+    // const [ state, setState ] = React.useState({
+    //   first: Math.ceil(Math.random() *9),
+    //   second: Math.ceil(Math.random() *9),
+    //   value: '',
+    //   result: '',
+    // })
+      // 이런식으로 바꾸는 것도 가능은 하지만 이럴 경우 부분적으로 setState를 하기가 힘들다. 
+      // hooks를 사용할때는 state를 나눠주는 방식으로 접근해야한다.
     const onChangeInput = (e) => {
       setValue(e.target.value);
     } 
     const onSubmitForm = (e) => {
       e.preventDefault();
       if (parseInt(value) === first * second) {                    
-          setResult('정답' + value);
+          // setResult((prevResult) => {
+          //   return '정답: ' + value
+          // }); // 
+          setResult('정답: ' + value )
           setFirst( Math.ceil(Math.random()* 9));
           setSecond( Math.ceil(Math.random() * 9));
           setValue('');            
@@ -37,16 +48,18 @@
         }
         inputRef.current.focus(); // 이런식으로 DOM 접근
     }
-
+    console.log("렌더링"); // hooks의 단점.setstate가 될때마다 전체코드가 다시 실행된다.
     return (
     <React.Fragment>
       <div>{first} 곱하기 {second}는?</div>
       <form onSubmit={onSubmitForm}>
         <input ref={inputRef} onChange={onChangeInput} value={value}/>
-        <button>입력!</button>
+        <button className="" htmlFor>입력!</button>
+        
       </form>
       <div id='result'>{result}</div>
     </React.Fragment>
+    // className 과 htmlFor(label의 for 속성)를 조심해야한다.
     )
   }
     
