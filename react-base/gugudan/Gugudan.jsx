@@ -11,6 +11,7 @@ class Gugudan extends Component {
       result: '',
       user: '',          
     };
+    console.log("hw");
   }
 
   // 화살표를 사용했을 때 this와 function의 this가 다르다.
@@ -44,7 +45,8 @@ class Gugudan extends Component {
  
   onChange = (e) => this.setState({value: e.target.value})
   input;
-  onRefInput = (c) => this.input = c
+  onRefInput = (c) => this.input = c;
+
   render() { 
     console.log("렌더링");
     // setState를 하면 render가 실행
@@ -52,7 +54,7 @@ class Gugudan extends Component {
     return (
       // XML과 메소드를 따로 분리하는 이유는 렌더링 될 시 매번 새로 생성하는 낭비가 발생함
       // 그래서 메소드는 위로 올려 놓자
-      <React.Fragment>
+      <>
         <div>{this.state.first} 곱하기 {this.state.second}는?</div>
         <form onSubmit={this.onSubmit}>
           <input ref={(c) => { this.input = c}}type='number' value={this.state.value} onChange={this.onChange}/>
@@ -62,7 +64,7 @@ class Gugudan extends Component {
           { this.state.result}
         </div>
            
-      </React.Fragment>
+      </>
       // <></>(fragment) 바벨이 지원을 안해서 react.fragment를 입력 원래는 <></>를 이용해서 div의 반복을 줄이자.
     );
   }
