@@ -1,47 +1,44 @@
-const path = require('path');//경로 조작
-const webpack = require('webpack');
-const RefreshWebpackPlugin= require('@pmmmwh/react-refresh-webpack-plugin')
+const path = require('path');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
-  name: 'wordrealy-setting',
-  mode: 'development', // 실서비스: production
-  devtool: 'eval',
+  name: 'word-relay-dev',
+  mode: 'development',
+  devtool: 'inline-source-map',
   resolve: {
-    extensions: ['.js', '.jsx'] // 확장자를 찾아주는 기능 entry 부분에 확장자를 입력하지 않아도 된다.
+    extensions: ['.js', '.jsx'],
   },
-  // entry와 output이 중요
-  entry: { // 입력
-    app: ['./client'] // , "./WordRelay.jsx"는 client에서 불러와지므로 따로 넣을 필요가 없다.
+  entry: {
+    app: './client',
   },
-
   module: {
     rules: [{
-      test: /\.jsx?/,
+      test: /\.jsx?$/,
       loader: 'babel-loader',
       options: {
         presets: [
           ['@babel/preset-env', {
+            
             debug: true,
-          }], '@babel/preset-react'],
-        plugins: [
-          '@babel/plugin-proposal-class-properties',
-          'react-refresh/babel'
+          }],
+          '@babel/preset-react',
         ],
-      }
-    }]
+        plugins: ['react-refresh/babel','@babel/plugin-proposal-class-properties'],
+      },
+      exclude: path.join(__dirname, 'node_modules'),
+    }],
   },
-  plugins:[ 
-    new RefreshWebpackPlugin()
+  plugins: [
+    new ReactRefreshWebpackPlugin(),
   ],
-  output: {  // 출력
-    path: path.join(__dirname, 'dist'), // C:\users\...를 만들어주는 기능이다.
+  output: {
+    path: path.join(__dirname, 'dist'),
     filename: 'app.js',
-    publicPath: '/dist'
+    publicPath: '/dist',
   },
-  devServer: {
+  devServer: {   
+    // contentBase: './',
     publicPath: '/dist',
     hot: true    
-  },
+  }
 };
-
-// 여기서 터미널에 webpack을 입력하면 알아서 app.js가 만들어진다.
