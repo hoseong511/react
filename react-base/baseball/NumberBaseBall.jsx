@@ -5,19 +5,30 @@ function getNumbers() { // 숫자 네 개를 겹치지 않고 랜덤하게 뽑�
 }
 
 class NumberBaseball extends Component{
-  state = {
-    value: '',
-    result: '',
-    answer: getNumbers(),
-    tries: [],
-  };
-
-  onSubmitForm = ( ) => {
-
+  constructor(props){
+    super(props)
+    this. state = {
+      value: '',
+      result: '',
+      answer: getNumbers(),
+      tries: [],
+    };
+    this.onSubmitForm = this.onSubmitForm.bind(this); // 기존에 사용되던 방식
+    this.onChangeInput = this.onChangeInput.bind(this);
+  }
+  // onSubmitForm(e) {
+  //   console.log(this);
+  // } 초기에는 이런식으로 this에 접근을 했다.
+  onSubmitForm = (e) => { // 화살표 함수가 bind를 자동으로 해주는 역할
+    e.preventDefault();
+    console.log(this.state.value);
   }
 
-  onChangeInput = () => {
-
+  onChangeInput = (e) => {
+    console.log(this);
+    this.setState( {
+      value: e.target.value,
+    });
   }
   input;
   refInput = (e) => {
@@ -45,7 +56,7 @@ class NumberBaseball extends Component{
       <ul>
         {this.fruits.map((v, i) => {
           return (
-            <Try value={v} index={i}/> // react에서는 props라고 불린다.
+            <Try key={v.fruit+v.taste}value={v} index={i}/> // react에서는 props라고 불린다.
           );
         })
         // key에 index를 사용하지 않는 이유는 요소가 추가또는 삭제 되면 배열의 순서가 바뀌어서 문제가 생긴다.
