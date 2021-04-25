@@ -3,7 +3,7 @@ const React = require('react');
 const { useState, useRef } = React;
 
 const WordRelay = () => {
-  const [word, setWord] = useState('호호12');
+  const [word, setWord] = useState('호호');
   const [value, setValue ] = useState('');
   const [result, setResult ] = useState('');
   const inputRef = useRef(null);
@@ -28,7 +28,9 @@ const WordRelay = () => {
     <>
       <div>{word}</div>
       <form onSubmit={onSubmitForm}>
-        <input ref={inputRef} value={value} onChange={onChangeInput} />
+        <label htmlFor="wordInput">글자를 입력하세요.</label>
+
+        <input className="hoho" ref={inputRef} value={value} onChange={onChangeInput} />
         <button>입력</button>
       </form>
       <div>{result}</div>
