@@ -1,5 +1,5 @@
 import React, { Component} from 'react'; //ES2015
-
+import Try from './Try'
 function getNumbers() { // 숫자 네 개를 겹치지 않고 랜덤하게 뽑는 함수
 
 }
@@ -23,6 +23,16 @@ class NumberBaseball extends Component{
   refInput = (e) => {
     this.input = e
   }
+  fruits = [
+    { fruit: '사과', taste:'맛있다'},
+    { fruit: '수박', taste:'맛있다!!'},
+    { fruit: '딸기', taste:'맛있다!'},
+    { fruit: '포도', taste:'맛있다 무야호~'},
+    { fruit: '귤', taste:'맛있다 ㅎㅎㅎ'},
+    { fruit: '감', taste:'맛있다!'},
+    { fruit: '바나나', taste:'!맛있다'},
+    { fruit: '배', taste:'!!맛있다'},
+  ]
 
   render(){
     return (
@@ -33,18 +43,9 @@ class NumberBaseball extends Component{
       </form>
       <div>시도: {this.state.tries.length}</div>
       <ul>
-        {[
-          { fruit: '사과', taste:'맛있다'},
-          { fruit: '수박', taste:'맛있다!!'},
-          { fruit: '딸기', taste:'맛있다!'},
-          { fruit: '포도', taste:'맛있다 무야호~'},
-          { fruit: '귤', taste:'맛있다 ㅎㅎㅎ'},
-          { fruit: '감', taste:'맛있다!'},
-          { fruit: '바나나', taste:'!맛있다'},
-          { fruit: '배', taste:'!!맛있다'},
-        ].map((v, i) => {
+        {this.fruits.map((v, i) => {
           return (
-          <li key={v.fruit + v.taste}>{v.fruit} - {i+1}</li>
+            <Try value={v} index={i}/> // react에서는 props라고 불린다.
           );
         })
         // key에 index를 사용하지 않는 이유는 요소가 추가또는 삭제 되면 배열의 순서가 바뀌어서 문제가 생긴다.
