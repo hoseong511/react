@@ -33,9 +33,21 @@ class NumberBaseball extends Component{
       </form>
       <div>시도: {this.state.tries.length}</div>
       <ul>
-        {['like','like','like','like','like'].map((data) => {
-          return <li>{data}</li>
+        {[
+          { fruit: '사과', taste:'맛있다'},
+          { fruit: '수박', taste:'맛있다!!'},
+          { fruit: '딸기', taste:'맛있다!'},
+          { fruit: '포도', taste:'맛있다 무야호~'},
+          { fruit: '귤', taste:'맛있다 ㅎㅎㅎ'},
+          { fruit: '감', taste:'맛있다!'},
+          { fruit: '바나나', taste:'!맛있다'},
+          { fruit: '배', taste:'!!맛있다'},
+        ].map((v, i) => {
+          return (
+          <li key={v.fruit + v.taste}>{v.fruit} - {i+1}</li>
+          );
         })
+        // key에 index를 사용하지 않는 이유는 요소가 추가또는 삭제 되면 배열의 순서가 바뀌어서 문제가 생긴다.
         }
         
       </ul>
