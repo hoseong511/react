@@ -6,7 +6,7 @@ class Try extends Component {
       <> 
         <li>
           {/* jsx의 주석 */}
-          {this.props.value.fruit} - {this.props.index+1}
+          {this.props.value.fruit} - {this.props.value.taste} - {this.props.index +1 }
           <div>컨텐츠12</div>
           <div>컨텐츠2</div>
           <div>컨텐츠3</div>

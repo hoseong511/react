@@ -1,6 +1,7 @@
 // 컴포넌트 분리하기~
 const React = require('react');
 const { useState, useRef } = React;
+const Api_word = require('./WordConfig')
 
 const WordRelay = () => {
   const [word, setWord] = useState('호호');
@@ -31,8 +32,10 @@ const WordRelay = () => {
         <label htmlFor="wordInput">글자를 입력하세요.</label>
 
         <input className="hoho" ref={inputRef} value={value} onChange={onChangeInput} />
+
         <button>입력</button>
       </form>
+      <Api_word value={value}/>
       <div>{result}</div>
     </>
   )
