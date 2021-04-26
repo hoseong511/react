@@ -28,45 +28,50 @@ class NumberBaseball extends Component{
   // } 초기에는 이런식으로 this에 접근을 했다.
   onSubmitForm = (e) => { // 화살표 함수가 bind를 자동으로 해주는 역할
     e.preventDefault();
-    const {value, reuslt, answer, tries } = this.state
-    if (value === answer.join('')){
-      this.setState({
-        result: '홈런!',
-        tries: [...tries, { try: value, result: '홈런!'}], // 참조 값이 달라져야 변화를 감지하는 방식
-      })
+    const {value, reuslt, answer} = this.state
+    if (value === answer.join('')){ // 연달아 state를 이용하는 경우 함수형 setState를 사용하기 
+      this.setState( (prevState) => {
+        return {
+            result: '홈런!',
+            tries: [...prevState.tries, { try: value, result: '홈런!'}], // 참조 값이 달라져야 변화를 감지하는 방식
+          }        
+        }
+      )
       this.setState({
         value: '',
         answer: getNumbers(),
         tries: [],
       });
     } else {
-      const answerArray = value.split('').map((v) => parseInt(v));
-      let strike = 0;
-      let ball = 0;
-      if (tries.length >= 9) {
-        this.setState( {
-          reuslt: `10번 넘게 틀려서 실패! 답은 ${this.state.answer.join(',')}였습니다!`,
-        });
-        alert('게임을 다시 시작합니다!');
-        this.setState({
-          value: '',
-          answer: getNumbers(),
-          tries: [],
-        });
-      } else{
-        for (let i = 0; i < 4; i += 1){
-          if (answerArray[i] === answer[i]){
-            strike += 1;
-          } else if ( answer.includes(answerArray[i])) {
-            ball += 1;
-          }
-        }
-        this.setState({
-          tries: [...tries, { try: value, result: `${strike} 스트라이트, ${ball} 볼입니다.`}],
-          value: '',
-        })
-      }  
-    }
+        const answerArray = value.split('').map((v) => parseInt(v));
+        let strike = 0;
+        let ball = 0;
+        if (tries.length >= 9) {
+          this.setState( {
+            reuslt: `10번 넘게 틀려서 실패! 답은 ${this.state.answer.join(',')}였습니다!`,
+          });
+          alert('게임을 다시 시작합니다!');
+          this.setState({
+            value: '',
+            answer: getNumbers(),
+            tries: [],
+          });
+        } else{
+            for (let i = 0; i < 4; i += 1){
+              if (answerArray[i] === answer[i]){
+                strike += 1;
+              } else if ( answer.includes(answerArray[i])) {
+                ball += 1;
+              }
+            }
+            this.setState( (prevState) => {
+              return {
+                tries: [...tries, { try: value, result: `${strike} 스트라이트, ${ball} 볼입니다.`}],
+                value: '',
+              }          
+            })
+          }  
+      }
     console.log(value);
   }
 
