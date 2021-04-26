@@ -23,12 +23,19 @@ class NumberBaseball extends Component{
     this.onSubmitForm = this.onSubmitForm.bind(this); // 기존에 사용되던 방식
     this.onChangeInput = this.onChangeInput.bind(this);
   }
+
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   if (this.state.counter !== nextState.counter) {
+  //     return true;
+  //   }
+  //   return false;  // 바뀌는 것이 없으면 렌더링이 안되도록 하는 부분이다.
+  // }
   // onSubmitForm(e) {
   //   console.log(this);
   // } 초기에는 이런식으로 this에 접근을 했다.
   onSubmitForm = (e) => { // 화살표 함수가 bind를 자동으로 해주는 역할
     e.preventDefault();
-    const {value, reuslt, answer} = this.state
+    const {value, reuslt, answer, tries} = this.state
     if (value === answer.join('')){ // 연달아 state를 이용하는 경우 함수형 setState를 사용하기 
       this.setState( (prevState) => {
         return {
@@ -48,7 +55,7 @@ class NumberBaseball extends Component{
         let ball = 0;
         if (tries.length >= 9) {
           this.setState( {
-            reuslt: `10번 넘게 틀려서 실패! 답은 ${this.state.answer.join(',')}였습니다!`,
+            reuslt: `10번 넘게 틀려서 실패! 답은 ${answer.join(',')}였습니다!`,
           });
           alert('게임을 다시 시작합니다!');
           this.setState({
@@ -66,7 +73,7 @@ class NumberBaseball extends Component{
             }
             this.setState( (prevState) => {
               return {
-                tries: [...tries, { try: value, result: `${strike} 스트라이트, ${ball} 볼입니다.`}],
+                tries: [...prevState.tries, { try: value, result: `${strike} 스트라이트, ${ball} 볼입니다.`}],
                 value: '',
               }          
             })

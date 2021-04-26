@@ -11,6 +11,12 @@ function getNumbers() { // 숫자 네 개를 겹치지 않고 랜덤하게 뽑�
   console.log(array); // hooks는 state가 바뀔때마다 전체 함수가 실행되는 것을 알수 있다.
   return array;
 } // this를 안쓰는 경우 function을 밖으로 빼놓는다
+const shouldComponentUpdate = (nextProps, nextState, nextContext) => {
+  if (this.state.counter !== nextState.counter) {
+    return true;
+  }
+  return false;  // 바뀌는 것이 없으면 렌더링이 안되도록 하는 부분이다.
+}
 
 const NumberBaseball = () => {
   const [ value, setValue ] = useState('');

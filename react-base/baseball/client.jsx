@@ -3,4 +3,4 @@ const ReactDom = require('react-dom');
 import NumberBaseBall from './NumberBaseball_hooks';
 import Test from './RenderTest'
 
-ReactDom.render(<Test/>, document.querySelector('#root'));
+ReactDom.render(<NumberBaseBall/>, document.querySelector('#root'));

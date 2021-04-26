@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, memo } from 'react'
 
-const Try = ({ tryInfo = this.props }) => {
-  
+const Try = memo(({ tryInfo }) => {
+  // memo == pure == should
   return (
     <> 
       <li>
@@ -11,5 +11,5 @@ const Try = ({ tryInfo = this.props }) => {
       </li>
     </>
   )
-}
+});
 export default Try;
