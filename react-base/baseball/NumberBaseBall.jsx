@@ -29,7 +29,10 @@ class NumberBaseball extends Component{
   //     return true;
   //   }
   //   return false;  // 바뀌는 것이 없으면 렌더링이 안되도록 하는 부분이다.
-  // }
+  // } 
+
+  // A -> B -> C   A에서 C로 바로 넘겨주는 역할 = context! 그리고 redux
+
   // onSubmitForm(e) {
   //   console.log(this);
   // } 초기에는 이런식으로 this에 접근을 했다.
