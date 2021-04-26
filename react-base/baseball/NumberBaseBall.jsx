@@ -1,4 +1,4 @@
-import React, { Component} from 'react'; //ES2015
+import React, { Component, createRef} from 'react'; //ES2015
 import Try from './Try'
 function getNumbers() { // 숫자 네 개를 겹치지 않고 랜덤하게 뽑는 함수
   const candidate = [1,2,3,4,5,6,7,8,9]
@@ -80,6 +80,7 @@ class NumberBaseball extends Component{
           }  
       }
     console.log(value);
+    this.inputRef.current.focus(); // ref접근
   }
 
   onChangeInput = (e) => {
@@ -88,17 +89,15 @@ class NumberBaseball extends Component{
       value: e.target.value,
     });
   }
-  input;
-  refInput = (e) => {
-    this.input = e
-  }
-
+  inputRef = createRef(); // createRef로 ref 접근 
+// 함수로 만드는 경우는 다른 조건이나 동작을 추가할 수 있다.
+// 자유도 증가! 1급 함수 highOrder function: 함수 안에 함수
   render(){
     return (
       <>
       <h1>{this.state.result}</h1>
       <form onSubmit = {this.onSubmitForm}>
-        <input ref={this.refInput} maxLength={4} value={this.state.value} onChange={this.onChangeInput} />
+        <input ref={this.inputRef} maxLength={4} value={this.state.value} onChange={this.onChangeInput} />
       </form>
       <div>시도: {this.state.tries.length}</div>
       <ul>
