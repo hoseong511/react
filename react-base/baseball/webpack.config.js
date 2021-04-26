@@ -1,6 +1,6 @@
 const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
+// process.env.NODE_ENV = 'production'; // 실서비스
 module.exports = {
   name: 'baseball',
   mode: 'development', // 실서비스: production
