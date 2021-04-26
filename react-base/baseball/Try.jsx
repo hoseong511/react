@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 
 class Try extends Component {
   render() {
+    console.log(this.props.tryInfo);
     return (
       <> 
         <li>
           {/* jsx의 주석 */}
-          {this.props.value.fruit} - {this.props.value.taste} - {this.props.index +1 }
-          <div>컨텐츠12</div>
-          <div>컨텐츠2</div>
-          <div>컨텐츠3</div>
-          <div>컨텐츠4</div>
+          <div>{this.props.tryInfo.try}</div>
+          <div>{this.props.tryInfo.result}</div>          
         </li>
       </>
     )

@@ -12,7 +12,7 @@ class Api_word extends Component {
   getWord = async () => {
     try {
       
-      const data = await axios.get(`${korean_URL}=안녕`, {headers: { 'X-Requested-With': 'XMLHttpRequest' }}
+      const data = await axios.get(`${korean_URL}=안녕`, { headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'}}
       )      
       console.log(data);
 
