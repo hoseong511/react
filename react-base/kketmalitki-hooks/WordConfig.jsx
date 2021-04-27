@@ -3,7 +3,7 @@ const { Component } = React;
 const axios = require('axios');
 
 
-const API_key = 'E7EA20AB38C9BA3D72B78760502FE244'
+
 const korean_URL = `https://stdict.korean.go.kr/api/search.do?key=${API_key}&q`;
 
 
