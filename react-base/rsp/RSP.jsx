@@ -60,8 +60,9 @@ class RSP extends Component {
     clearInterval(this.interval); // 메모리 누수 문제 해결
   }
 
-  onClickBtn = (choice) => (e) => { // 자주쓰는 패턴
+  onClickBtn = (choice) => (e) => { // 자주쓰는 패턴 curried function
     console.log(choice);
+    console.log(e)
     const { imgCoord } = this.state
     clearInterval(this.interval);
     const myScore = scores[choice];
