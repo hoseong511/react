@@ -60,7 +60,7 @@ class RSP extends Component {
     clearInterval(this.interval); // 메모리 누수 문제 해결
   }
 
-  onClickBtn = (choice) => {
+  onClickBtn = (choice) => (e) => { // 자주쓰는 패턴
     console.log(choice);
     const { imgCoord } = this.state
     clearInterval(this.interval);
@@ -97,9 +97,9 @@ class RSP extends Component {
       <h1>가위바위보!</h1>
       <div id="computer" style={{ background: `url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${imgCoord} 0` }}></div>
       <div>
-        <button id='rock' className="btn" onClick={() => this.onClickBtn('바위')}>바위</button>
-        <button id='scissor' className="btn" onClick={() => this.onClickBtn('가위')}>가위</button>
-        <button id='paper' className="btn" onClick={() => this.onClickBtn('보')}>보</button>
+        <button id='rock' className="btn" onClick={this.onClickBtn('바위')}>바위</button>
+        <button id='scissor' className="btn" onClick={this.onClickBtn('가위')}>가위</button>
+        <button id='paper' className="btn" onClick={this.onClickBtn('보')}>보</button>
       </div>
       <div>{result}</div>
       <div>현재 {score}점</div>
