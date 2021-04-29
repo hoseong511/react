@@ -14,7 +14,7 @@ const Ball = memo(({ number }) => { // 컴포넌트를 다른 컴포넌트로 �
       background = 'green';
     }
     return (      
-      <div className="ball" style={{ background }}>{number}</div>
+      <div key={number+Math.random()} className="ball" style={{ background }}>{number}</div>
     );
 });
 
