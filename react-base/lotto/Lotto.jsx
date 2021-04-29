@@ -51,7 +51,10 @@ class Lotto extends Component {
     if (this.state.winBalls.length === 0) {
       this.runTimeouts();
     }
-  }
+    if (prevState.winNumbers !== this.state.winNumbers){
+      console.log('로또 숫자를 생성합니다.');
+    }
+  }//hooks와 다르게 componentDidUpdate에서 모든 조건을 처리할 수 있다.
 
   componentWillUnmount() {
     this.timeouts.forEach((v) => {
