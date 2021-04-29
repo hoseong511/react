@@ -1,5 +1,5 @@
 import ReactDom from 'react-dom';
 import React from 'react';
-import RSP from './RSP-hook';
+import Lotto from './Lotto';
 
-ReactDom.render(<RSP />, document.querySelector('#root'));
+ReactDom.render(<Lotto />, document.querySelector('#root'));

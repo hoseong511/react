@@ -50,7 +50,7 @@ const RSP = () => {
   // 값이 바뀔때 마다 useEffect는 다시 실행한다.
   useEffect( () => { // componentDidMount랑 componentDidUpdate 역할( 1:1 대응은 아님)
     console.log('순서1');
-    interval.current = setInterval(changeHand,1000);
+    interval.current = setInterval(changeHand,100);
     return() => { // componentWillUnmount 역할
       console.log('순서2');
       clearInterval(interval.current);
@@ -86,8 +86,9 @@ const RSP = () => {
       setScore((prevScore) => prevScore - 1)            
     }
     setTimeout(()=> {
-      interval.current = setInterval(changeHand, 1000);
-    }, 2000);
+      alert("다시하겠습니까?")
+      interval.current = setInterval(changeHand, 100);
+    }, 100);
   };
 
 
