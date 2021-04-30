@@ -4,10 +4,16 @@ import Table from './Table';
 const initialState = {
   winner: '',
   turn: 'O',
-  tableData: [['','',''],['','',''],['','','']]
+  tableData: [
+    ['','',''],
+    ['','',''],
+    ['','','']
+  ]
 };
 
-const SET_WINNER = 'SET_WINNER' // 컨벤션임 action 들은 대문자로표현
+export const SET_WINNER = 'SET_WINNER' // 컨벤션임 action 들은 대문자로표현
+export const CLICK_CELL = 'CLICK_CELL'; // action을 다른 컴포넌트들에게 내보내기
+export const CHANGE_TURN = 'CHANGE_TURN';
 
 const reducer = (state, action) => {
   switch (action.type){
@@ -15,8 +21,24 @@ const reducer = (state, action) => {
       // state.winner = action.winner ; 이렇게 하면 안된다.
       return {
         ...state, // 기존 state는 그대로 얕게 복사하고, 바뀌는 부분만 바꿔주기
-        winner: action.winner,
+        winner: action.winner, // 불변성 지키기
+      };
+    case CLICK_CELL: {
+      const tableData = [...state.tableData];
+      tableData[action.row] = [...tableData[action.row]]; // 불변성 지키기 immer라는 라이브러리로 해결
+      tableData[action.row][action.cell] = state.turn;
+      return{
+        ...state,
+        tableData,
       }
+    }
+    case CHANGE_TURN: {
+      return {
+        ...state,
+        turn: state.turn === 'O' ? 'X' : 'O', // 번갈아 가면서 작동시키려는 목적
+      }
+    }
+
   }
 };
 
@@ -34,7 +56,7 @@ const TicTacToc = () => { // 자식 컴포넌트들에게 상태를 넘겨주는
 
   return (
     <>
-      <Table onClick={onClickTable} tableData={state.tableData}/>
+      <Table onClick={onClickTable} tableData={state.tableData} dispatch={dispatch}/>
       {state.winner && <div>{state.winner}님의 승리</div>}
     </>
   )
