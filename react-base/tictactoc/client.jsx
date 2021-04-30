@@ -1,5 +1,5 @@
 import ReactDom from 'react-dom';
 import React from 'react';
-import Lotto from './Lotto-hooks';
+import TicTacToc from './TicTacToc';
 
-ReactDom.render(<Lotto />, document.querySelector('#root'));
+ReactDom.render(<TicTacToc />, document.querySelector('#root'));
