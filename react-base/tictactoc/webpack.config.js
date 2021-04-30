@@ -2,7 +2,7 @@ const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // process.env.NODE_ENV = 'production'; // 실서비스
 module.exports = {
-  name: 'RSP',
+  name: 'tictactoc',
   mode: 'development', // 실서비스: production
   devtool: 'eval', // 실서비스: hidden-source-map
   resolve: {
