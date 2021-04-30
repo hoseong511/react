@@ -11,7 +11,7 @@ const initialState = {
   ],
   recentCell: [-1,-1]
 };
-// useState들이 너무 많아질 때 useReucer를 고려해야한다.
+// useState들이 너무 많아질 때 useReducer를 고려해야한다. -> 대신 useReducer는 비동기적으로 변한다.
 export const SET_WINNER = 'SET_WINNER' // 컨벤션임 action 들은 대문자로표현
 export const CLICK_CELL = 'CLICK_CELL'; // action을 다른 컴포넌트들에게 내보내기
 export const CHANGE_TURN = 'CHANGE_TURN';
