@@ -1,0 +1,10 @@
+$size: 40px;
+table {
+  border-collapse: collapse;
+}
+td {
+  border: 1px solid black;
+  width: $size;
+  height: $size;
+  text-align:center;
+}
