@@ -1,6 +1,5 @@
-$size: 200px;
 #computer {
   width: 142px;
-  height: $size;
+  height: 200px;
   background-position: 0 0;
 }
