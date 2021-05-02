@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, memo, useMemo } from 'react';
 import { TableContext, CODE, OPEN_CELL, CLICK_MINE, FLAG_CELL, NORMALIZE_CELL, QUESTION_CELL } from './MineSearch';
 
 const getTdStyle = (code) => {
@@ -30,6 +30,7 @@ const getTdStyle = (code) => {
 };
 
 const getTdText = (code) => {
+  console.log("getTdText");
   switch (code) {
     case CODE.NORMAL:
       return '';
@@ -49,7 +50,7 @@ const getTdText = (code) => {
 };
 
 
-const Td = ({ rowIndex, cellIndex }) => {
+const Td = memo(({ rowIndex, cellIndex }) => {
   const { tableData, dispatch, halted } = useContext(TableContext);
   const onClickTd = useCallback(() => {
     console.log(halted);  
@@ -94,8 +95,8 @@ const Td = ({ rowIndex, cellIndex }) => {
         return;
     }
   }, [tableData[rowIndex][cellIndex], halted]);
-
-  return (
+  console.log("td rendered"); // td는 전체 칸이 실행되지만 실제 내부 컴포넌트들은 하나 씩만 실행되는 것을 알 수 있다.
+  return useMemo(() => ( 
     <>
       <td style={getTdStyle(tableData[rowIndex][cellIndex])} 
           onClick={onClickTd}
@@ -103,7 +104,8 @@ const Td = ({ rowIndex, cellIndex }) => {
         {getTdText(tableData[rowIndex][cellIndex])}
       </td>
     </>
-  )
-}
+  ), [tableData[rowIndex][cellIndex]]);
+});
 
+// component를 분리해서 memo를 사용 or usememo사용
 export default Td;

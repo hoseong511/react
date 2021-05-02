@@ -51,9 +51,15 @@ export const TableContext = createContext({
 
 const initialState = {
   tableData: [],
+  data: {
+    row:0,
+    cell:0,
+    mine:0
+  },
   timer: 0,
   result: '',
-  halted: false,
+  halted: true,
+  opened_count: 0,
 };
 
 export const START_GAME = 'START_GAME';
@@ -62,14 +68,19 @@ export const CLICK_MINE = 'CLICK_MINE';
 export const NORMALIZE_CELL = 'NORMALIZE_CELL';
 export const FLAG_CELL = 'FLAG_CELL';
 export const QUESTION_CELL = 'QUESTION_CELL';
+export const INCREMENT_TIMER = 'INCREMENT_TIMER';
+
 
 const reducer = (state, action) => {
   switch (action.type) {
     case START_GAME:
       return {
         ...state,
+        data: { row: action.row, cell: action.cell, mine: action.mine },
+        opened_count: 0,
         tableData: plantMine(action.row, action.cell, action.mine),
         halted: false,
+        timer: 0
       }
     case OPEN_CELL: {
       const tableData = [...state.tableData];
@@ -77,6 +88,7 @@ const reducer = (state, action) => {
         tableData[i] = [...row];
       });
       const checked = [];
+      let open_count = 0;
       console.log(tableData.length, tableData[0].length);
       const checkAround = (row, cell) => {
         console.log(row, cell);
@@ -125,12 +137,24 @@ const reducer = (state, action) => {
             });
           }
         }
+        if (tableData[row][cell] === CODE.NORMAR ) {
+          open_count += 1;
+        }
         tableData[row][cell] = count;
       };
       checkAround(action.row, action.cell);
+      let halted = false;
+      let result = '';
+      if (state.data.row * state.data.cell - state.data.mine === state.opened_count + open_count) {
+        halted = true;
+        result = `${state.timer}초만에 승리`;
+      }
       return {
         ...state,
         tableData,
+        opened_count: state.opened_count + open_count,
+        halted,
+        result,
       };
     }
     case CLICK_MINE: {
@@ -182,6 +206,12 @@ const reducer = (state, action) => {
         tableData,
       };
     }
+    case INCREMENT_TIMER: {
+      return {
+        ...state,
+        timer: state.timer+1,
+      }
+    }
     default:
       return state; 
   }
@@ -192,6 +222,17 @@ const MineSearch = () => { // 자식 컴포넌트들에게 상태를 넘겨주�
   const { tableData, halted, timer, result } = state;
   const value = useMemo(() => ({ tableData, halted, dispatch }), [tableData, halted]);
   // 이런식으로 캐싱 해주기
+  useEffect(() => {
+    let timer;
+    if ( halted === false){
+      timer = setInterval(() => {
+        dispatch( {type: INCREMENT_TIMER });
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    }
+  }, [halted]);
 
   return (
     <TableContext.Provider value={value}>     {/*value={{ tableData: state.tableData, dispatch}}> {/**이런 방식은 매번 새로운 객체가 생성되므로 성능 최악 */}
