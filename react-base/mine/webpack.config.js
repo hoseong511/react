@@ -3,8 +3,8 @@ const webpack  = require('webpack');
 
 module.exports = {
   name: 'gugudan',
-  mode: 'development', // 실서비스: production
-  devtool: 'eval', // 실서비스: hidden-source-map
+  mode: 'production', // 실서비스: production
+  devtool: 'hidden-source-map', // 실서비스: hidden-source-map
   resolve: {
     extensions: ['.js', '.jsx'] // 확장자를 찾아주는 기능 entry 부분에 확장자를 입력하지 않아도 된다.
   },
@@ -35,9 +35,7 @@ module.exports = {
   }, // webpack 공식문서를 확인해보기
   
   plugins: [ // 일부러 플러그인을 빼보면서 에러메시지를 확인해보기
-    new webpack.LoaderOptionsPlugin({
-       debug: true 
-      }),
+
   ],
   output: {  // 출력
     path: path.join(__dirname, 'dist'), // C:\users\...를 만들어주는 기능이다.

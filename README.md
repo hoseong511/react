@@ -7,6 +7,8 @@
 - No create-react-app version ([ rock scissor paper ](https://hoseong511.github.io/react-redux/react-base/rsp/))
 - No create-react-app version ([ response check ](https://hoseong511.github.io/react-redux/react-base/response/))
 - No create-react-app version ([ lotto ](https://hoseong511.github.io/react-redux/react-base/lotto/))
+- No create-react-app version ([ tictactoe ](https://hoseong511.github.io/react-redux/react-base/tictactoc/))
+- No create-react-app version ([ mine search ](https://hoseong511.github.io/react-redux/react-base/mine/))
 
 
   
