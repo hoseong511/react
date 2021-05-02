@@ -44,9 +44,8 @@ const plantMine = (row, cell, mine) => {
 };
 
 export const TableContext = createContext({
-  tableData: [
-  
-  ],
+  tableData: [],
+  halted: true,
   dispatch: () => {},
 }); // 초기값 넣어주기 
 
@@ -54,18 +53,82 @@ const initialState = {
   tableData: [],
   timer: 0,
   result: '',
+  halted: false,
 };
 
 export const START_GAME = 'START_GAME';
-
+export const OPEN_CELL = 'OPEN_CELL';
+export const CLICK_MINE = 'CLICK_MINE';
+export const NORMALIZE_CELL = 'NORMALIZE_CELL';
+export const FLAG_CELL = 'FLAG_CELL';
+export const QUESTION_CELL = 'QUESTION_CELL';
 
 const reducer = (state, action) => {
-  switch (action.type){
+  switch (action.type) {
     case START_GAME:
       return {
         ...state,
-        tableData: plantMine(action.row, action.cell, action.mine)
+        tableData: plantMine(action.row, action.cell, action.mine),
+        halted: false,
       }
+    case OPEN_CELL: {
+      const tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      tableData[action.row][action.cell] = CODE.OPEND;
+      return {
+        ...state,
+        tableData,
+      };
+    }
+    case CLICK_MINE: {
+      const tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      tableData[action.row][action.cell] = CODE.CLICKED_MINE;
+      return {
+        ...state,
+        tableData,
+        halted: true,
+      };
+    }
+    case FLAG_CELL: {
+      const tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      if (tableData[action.row][action.cell] === CODE.MINE){
+        tableData[action.row][action.cell] = CODE.FLAG_MINE;
+      } else {
+        tableData[action.row][action.cell] = CODE.FLAG;
+      }
+      return {
+        ...state,
+        tableData,
+      };
+    }
+    case QUESTION_CELL:{
+      const tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      if (tableData[action.row][action.cell] === CODE.FLAG_MINE){
+        tableData[action.row][action.cell] = CODE.QUESTION_MINE;
+      } else {
+        tableData[action.row][action.cell] = CODE.QUESTION;
+      }
+      return {
+        ...state,
+        tableData,
+      };
+    }
+    case NORMALIZE_CELL: {
+      const tableData = [...state.tableData];
+      tableData[action.row] = [...state.tableData[action.row]];
+      if (tableData[action.row][action.cell] === CODE.QUESTION_MINE){
+        tableData[action.row][action.cell] = CODE.MINE;
+      } else {
+        tableData[action.row][action.cell] = CODE.NORMAL;
+      }
+      return {
+        ...state,
+        tableData,
+      };
+    }
     default:
       return state; 
   }
@@ -73,16 +136,16 @@ const reducer = (state, action) => {
 
 const MineSearch = () => { // 자식 컴포넌트들에게 상태를 넘겨주는 효과적인 방법 -> contextAPI, state의 개수를 줄이는 useReduce
   const [state, dispatch] = useReducer(reducer, initialState);
-  
-  const value = useMemo(() => ({ tableData: state.tableData, dispatch }), [state.tableData]);
+  const { tableData, halted, timer, result } = state;
+  const value = useMemo(() => ({ tableData, halted, dispatch }), [tableData, halted]);
   // 이런식으로 캐싱 해주기
 
   return (
     <TableContext.Provider value={value}>     {/*value={{ tableData: state.tableData, dispatch}}> {/**이런 방식은 매번 새로운 객체가 생성되므로 성능 최악 */}
       <Form dispatch={dispatch} />{/**context Api를 적용해보자 */}
-      <div>{state.timer}</div>
+      <div>{timer}</div>
       <Table />
-      <div>{state.result}</div>
+      <div>{result}</div>
     </TableContext.Provider>
   )
 };
