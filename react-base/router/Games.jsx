@@ -8,12 +8,16 @@ import Lotto from '../lotto/Lotto';
 const Games = () => {
   return (
    <BrowserRouter>
-    <Link to='/number-baseball'>숫자야구</Link>
-    &nbsp;
-    <Link to='/rock-scissors-paper'>가위바위보</Link>
-    &nbsp;
-    <Link to='/lotto'>로또</Link>
-    &nbsp;
+    <div>
+      공통 부분
+      <br/>
+      <Link to='/number-baseball'>숫자야구</Link>
+      &nbsp;
+      <Link to='/rock-scissors-paper'>가위바위보</Link>
+      &nbsp;
+      <Link to='/lotto'>로또</Link>
+      &nbsp;
+    </div>
     <div>
       <Route path='/number-baseball' component={BaseBall}></Route>
       <Route path='/rock-scissors-paper' component={RSP}></Route>
@@ -22,5 +26,6 @@ const Games = () => {
    </BrowserRouter> 
   )
 }
+// 페이지가 여러개있는것이 아니다. 프론트엔드에서만 동작한다.
 
 export default Games;
