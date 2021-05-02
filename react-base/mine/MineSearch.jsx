@@ -137,7 +137,7 @@ const reducer = (state, action) => {
             });
           }
         }
-        if (tableData[row][cell] === CODE.NORMAR ) {
+        if (tableData[row][cell] === CODE.NORMAL ) {
           open_count += 1;
         }
         tableData[row][cell] = count;
@@ -145,6 +145,7 @@ const reducer = (state, action) => {
       checkAround(action.row, action.cell);
       let halted = false;
       let result = '';
+      console.log(state.data.row, state.data.cell, state.data.mine, state.opened_count + open_count);
       if (state.data.row * state.data.cell - state.data.mine === state.opened_count + open_count) {
         halted = true;
         result = `${state.timer}초만에 승리`;
