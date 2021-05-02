@@ -31,14 +31,6 @@ module.exports = {
            '@babel/preset-react'],
         plugins: ['@babel/plugin-proposal-class-properties']
       },
-    },
-    {
-      test: /\.s?css$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        'sass-loader'
-      ]
     }]
   }, // webpack 공식문서를 확인해보기
   
