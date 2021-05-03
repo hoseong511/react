@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter, Link, Route, withRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Link, Route, Switch, withRouter } from 'react-router-dom';
 import GameMatcher from './GameMatcher';
 import Header from './Header';
 import Footer from './Footer';
@@ -12,7 +12,16 @@ const Games = ({ match, location, history }) => {
     <section>
       <Header />
       <div>
-        <Route path='/game/:name' component={GameMatcher}></Route>
+        <Switch>
+          <Route path='/game/:name' render={(props) => <GameMatcher {...props}/>}></Route>
+          {/** 부모의 props를 자식에게 전달하는 방식 render를 이용하자 */}
+          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
+          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
+          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
+          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
+          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
+        </Switch>
+        {/**일치하는 라우터 하나만 나오게 하는 방법 */}
       </div>
       <Footer />
     </section>
