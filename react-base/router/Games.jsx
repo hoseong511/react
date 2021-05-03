@@ -12,16 +12,10 @@ const Games = ({ match, location, history }) => {
     <section>
       <Header />
       <div>
-        <Switch>
+          <Route exact path='/' render={(props) => <GameMatcher {...props}/>}></Route>
+          {/** exact를 붙여줘서 정확하게 원하는 라우터만 나타나게 한다.*/}
           <Route path='/game/:name' render={(props) => <GameMatcher {...props}/>}></Route>
-          {/** 부모의 props를 자식에게 전달하는 방식 render를 이용하자 */}
-          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
-          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
-          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
-          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
-          <Route path='/game/number' render={(props) => <GameMatcher {...props}/>}></Route>
-        </Switch>
-        {/**일치하는 라우터 하나만 나오게 하는 방법 */}
+        {/**하위 주소에 일치하는 상위주소가 있을 경우 둘다 렌더링 되는 문제가있다, 이를 해결할 수 있는 방법에는 exact가 있다. */}
       </div>
       <Footer />
     </section>
