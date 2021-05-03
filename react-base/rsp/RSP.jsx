@@ -21,6 +21,9 @@ const computerChoice = (imgCoord) =>{
   })[0];
 };
 
+
+
+
 class RSP extends Component {
   state = {
     result : '',
