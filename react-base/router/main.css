@@ -23,3 +23,11 @@ td {
   height: 200px;
   background-position: 0 0;
 }
+section {
+  position: relative;
+  height: 500px;
+}
+section .footer {
+  position: absolute;
+  bottom: 10px;
+}
