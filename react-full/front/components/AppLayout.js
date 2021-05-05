@@ -7,7 +7,6 @@ import { Menu, Input, Row, Col } from 'antd';
 const AppLayout = ({ children }) => {
   return (
     <div>
-      <div>공통메뉴</div>
       <Menu mode="horizontal">
         <Menu.Item key="home">
           <Link href='/'><a>노드버드</a></Link>
@@ -21,7 +20,9 @@ const AppLayout = ({ children }) => {
         <Menu.Item key="search">
           <Input.Search />
         </Menu.Item>
-        <Row gutter={8}>
+        
+      </Menu>
+      <Row gutter={8}>
           <Col xs={24} md={6}>
             왼쪽 메뉴
           </Col>
@@ -32,7 +33,6 @@ const AppLayout = ({ children }) => {
             <a href="https://github.com/hoseong511" target="_blank" rel="noreferrer noopener">Made by hoseong511</a>
           </Col>
         </Row>
-      </Menu>
     </div>
   )
 };
