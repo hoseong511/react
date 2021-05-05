@@ -6,11 +6,11 @@ const AppLayout = ({ children }) => {
   return (
     <div>
       <div>공통메뉴</div>
-      <Link href='/'>노드버드</Link>
+      <Link href='/'><a>노드버드</a></Link>
       <br></br>
-      <Link href='/profile'>프로필</Link>
+      <Link href='/profile'><a>프로필</a></Link>
       <br></br>
-      <Link href='/signup'>회원가입</Link>
+      <Link href='/signup'><a>회원가입</a></Link>
 
       {children}
     </div>

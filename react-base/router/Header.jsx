@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { BrowserRouter, HashRouter, Link, Route, withRouter } from 'react-router-dom';
 
-class Header extends Component {
+class Header extends PureComponent {
   render() {
     return (
     <div>
