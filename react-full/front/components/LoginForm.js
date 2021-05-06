@@ -29,6 +29,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
     setIsLoggedIn(true);
   },[id, password]);
 
+  //useMemo를 이용한 스타일
+  // const style = useMemo(() => ({ marginTop: 10 }), []); // onClick과 같은 방식으로 style={style}"
+
   return (
     <>
       <FormWrapper onFinish={onSubmitForm}>
