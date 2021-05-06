@@ -1,10 +1,17 @@
 import React, { useState, useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
+import styled from 'styled-components';
 
-// 실무에서는 리액트에서 제공되는 로그인폼을 이용해 빠르게 완성하자
+const ButtonWrapper = styled.div`
+  margin-top: 10px;
+`;
 
-const LoginForm = () => {
+const FormWrapper = styled(Form)`
+  padding: 10px;
+`
+
+const LoginForm = ({ setIsLoggedIn }) => {
   const [ id, setId ] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,9 +23,15 @@ const LoginForm = () => {
       setPassword(e.target.value);
     }, [] );
 
+// NEXT.js에 onFinish 기능에는 e.preventdefault가 내장 되어 있다.
+  const onSubmitForm = useCallback(() => {
+    console.log(id, password);
+    setIsLoggedIn(true);
+  },[id, password]);
+
   return (
     <>
-      <Form>
+      <FormWrapper onFinish={onSubmitForm}>
         <div>
           <label htmlFor="user-id">아이디</label>
           <br/>
@@ -36,16 +49,13 @@ const LoginForm = () => {
               />
 
         </div>
-        <div>
+        <ButtonWrapper>
           <Button type="primary" htmlType="submit" loading={false}>
             로그인
           </Button>
           <Link href="/signup"><a>회원가입</a></Link>
-        </div>
-        <div>
-
-        </div>
-      </Form>
+        </ButtonWrapper>
+      </FormWrapper>
 
     </>
   );

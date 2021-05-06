@@ -2,9 +2,16 @@ import React, { useState} from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
+import styled from 'styled-components';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 
+
+// 리렌더링을 방지하기 위해서 인라인 스타일을 사용하지 않는다. -> styled를 사용해서 스타일을 이용
+// 리렌더링은 바뀌는 부분만 다시 렌더링되는것 헷갈리지 말자.!
+const SearchInput = styled(Input.Search)`
+  verticalAlign:middle;
+`;
 // 모바일 먼저 디자인해야 한다. 그다음 데탑!
 const AppLayout = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
@@ -21,12 +28,12 @@ const AppLayout = ({ children }) => {
           <Link href="/signup"><a>회원가입</a></Link>
         </Menu.Item>
         <Menu.Item key="search">
-          <Input.Search style={{verticalAlign:"middle"}} />
+          <SearchInput />
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
           <Col xs={24} md={6}>
-            {isLogin ? <UserProfile /> : <LoginForm />}
+            {isLogin ? <UserProfile setIsLoggedIn={setIsLogin}/> : <LoginForm setIsLoggedIn={setIsLogin}/>}
           </Col>
           <Col xs={24} md={12}>
             {children}
