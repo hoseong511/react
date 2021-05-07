@@ -1,5 +1,6 @@
 ```sql
--- CLI(mysql)
+-- CLI, sqlClient, Sequelize 3가지 방법으로 테이블 만들기
+-- CLI(mysql) 
 -- create schema
 CREATE SCHEMA `nodejs` default CHARACTER SET utf8;
 use nodejs
