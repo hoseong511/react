@@ -28,7 +28,11 @@ const AppLayout = ({ children }) => {
   const style_a = useMemo(() => ({ 'text-align':'center'}))
 
   const toggleCollapsed = useCallback(() => {
-    setCollapsed(!collapsed);
+    if (collapsed) {
+      setCollapsed(false);
+    } else {
+      setCollapsed(true);
+    }
   }, [collapsed]);
 
   const handleResize = () => {
@@ -50,43 +54,45 @@ const AppLayout = ({ children }) => {
   return (
     <>
       <Row gutter={8}>
-        <Col xs={24} md={6}>
+        <Col xs={6} md={6}>
           <div style={{ width: 280 }}>
             <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+              {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
             </Button>
             <Menu 
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
                 mode="inline"
                 theme="dark"
-                inlineCollapsed={collapsed}>
-              <Menu.Item key="home" icon={<HomeOutlined />}>
+                inlineCollapsed={collapsed}
+                style={{zIndex:9}} >
+              <Menu.Item key="home"  icon={<HomeOutlined />}>
                 <Link href='/'><a>Home</a></Link>
               </Menu.Item>
-              <Menu.Item key="profile" icon={<UserOutlined />}>
+              <Menu.Item key="profile"  icon={<UserOutlined />}>
                 <Link href="/profile"><a>My profile</a></Link>
               </Menu.Item>
-              <Menu.Item key="signup" icon={<SettingOutlined />}>
+              <Menu.Item key="signup"  icon={<SettingOutlined />}>
                 <Link href="/signup"><a>Settings</a></Link>
               </Menu.Item>
-              <Menu.Item key="search" icon={<SearchOutlined />}>
+              {/* <Menu.Item key="search" onClick={toggleCollapsed} icon={<SearchOutlined />}>
                 <SearchInput 
                  placeholder="input search text"
                  allowClear
                  enterButton="Search"
                  size="default"/>
-              </Menu.Item>
+              </Menu.Item> */}
+
             </Menu>
           </div>
           <a href="https://github.com/hoseong511" target="_blank" rel="noreferrer noopener" style={style_a}>Made by hoseong511</a>
 
         </Col>
       
-        <Col xs={24} md={12}>
+        <Col xs={18} md={12}>
           {children}
         </Col>
-        <Col xs={24} md={6}>
+        <Col xs={0} md={6}>
           {isLogin ? <UserProfile setIsLoggedIn={setIsLogin}/> : <LoginForm setIsLoggedIn={setIsLogin}/>}
         </Col>
       </Row>
