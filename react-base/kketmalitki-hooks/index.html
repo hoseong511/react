@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>끝말잇기</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="./dist/app.js"></script> 
+  <!-- webPack 에 대한 설명: 여러개의 js파일을 하나의 js 파일로 만드는 기술 -->
+  <!-- webpack을 돌리기 위한 js실행기(node)가 필요하다. -->
+  <!-- '--D' 실제 서비스가 아닌 개발할 때만 사용하겠다는 의미 -->
+  <!-- 지금 하는 작업이 바로 npx create-react-app을 하는 작업이다. -->
+  <!-- 1. npm i react react-dom -->
+  <!-- 2.1 npm i -D webpack webpack-cli -->
+  <!-- 2.2 npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader @babel/plugin-proposal-class-properties-->
+  <!-- 3. create webpack.config.js -> module.exports = {} -->
+  <!-- 4. create client.jsx -> const React = requrie('react'); const ReactDom = require('react-dom') -->
+  <!-- 5. create dist -->
+  <!-- 6. npx webpack -->
+  <!-- **. 모듈시스템에서 항상 module.exports = 모듈이름 -->
+  <!-- html에서 읽히는 js파일은 하나이다. 이것을 해결해주기 위해서 필요한것이 바로 webpack인거다. -->
+  <!-- Module parse failed: Unexpected token (5:16)
+You may need an appropriate loader to handle js.org/concepts#loaders -->
+  <!-- 문법(JSX)을 이해하기 위한 도구가 필요하다 -> 바벨이 필요하다 -->
+  <!-- "@babel/core": "^7.13.16", 기본적인 babel
+       "@babel/preset-env": "^7.13.15", 내 환경에 맞게 바꿔주는 것
+       "@babel/preset-react": "^7.13.13", jsx를 바꿔주는 것
+       "babel-loader": "^8.2.2", babel과 webpack을 연결하는것
+
+   -->
+</body>
+</html>

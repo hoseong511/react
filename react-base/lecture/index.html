@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div> 
+  <!-- 결과: <div id="root"><button>Like</button></div> -->
+  <script type="text/babel">
+  // 바벨을 이용하자. 단 열었던 태그는 잘 닫아줘야 작동된다.
+    const e = React.createElement;
+    class LikeButton extends React.Component {
+      constructor(props){
+        super(props);
+        this.state = {
+          liked: false,
+        }
+      }
+      render() { // e(....) 이렇게 쓰는 이전에서 XML형식으로 바뀜! 대신 Babel을 사용해야함
+        return <button type='submit' onClick= {() => {console.log('clicked'); this.setState({ liked: true })}}  >
+                  { this.state.liked === true ? "Liked" : 'Like'}
+               </button>
+        // 태그를 만들겠다의 의미.
+      }
+    }
+    // 바뀔 여지가 있는 부분을 상태(state)라고 한다.
+  </script>
+  <script type="text/babel">
+    ReactDOM.render(
+      <>
+        반복되는 버튼을 수정하려고 하면?
+        <br />
+        <button>liked</button>
+        <button>liked</button>
+        <button>liked</button>
+        <button>liked</button>
+        <br />
+        컴포넌트 이용한 버튼을 수정하려고 하면?
+        <br />
+        <LikeButton />
+        <LikeButton />
+        <LikeButton />
+        <LikeButton />
+        <br />        
+        만들어진 컴포넌트를 손쉽게 이용할 수 있다.
+        <br/>
+        
+        
+      </>, 
+      document.querySelector('#root')); // 이런 원리로 작동됨
+  </script>
+</body>
+</html>
