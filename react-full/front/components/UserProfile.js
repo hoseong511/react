@@ -6,7 +6,7 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const onLogOut = useCallback(() => {
     dispatch(logoutAction())
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
   }, []);
   return (
     <Card

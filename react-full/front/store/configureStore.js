@@ -6,10 +6,11 @@ import reducer from '../reducers'
 // 리덕스나 몹엑스로 비동기처리를 한다. 
 const configureStore = () => {
   const store = createStore(reducer);
+  return store;
 };
 
 const wrapper = createWrapper(configureStore, {
   debug: process.env.NODE_ENV === 'development',
 });
 
-export default configureStore;
+export default wrapper;

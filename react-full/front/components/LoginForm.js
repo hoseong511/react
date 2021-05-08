@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import useInput from '../hooks/useInput';
 import { useDispatch } from 'react-redux';
 
@@ -24,7 +23,7 @@ const LoginForm = () => {
   const onSubmitForm = useCallback(() => {
     console.log(id, password);
     dispatch(loginAction({ id, password }))
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
   },[id, password]);
 
   //useMemo를 이용한 스타일

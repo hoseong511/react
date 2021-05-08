@@ -1,3 +1,5 @@
+import { HYDRATE } from 'next-redux-wrapper'
+
 const initialState = {
   user: {
     isLogin: false,
@@ -38,7 +40,10 @@ changeNickname('hoyq'); // 이런식으로 이용하자-> 바뀐 내용을  disp
 
 // (이전상태, 액션) => 다음상태를 만드는 reducer!
 const rootReducer = (state = initialState, action) => {
-  switch (applicationCache.type) {
+  switch (action.type) {
+    case HYDRATE:
+      console.log(HYDRATE, action);
+      return { ...state, ...action.payload};
     case 'CHANGE_NICKNAME':
       return {
         ...state,
@@ -62,6 +67,8 @@ const rootReducer = (state = initialState, action) => {
           user: null,
         }
       }
+    default:
+      return state;
   }
 };
 
