@@ -57,7 +57,7 @@ const AppLayout = ({ children }) => {
     <>
       <Row gutter={8}>
         <Col xs={6} md={6}>
-          <div style={{ width: 280 }}>
+          <div>
             <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
               {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
             </Button>

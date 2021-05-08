@@ -12,7 +12,7 @@ const ButtonWrapper = styled.div`
 
 const FormWrapper = styled(Form)`
   padding: 10px;
-`
+`// styled컴포넌트를 ssr에 설정을 해놓지 않아서 처음 화면에서는 적용되지 않은 상태로 보여진다
 
 const LoginForm = () => {
   const dispatch = useDispatch();
