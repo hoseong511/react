@@ -11,6 +11,7 @@ import {
   UserOutlined,
   SettingOutlined
 } from '@ant-design/icons';
+import { useSelector } from 'react-redux'; // react랑 redux를 연결
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
@@ -22,7 +23,8 @@ verticalAlign:middle;
 `;
 // 모바일 먼저 디자인해야 한다. 그다음 데탑!
 const AppLayout = ({ children }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const isLogin = useSelector((state) => state.user.isLogin);
+
   const [collapsed, setCollapsed] = useState(false);
 
   const style_a = useMemo(() => ({ 'text-align':'center'}))
@@ -93,7 +95,7 @@ const AppLayout = ({ children }) => {
           {children}
         </Col>
         <Col xs={0} md={6}>
-          {isLogin ? <UserProfile setIsLoggedIn={setIsLogin}/> : <LoginForm setIsLoggedIn={setIsLogin}/>}
+          {isLogin ? <UserProfile /> : <LoginForm />}
         </Col>
       </Row>
     </>
