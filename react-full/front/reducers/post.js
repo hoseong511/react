@@ -40,9 +40,9 @@ const dummyPost = { // 데이터를 구성한 후 화면??
   User: {
     id: 1,
     nickname: 'hoho', 
-    Images: [],
-    Comments: [], 
   },
+  Images: [],
+  Comments: [], 
 
 }
 
