@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { Menu, Input, Row, Col, Button } from 'antd';
 import {
   HomeOutlined,
@@ -16,8 +16,23 @@ import { useSelector } from 'react-redux'; // react랑 redux를 연결
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 
-// 리렌더링을 방지하기 위해서 인라인 스타일을 사용하지 않는다. -> styled를 사용해서 스타일을 이용
-// 리렌더링은 바뀌는 부분만 다시 렌더링되는것 헷갈리지 말자.!
+const Global = createGlobalStyle`
+  .ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .ant-col:first-child {
+    padding-left: 0 !important;
+  }
+
+  .ant-col:last-child {
+    padding-right: 0 !important;
+  }
+`; /**
+ * 이런식으로 Global에 담아서 고유한 css를 수정하는 방법도 있다.
+ */
+
 const SearchInput = styled(Input.Search)`
 verticalAlign:middle;
 `;
@@ -55,6 +70,7 @@ const AppLayout = ({ children }) => {
 
   return (
     <>
+    <Global />
       <Row gutter={8}>
         <Col xs={6} md={6}>
           <div>
