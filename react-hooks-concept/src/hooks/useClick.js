@@ -5,8 +5,10 @@ const useClick = (func) => {
   useEffect(() => {
     if (element.current) {
       element.current.addEventListener("click", func);
+      console.log(element.current.textContent);
     }
     return () => {
+      console.log('unmount');
       if (element.current) {
         element.current.removeEventListener("click", func);
       }

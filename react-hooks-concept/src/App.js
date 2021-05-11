@@ -6,6 +6,7 @@ import { useTabs, content } from "./useTabs";
 import usePreventLeave from './hooks/usePreventLeave';
 import useConfirm from './hooks/useConfirm';
 import useClick from './hooks/useClick';
+import useBeforeLeave from './hooks/useBeforeLeave';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
@@ -53,17 +54,21 @@ const App = () => {
   const el = document.querySelector('h1');
   const sayHello = () => console.log(el); // 기존: console.log(el.textContent); 수정: .log(el); 실행을 하니 먼저 마운트된 컴포넌트가 해제되지 않아서 두가지가 동시에 실행되는 것을 확인할 수 있다.
   const htitle = useClick(sayHello);
+  // 여기에서 리액트 lifecycle에 대해서 다시 생각해볼 수 있다. 1. render 2. update  즉 컴포넌트가 업데이트가 되고 나서 다시 render가 되므로 el은 비워져 있는 것, 그래서 useRef를 사용하는구나
 
   const { enablePrevent, disablePrevent } = usePreventLeave();
   const deleteWorld = () => console.log("delete the world");
   const abort = () => console.log('aborted')
   const confirmDelete = useConfirm('Are you sure?',deleteWorld, abort);
+
+  const leave = () => alert('dont leave~~');
+  useBeforeLeave(leave);
   return (
     <div className="App">
-      change title!
+      change screen!
       <br />
       <button onClick={onChangetitle} >화면 바꾸기</button>
-      { changeScreen 
+      { !changeScreen 
           ? <>
               <br />
               <br />
@@ -87,7 +92,7 @@ const App = () => {
             </>
           : <> 
               <br/>
-              loading...
+              hello!
             </>
       }
       
