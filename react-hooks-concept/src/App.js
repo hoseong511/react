@@ -8,6 +8,7 @@ import useConfirm from './hooks/useConfirm';
 import useClick from './hooks/useClick';
 import useBeforeLeave from './hooks/useBeforeLeave';
 import useFadeIn from './hooks/useFadeIn';
+import useNetwork from './hooks/useNetwork';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
@@ -66,6 +67,9 @@ const App = () => {
   useBeforeLeave(leave);
   const fadeInText = useFadeIn(1, 2);
   const fadeInText2 = useFadeIn(3, 1);
+
+  const onLineHandle = (online) => console.log(online?"we are ready to running a function":"off.. we need on");
+  const online = useNetwork(onLineHandle);
   return (
     <div className="App">
       change screen!
@@ -98,6 +102,7 @@ const App = () => {
               hello!
             </>
       }
+      <div>{online ? 'onLine!' : 'offline'}</div>
       
     </div>
   )
