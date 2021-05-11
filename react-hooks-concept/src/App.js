@@ -7,6 +7,7 @@ import usePreventLeave from './hooks/usePreventLeave';
 import useConfirm from './hooks/useConfirm';
 import useClick from './hooks/useClick';
 import useBeforeLeave from './hooks/useBeforeLeave';
+import useFadeIn from './hooks/useFadeIn';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
@@ -63,11 +64,13 @@ const App = () => {
 
   const leave = () => alert('dont leave~~');
   useBeforeLeave(leave);
+  const fadeInText = useFadeIn(1, 2);
+  const fadeInText2 = useFadeIn(3, 1);
   return (
     <div className="App">
       change screen!
       <br />
-      <button onClick={onChangetitle} >화면 바꾸기</button>
+      <button {...fadeInText} onClick={onChangetitle} >화면 바꾸기</button>
       { !changeScreen 
           ? <>
               <br />
@@ -82,7 +85,7 @@ const App = () => {
               <br />
               Test usePreventLeave
               <br />
-              <button onClick={enablePrevent}>protect</button>
+              <button {...fadeInText2} onClick={enablePrevent}>protect</button>
               <button onClick={disablePrevent}>unprotect</button>
               <br />
               <br />
