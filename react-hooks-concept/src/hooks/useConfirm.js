@@ -11,7 +11,7 @@ const useConfirm = (message='', onConfirm, onCancel) => {
     return;
   }
   const confirmAction = () => {
-    if (confirm(message)) {
+    if (window.confirm(message)) {
       onConfirm();
     } else {
       onCancel();
@@ -24,7 +24,7 @@ const useConfirm = (message='', onConfirm, onCancel) => {
 const App = () => {
   const deleteWorld = () => console.log("delete the world");
   const abort = () => console.log('aborted')
-  const confirmDelete = useComfirm('Are you sure?',deleteWorld, abort);
+  const confirmDelete = useConfirm('Are you sure?',deleteWorld, abort);
   return (
     <div className="App">
       <button onClick={confirmDelete}>Delete the world</button>

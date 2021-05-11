@@ -8,8 +8,8 @@ const usePreventLeave = () => {
     event.preventDefault();
     event.returnValue =""; // 이 부분이 있어야만 작동한다.
   }
-    const enablePrevent = () => window.addEventListener("beforeunload", listener)
-  const disablePrevent = () =>window.removeEventListener("beforeunload",listener)
+  const enablePrevent = () => window.addEventListener("beforeunload", listener)
+  const disablePrevent = () => window.removeEventListener("beforeunload",listener)
   return {enablePrevent, disablePrevent};
 }
 const App = () => {
