@@ -11,6 +11,7 @@ import useFadeIn from './hooks/useFadeIn';
 import useNetwork from './hooks/useNetwork';
 import useScroll from './hooks/useScroll';
 import useFullscreen from './hooks/useFullscreen';
+import useNotification from './hooks/useNotification';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
@@ -77,8 +78,10 @@ const App = () => {
   
   
   const { element, triggerFull, exitFull, isFull } = useFullscreen();
+
+  const triggerNotif = useNotification("hey! what a nice Code ..! is'n it?", {body: 'wow great~'});
   return (
-    <div className="App" style={{ height: '1000vh' }}>
+    <div className="App" style={{ height: '1000vh', position:'relative' }}>
       change screen!
       <br />
       <button {...fadeInText} onClick={onChangetitle} >화면 바꾸기</button>
@@ -111,7 +114,7 @@ const App = () => {
       }
       <div>{online ? 'onLine!' : 'offline'}</div>
       <br />
-        <h1 style={{ top:0,position: 'fixed', opacity: y > 100 ? `0` : '1', transition: '1s'}}>스크롤해보세요</h1>
+        <h1 style={{ top:50,position: 'fixed', opacity: y > 100 ? `0` : '1', transition: '1s'}}>스크롤해보세요</h1>
       <br />
       <br /> 
       <div ref={element}>
@@ -119,6 +122,10 @@ const App = () => {
         <br />
          {isFull ?  <button onClick={exitFull}>X</button> : <button>이미지를 클릭!</button>}
       </div>
+        <button 
+        onClick={triggerNotif} 
+        style={{ position:'absolute', top: '0', left: '0', backgroundColor: 'royalblue', color: 'white', display: 'block', width: '100px', height: '50px', border: '5px' }}>
+           Notice! </button>
     </div>
   )
 }
