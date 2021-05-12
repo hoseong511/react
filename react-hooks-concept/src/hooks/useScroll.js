@@ -1,5 +1,5 @@
 // 스크롤 변화시 작동시킬 효과를 지정하는 훅
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const useScroll = () => {
   const [ state, setState ] = useState({

@@ -9,6 +9,8 @@ import useClick from './hooks/useClick';
 import useBeforeLeave from './hooks/useBeforeLeave';
 import useFadeIn from './hooks/useFadeIn';
 import useNetwork from './hooks/useNetwork';
+import useScroll from './hooks/useScroll';
+import useFullscreen from './hooks/useFullscreen';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
@@ -70,6 +72,11 @@ const App = () => {
 
   const onLineHandle = (online) => console.log(online?"we are ready to running a function":"off.. we need on");
   const online = useNetwork(onLineHandle);
+
+  const { y } = useScroll();
+  
+  
+  const { element, triggerFull, exitFull, isFull } = useFullscreen();
   return (
     <div className="App" style={{ height: '1000vh' }}>
       change screen!
@@ -104,9 +111,13 @@ const App = () => {
       }
       <div>{online ? 'onLine!' : 'offline'}</div>
       <br />
+        <h1 style={{ top:0,position: 'fixed', opacity: y > 100 ? `0` : '1', transition: '1s'}}>스크롤해보세요</h1>
       <br />
-      <div>
-        <h1 style={{ position: 'fixed', color: y > 100 ? 'blue' : 'red'}}>스크롤해보세요</h1>
+      <br /> 
+      <div ref={element}>
+        <img onClick={triggerFull} style={{ width: '50%'}}src="https://images.pexels.com/photos/7624265/pexels-photo-7624265.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" />
+        <br />
+         {isFull ?  <button onClick={exitFull}>X</button> : <button>이미지를 클릭!</button>}
       </div>
     </div>
   )
