@@ -71,7 +71,7 @@ const App = () => {
   const onLineHandle = (online) => console.log(online?"we are ready to running a function":"off.. we need on");
   const online = useNetwork(onLineHandle);
   return (
-    <div className="App">
+    <div className="App" style={{ height: '1000vh' }}>
       change screen!
       <br />
       <button {...fadeInText} onClick={onChangetitle} >화면 바꾸기</button>
@@ -103,7 +103,11 @@ const App = () => {
             </>
       }
       <div>{online ? 'onLine!' : 'offline'}</div>
-      
+      <br />
+      <br />
+      <div>
+        <h1 style={{ position: 'fixed', color: y > 100 ? 'blue' : 'red'}}>스크롤해보세요</h1>
+      </div>
     </div>
   )
 }
