@@ -12,6 +12,7 @@ import useNetwork from './hooks/useNetwork';
 import useScroll from './hooks/useScroll';
 import useFullscreen from './hooks/useFullscreen';
 import useNotification from './hooks/useNotification';
+import useAxios from './useAxios';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
@@ -80,6 +81,10 @@ const App = () => {
   const { element, triggerFull, exitFull, isFull } = useFullscreen();
 
   const triggerNotif = useNotification("hey! what a nice Code ..! is'n it?", {body: 'wow great~'});
+
+  const { loading, data, error, refetch } = useAxios({
+    url: "https://yts-proxy.now.sh/list_movies.json"
+  });
   return (
     <div className="App" style={{ height: '1000vh', position:'relative' }}>
       change screen!
@@ -123,9 +128,15 @@ const App = () => {
          {isFull ?  <button onClick={exitFull}>X</button> : <button>이미지를 클릭!</button>}
       </div>
         <button 
-        onClick={triggerNotif} 
-        style={{ position:'absolute', top: '0', left: '0', backgroundColor: 'royalblue', color: 'white', display: 'block', width: '100px', height: '50px', border: '5px' }}>
-           Notice! </button>
+          onClick={triggerNotif} 
+          style={{ position:'absolute', top: '0', left: '0', backgroundColor: 'royalblue', color: 'white', display: 'block', width: '100px', height: '50px', border: '2px solid #333', borderRadius: '4px' }}>
+            Notice! 
+        </button> 
+        <button onClick={refetch}> refetch </button>
+        <div>
+          {loading ? <h1>Loading...</h1> : data && <h2>{JSON.stringify(data)} ok!</h2>}
+        </div>
+
     </div>
   )
 }
