@@ -7,6 +7,7 @@
   <title>Document</title>
   <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -29,39 +30,37 @@
   </style>
 </head>
 <body>
-  <div id="root">
-  </div>
-  <button id="btn_plus">+</button>
+  <div id="root"></div>
+  <!-- <button id="btn_plus">+</button> -->
 
-  <script type="text/javascript">
-    // console.log(React);
-    // console.log(ReactDOM);
-    // const root = document.querySelector('#root')
-    // const btn_plus = document.querySelector('#btn_plus');
+  <script type="text/babel">
+    console.log(React);
+    console.log(ReactDOM);
 
-    // let i = 0;
 
-    // root.innerHTML = '<p>init : 0</p>';
-
-    // btn_plus.addEventListener('click', (e) => root.innerHTML = `<p>init : ${++i}</p>`);
-
-    const component= {
-      message: 'init',
-      count: 0,
-      render() {
-        return `<p>${this.message} : ${this.count}</p>`;
-      }
-    };
-    function r(rootElement, component) {
-      rootElement.innerHTML = component.render();
+      /*createElement( a, {b:c}, d) => <a b={c}>d</a>  이런형태*/
+    const Abc = () => {
+      return (
+        <>
+          hello
+        </>
+      )
     }
-    r(document.querySelector('#root'), component); // 초기화
 
-    document.querySelector('#btn_plus').addEventListener('click', () => {
-      component.message = 'update';
-      component.count += 1;
-      r(document.querySelector('#root'), component )
-    })
+    class ClassComponent extends React.Component {
+      render (){
+        return(
+            <div>
+            111helloasdasd
+            </div>
+        )
+      }        
+    }   
+    
+  </script>
+  <script type="text/babel">
+    ReactDOM.render(<Abc />, document.querySelector('#root') )
+
   </script>
   
 </body>
