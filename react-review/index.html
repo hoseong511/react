@@ -50,56 +50,107 @@
     //   message: 'defaultProps를 이용한 형태'
     // }
 
-    class ClassComponent extends React.Component {
-      state = {
-        age: 39,
-      }
-      interval = null;
-      constructor(props){
-        super(props);
-        console.log('constructor', props);
-      }
-      render (){
-        return(
-          <>
-            <h1>
-              Hello {this.props.name} - {this.state.age}
-            </h1>
-          </>
-        )
-      } 
-      componentWillMount() {
-        console.log('componentWillMount');
-      }       
-      componentDidMount() {
-        console.log('componentDidMount');
+    // class ClassComponent extends React.Component {
+    //   state = {
+    //     age: 39,
+    //   }
+    //   interval = null;
+    //   constructor(props){
+    //     super(props);
+    //     console.log('constructor', props);
+    //   }
+    //   render (){
+    //     return(
+    //       <>
+    //         <h1>
+    //           Hello {this.props.name} - {this.state.age}
+    //         </h1>
+    //       </>
+    //     )
+    //   } 
+    //   componentWillMount() {
+    //     console.log('componentWillMount');
+    //   }       
+    //   static getDerivedStateFromProps(nextProps, prevstate) {
+    //     // props에 의존하는 state인 경우?
+    //     return {
+    //       age: 22
+    //     };
+    //   }
+    //   componentDidMount() {
+    //     console.log('componentDidMount');
 
-        this.interval = setInterval(() => {
-          console.log('setInterval');
-          this.setState(prev => ({...prev, age: prev.age+1}))
+    //     this.interval = setInterval(() => {
+    //       console.log('setInterval');
+    //       this.setState(prev => ({...prev, age: prev.age+1}))
+    //     }, 2000)
+    //   }
+    //   componentWillReceiveProps(nextProps) {
+    //     console.log('componentWillReceiveProps',nextProps);
+    //   }
+    //   shouldComponentUpdate(nextProps, nextState) {
+    //     console.log("shouldComponentUpdate", nextProps);
+    //     return true;
+    //   } 
+    //   componentWillUpdate(nextProps, nextState) {
+    //     console.log('componentWillupdate', nextProps, nextState);
+    //   }      
+    //   componentDidUpdate(prevProps, prevState) {
+    //     console.log('componentDidupdate', prevProps, prevState);
+    //   }    
+    //   componentWillUnmout() {
+    //     clearInterval(interval);
+    //   }  
+    // }  
+    let i =0
+    class App extends React.Component {
+      state = { 
+        list: [],
+        hasError: false,
+      };
+      render (){
+        if (this.state.hasError) {
+          return <div>에러 발생 </div>
+        } // Error Boundaries -> 미들웨어 역할
+        return (
+          <div id="list" style={{ height: 100, overflow: 'scroll'}}>
+            {this.state.list.map((i) => {
+              return <h1>{i}</h1>
+            })}  
+          </div>
+        )
+      }
+
+      componentDidMount() {
+        setInterval(() => {
+          this.setState((prev) => ({
+            list: [...prev.list, i++]
+          }))
         }, 2000)
       }
-      componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps',nextProps);
+
+      getSnapshotBeforeUpdate(prevProps, prevState) {
+        if (prevState.list.length === this.state.list.length) return;
+        const list = document.querySelector('#list');
+        return list.scrollHeight - list.scrollTop;
       }
-      shouldComponentUpdate(nextProps, nextState) {
-        console.log("shouldComponentUpdate", nextProps);
-        return true;
-      } 
-      componentWillUpdate(nextProps, nextState) {
-        console.log('componentWillupdate', nextProps, nextState);
-      }      
-      componentDidUpdate(prevProps, prevState) {
-        console.log('componentDidupdate', prevProps, prevState);
-      }    
-      componentWillUnmout() {
-        clearInterval(interval);
-      }  
-    }   
+      componentDidUpdate(prevProps, prevState, snapshot) {
+        
+        if (snapshot === null ) return;
+        const list = document.querySelector('#list');
+        console.log(list.scrollTop, snapshot);
+        list.scrollTop = list.scrollHeight - snapshot
+        console.log(list.scrollTop, snapshot);
+      }
+
+      componentDidCatch(error, info) {
+        this.setState({ hasError: true });
+      }
+    } 
   </script>
   
   <script type="text/babel">
-    ReactDOM.render(<ClassComponent name="hihi"/>, document.querySelector('#root') )
+    ReactDOM.render(<App name="hihi"/>, document.querySelector('#root') )
 
   </script>
   
