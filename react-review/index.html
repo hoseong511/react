@@ -51,61 +51,55 @@
     // }
 
     class ClassComponent extends React.Component {
+      state = {
+        age: 39,
+      }
+      interval = null;
       constructor(props){
         super(props);
-        this.state = {
-          count: 0
-        }
-
+        console.log('constructor', props);
       }
-
       render (){
-        const {count} = this.state
-        const onClickPlus = (e) => {
-          console.log(e);
-          this.setState((prev) => ({
-            ...prev,
-            count: prev.count + 1
-          })
-          )
-        }
-        const onClickMinus = (e) => {
-          this.setState((prev) => ({
-            ...prev,
-            count: prev.count - 1
-          }))
-        }
         return(
           <>
             <h1>
-              {count}
+              Hello {this.props.name} - {this.state.age}
             </h1>
-            <button onClick={onClickPlus}>증가</button>
-            &nbsp;
-            <button onClick={onClickMinus}>감소</button>
           </>
         )
-      }        
+      } 
+      componentWillMount() {
+        console.log('componentWillMount');
+      }       
       componentDidMount() {
-        setTimeout(() => {
-          // this.setState({
-          //   count: this.state.count+1
-          // })
-          this.setState((previousState)=> {
-            const newState =  {count: previousState.count + 1}
-            return newState
-          })
-        }, 1000)
-        
-      }
-    }   
-  
+        console.log('componentDidMount');
 
+        this.interval = setInterval(() => {
+          console.log('setInterval');
+          this.setState(prev => ({...prev, age: prev.age+1}))
+        }, 2000)
+      }
+      componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps',nextProps);
+      }
+      shouldComponentUpdate(nextProps, nextState) {
+        console.log("shouldComponentUpdate", nextProps);
+        return true;
+      } 
+      componentWillUpdate(nextProps, nextState) {
+        console.log('componentWillupdate', nextProps, nextState);
+      }      
+      componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidupdate', prevProps, prevState);
+      }    
+      componentWillUnmout() {
+        clearInterval(interval);
+      }  
+    }   
   </script>
   
   <script type="text/babel">
-  // <Abc></Abc> => <Abc />
-    ReactDOM.render(<ClassComponent  />, document.querySelector('#root') )
+    ReactDOM.render(<ClassComponent name="hihi"/>, document.querySelector('#root') )
 
   </script>
   
