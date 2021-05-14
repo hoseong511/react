@@ -40,26 +40,35 @@
 
       /*createElement( a, {b:c}, d) => <a b={c}>d</a>  이런형태*/
     const Abc = () => {
-      return (
-        <>
-          hello
-        </>
+      return React.createElement(
+        'h1',
+        null,
+        'type이 react 컴포넌트이다.'
       )
     }
 
-    class ClassComponent extends React.Component {
-      render (){
-        return(
-            <div>
-            111helloasdasd
-            </div>
-        )
-      }        
-    }   
-    
+    // class ClassComponent extends React.Component {
+    //   render (){
+    //     return(
+    //         <div>
+    //         111helloasdasd
+    //         </div>
+    //     )
+    //   }        
+    // }   
+  /*
+  1. React.createElement(태그이름, props, 내용) -> 태그 문자열 type
+  2. React 컴포넌트 형 type
+  3. React.Fragment type -> 여러 내용을 담을 때??
+  4. 복잡한 React element  -> 여러 컴포넌트를 담는 경우?
+  */
+
   </script>
+  
   <script type="text/babel">
-    ReactDOM.render(<Abc />, document.querySelector('#root') )
+  // <Abc></Abc> => <Abc />
+    ReactDOM.render(
+      React.createElement(Abc, null), document.querySelector('#root') )
 
   </script>
   
