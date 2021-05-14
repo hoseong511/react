@@ -1,0 +1,43 @@
+{
+  "name": "react-redux",
+  "version": "1.0.0",
+  "description": "- No create-react-app version ([ gugudan ](https://hoseong511.github.io/react-redux/react-base/gugudan/))\r - No create-react-app version ([ kketmalitki ](https://hoseong511.github.io/react-redux/react-base/kketmalitki-hooks/))\r - No create-react-app version ([ numberBaseBall ](https://hoseong511.github.io/react-redux/react-base/baseball/))\r - No create-react-app version ([ rock scissor paper ](https://hoseong511.github.io/react-redux/react-base/rsp/))\r - No create-react-app version ([ response check ](https://hoseong511.github.io/react-redux/react-base/response/))\r - No create-react-app version ([ lotto ](https://hoseong511.github.io/react-redux/react-base/lotto/))\r - No create-react-app version ([ tictactoe ](https://hoseong511.github.io/react-redux/react-base/tictactoc/))\r - No create-react-app version ([ mine search ](https://hoseong511.github.io/react-redux/react-base/mine/))",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "eslintConfig": {
+   
+    "rules": {
+      "semi": [
+        "error",
+        "always"
+      ]
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoseong511/react-redux.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoseong511/react-redux/issues"
+  },
+  "homepage": "https://github.com/hoseong511/react-redux#readme",
+  "devDependencies": {
+    "eslint": "^7.26.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0"
+  }
+}
