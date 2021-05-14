@@ -81,9 +81,18 @@ const Mylayout = ({ children }) => {
         </div>
       </Header>
     <Content className="site-layout">
-      <div className="site-layout-background">
-          {children}    
-      </div>
+      <Row>
+        <Col xs={0} md={6}>
+        </Col>
+        <Col xs={24} md={12}>
+          <div className="site-layout-background">
+              {children}    
+          </div>
+        </Col>
+        <Col xs={0} md={6}>
+        </Col>
+      </Row>
+      
 
   </Content>
   <Footer style={{ textAlign: 'center' }}>Toy ©2021 Created by Ho</Footer>
