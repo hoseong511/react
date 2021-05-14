@@ -53,9 +53,11 @@ const Mylayout = ({ children }) => {
                   <Menu.Item key="home"  >
                     <Link href='/'><a>Home</a></Link>
                   </Menu.Item>
-                  <Menu.Item key="profile"  >
-                    <Link href="/profile"><a>My profile</a></Link>
-                  </Menu.Item>
+                  {isLogin && 
+                    <Menu.Item key="profile"  >
+                      <Link href="/profile"><a>My profile</a></Link>
+                    </Menu.Item>
+                  }
                   {isLogin || 
                     <Menu.Item key="signup"  >
                       <Link href="/signup"><a>signUp</a></Link>
