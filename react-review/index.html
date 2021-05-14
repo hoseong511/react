@@ -48,18 +48,37 @@
     }
 
     class ClassComponent extends React.Component {
+      constructor(props){
+        super(props)
+        this.state = {
+          aa: '123123123',
+          bu: 'hey'
+        }
+      }
       render (){
+        const { aa } = this.state
+        let count = 0
+        const onClickHi = (e) => {
+          console.log(e.target);
+        }
+
         return(
-            <div>
-            111helloasdasd
-            </div>
+            // <div>
+            // 111helloasdasd
+            // </div>
+              <>
+               <div className="hi" onClick={onClickHi}>
+                 <div>hihi{aa}</div>
+               </div>
+              </>
+            
         )
       }        
     }   
     
   </script>
   <script type="text/babel">
-    ReactDOM.render(<Abc />, document.querySelector('#root') )
+    ReactDOM.render(<ClassComponent />, document.querySelector('#root') )
 
   </script>
   

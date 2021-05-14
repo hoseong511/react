@@ -1,10 +1,10 @@
-const path = require('path');//경로 조작
-const webpack  = require('webpack');
-
+const path = require('path');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+// process.env.NODE_ENV = 'production'; // 실서비스
 module.exports = {
-  name: 'gugudan',
-  mode: 'production', // 실서비스: production
-  devtool: 'hidden-source-map', // 실서비스: hidden-source-map
+  name: 'baseball',
+  mode: 'development', // 실서비스: production
+  devtool: 'eval', // 실서비스: hidden-source-map
   resolve: {
     extensions: ['.js', '.jsx'] // 확장자를 찾아주는 기능 entry 부분에 확장자를 입력하지 않아도 된다.
   },
@@ -29,19 +29,23 @@ module.exports = {
             debug: true,
           }],
            '@babel/preset-react'],
-        plugins: ['@babel/plugin-proposal-class-properties']
+        plugins: ['react-refresh/babel','@babel/plugin-proposal-class-properties']
       },
     }]
   }, // webpack 공식문서를 확인해보기
   
-  plugins: [ // 일부러 플러그인을 빼보면서 에러메시지를 확인해보기
-
+  plugins: [ 
+    new ReactRefreshWebpackPlugin(),
   ],
   output: {  // 출력
     path: path.join(__dirname, 'dist'), // C:\users\...를 만들어주는 기능이다.
     filename: 'app.js'
-  }
+  },
+  devServer: {   
+    //   // contentBase: './',
+      publicPath: '/dist',
+      hot: true ,   
+      port: 8082
+    }
+  
 };
-// entry -> module -> plugins -> output
-
-// 여기서 터미널에 webpack을 입력하면 알아서 app.js가 만들어진다.

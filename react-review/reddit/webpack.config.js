@@ -32,8 +32,8 @@ module.exports = {
         plugins: ['react-refresh/babel']
       },
     }, {
-      test: /\.css$/i,
-      use: ["style-loader", "css-loader"]
+      test: /\.s?css$/i,
+      use: ["style-loader", "css-loader", "sass-loader"]
     }]
   }, // webpack 공식문서를 확인해보기
   

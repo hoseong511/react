@@ -1,5 +1,16 @@
-.logo {
+.inner {
   color: white;
+  font-size: larger;
+  & .logo {
+    color: white;
+    & img {
+      height: 22px;
+    }
+  }
+  & .ant-dropdown-link {
+    position: absolute;
+    right: 5px;
+  }
 
 }
 

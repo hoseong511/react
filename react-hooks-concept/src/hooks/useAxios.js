@@ -10,10 +10,12 @@ const useAxios = (opts, axiosInstance = defaultAxios) => {
   });
 
   const [trigger, setTrigger] = useState(false);
+
   const refetch = () => {
     setState({ ...state, loading: true });
     setTrigger(Date.now());
   }
+
   useEffect(() => {
     axiosInstance(opts)
     .then(data => {

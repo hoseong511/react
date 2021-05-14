@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component, useState, useEffect, useRef, useCallback } from 'react';
-import { useInput } from "./useInput"
-import { useTabs, content } from "./useTabs";
+// import { useInput } from "./hooks/useInput"
+// import { useTabs, content } from "./useTabs";
 import usePreventLeave from './hooks/usePreventLeave';
 import useConfirm from './hooks/useConfirm';
 import useClick from './hooks/useClick';
@@ -12,7 +12,7 @@ import useNetwork from './hooks/useNetwork';
 import useScroll from './hooks/useScroll';
 import useFullscreen from './hooks/useFullscreen';
 import useNotification from './hooks/useNotification';
-import useAxios from './useAxios';
+import useAxios from './hooks/useAxios';
 
 const useTitle = initialTitle => {
   const [title, setTitle ] = useState(initialTitle);
