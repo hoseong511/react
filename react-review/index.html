@@ -39,46 +39,73 @@
 
 
       /*createElement( a, {b:c}, d) => <a b={c}>d</a>  이런형태*/
-    const Abc = () => {
-      return (
-        <>
-          hello
-        </>
-      )
-    }
+    // const Abc = ({message}) => {
+    //   return (
+    //     <>
+    //       <h1>{message}</h1>
+    //     </>
+    //   )
+    // }
+    // Abc.defaultProps = {
+    //   message: 'defaultProps를 이용한 형태'
+    // }
 
     class ClassComponent extends React.Component {
       constructor(props){
-        super(props)
+        super(props);
         this.state = {
-          aa: '123123123',
-          bu: 'hey'
-        }
-      }
-      render (){
-        const { aa } = this.state
-        let count = 0
-        const onClickHi = (e) => {
-          console.log(e.target);
+          count: 0
         }
 
+      }
+
+      render (){
+        const {count} = this.state
+        const onClickPlus = (e) => {
+          console.log(e);
+          this.setState((prev) => ({
+            ...prev,
+            count: prev.count + 1
+          })
+          )
+        }
+        const onClickMinus = (e) => {
+          this.setState((prev) => ({
+            ...prev,
+            count: prev.count - 1
+          }))
+        }
         return(
-            // <div>
-            // 111helloasdasd
-            // </div>
-              <>
-               <div className="hi" onClick={onClickHi}>
-                 <div>hihi{aa}</div>
-               </div>
-              </>
-            
+          <>
+            <h1>
+              {count}
+            </h1>
+            <button onClick={onClickPlus}>증가</button>
+            &nbsp;
+            <button onClick={onClickMinus}>감소</button>
+          </>
         )
       }        
+      componentDidMount() {
+        setTimeout(() => {
+          // this.setState({
+          //   count: this.state.count+1
+          // })
+          this.setState((previousState)=> {
+            const newState =  {count: previousState.count + 1}
+            return newState
+          })
+        }, 1000)
+        
+      }
     }   
-    
+  
+
   </script>
+  
   <script type="text/babel">
-    ReactDOM.render(<ClassComponent />, document.querySelector('#root') )
+  // <Abc></Abc> => <Abc />
+    ReactDOM.render(<ClassComponent  />, document.querySelector('#root') )
 
   </script>
   
