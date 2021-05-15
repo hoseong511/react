@@ -11,6 +11,11 @@ export default function NavLinks() {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/login" activeStyle={activeStyle}>
+          Login
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/profile" exact activeStyle={activeStyle}>
           Profile
         </NavLink>
