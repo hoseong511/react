@@ -8,5 +8,9 @@ export default function About(props) {
 
   const query = queryString.parse(searchParams);
   console.log(query);
-  return <div>{query.name && <h2>쿼리스트링 -&gt; {query.name}</h2>}</div>;
+  return (
+    <div>
+      {query.name ? <h2>쿼리스트링 -&gt; {query.name}</h2> : <h1>야호</h1>}
+    </div>
+  );
 }
