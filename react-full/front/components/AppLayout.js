@@ -2,14 +2,7 @@ import React, { useCallback, useMemo, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Menu, Input, Row, Col, Button, Content,Layout } from 'antd';
-import {
-  HomeOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  SearchOutlined,
-  UserOutlined,
-  SettingOutlined
-} from '@ant-design/icons';
+
 import { useSelector } from 'react-redux'; // react랑 redux를 연결
 
 import Mylayout from './MyLayout';

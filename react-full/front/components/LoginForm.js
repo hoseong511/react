@@ -6,6 +6,7 @@ import useInput from '../hooks/useInput';
 import { useDispatch } from 'react-redux';
 
 import { loginAction } from '../reducers/user';
+
 const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
@@ -22,7 +23,8 @@ const LoginForm = () => {
 // NEXT.js에 onFinish 기능에는 e.preventdefault가 내장 되어 있다.
   const onSubmitForm = useCallback(() => {
     console.log(id, password);
-    dispatch(loginAction({ id, password }))
+    dispatch(loginAction({ id, password }));
+    
     // setIsLoggedIn(true);
   },[id, password]);
 

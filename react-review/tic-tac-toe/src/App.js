@@ -8,7 +8,7 @@ import NavLinks from "./components/NavLinks";
 import Login from "./pages/Login";
 
 import styles from "./App.module.css"; // module.css를 이용해서 컴포넌트 하나 당 독립적인 css를 적용할 수 있도록 설정한다.
-import logo from "./logo.svg";
+import logo2 from "./sun.svg";
 import Button from "./components/Button";
 
 const isLogin = false;
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className={styles["App"]}>
       <header className={styles["header"]}>
-        <img src={logo} className={styles["logo"]} alt="logo" />
+        <img src={logo2} className={styles["logo"]} alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>

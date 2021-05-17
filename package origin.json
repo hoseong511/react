@@ -16,6 +16,13 @@
       ]
     }
   },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hoseong511/react-redux.git"
