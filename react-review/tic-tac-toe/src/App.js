@@ -10,12 +10,48 @@ import Login from "./pages/Login";
 import styles from "./App.module.css"; // module.css를 이용해서 컴포넌트 하나 당 독립적인 css를 적용할 수 있도록 설정한다.
 import logo2 from "./sun.svg";
 import Button from "./components/Button";
+import StyledButton from "./components/StyledButton";
+import styled, { createGlobalStyle } from 'styled-components';
+import StyledA from "./components/StyledA";
+const PrimaryStyledButton = styled(StyledButton)`
+  background: royalblue;
+  color: white;
+  `;
+
+const UppercaseButton = props => <button {...props} children={props.children.toUpperCase()}/>; // as 활용하기(컴포넌트 지정)
+
+const MyButton = props => <button {...props} children={`MyButton ${props.children}`} />;
+
+const StyledMyButton = styled(MyButton)`
+  background: transparent;
+  border-radius:3px;
+  color: white;
+  border: 2px solid ${props => props.color || 'white'};
+  margin: 0 1em;
+  padding: 0.25em 1em;
+
+  :hover {
+    border: 2px solid red;
+  }
+
+  ::before {
+    content: '|';
+  }
+`;
+
+const GlobalStyle = createGlobalStyle`
+button {
+  color: yellow;
+  background: black;
+}
+`;
 
 const isLogin = false;
 // 동적 라우팅 -> switch를 이용해서 NotFound(default)페이지 표현하기
 function App() {
   return (
     <div className={styles["App"]}>
+      <GlobalStyle />
       <header className={styles["header"]}>
         <img src={logo2} className={styles["logo"]} alt="logo" />
         <p>
@@ -29,7 +65,15 @@ function App() {
         >
           Learn React
         </a>
+        <button>global</button>
         <Button>Button</Button>
+        <StyledButton>버튼</StyledButton>
+        <StyledButton primary>버튼</StyledButton>
+        <PrimaryStyledButton >버튼</PrimaryStyledButton>
+        <StyledButton as='a' href='/'>버튼</StyledButton>
+        <StyledButton as={UppercaseButton} href='/'>button</StyledButton>
+        <StyledMyButton>button</StyledMyButton>
+        <StyledA href='https://google.com'> 구구구구글</StyledA>
       </header>
       <BrowserRouter>
         <Links />
