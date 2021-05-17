@@ -13,6 +13,10 @@ import Button from "./components/Button";
 import StyledButton from "./components/StyledButton";
 import styled, { createGlobalStyle } from 'styled-components';
 import StyledA from "./components/StyledA";
+
+import root from 'react-shadow'; // module.css, styled-component, shadow 전부 css를 독립적으로 사용하는 기능
+
+
 const PrimaryStyledButton = styled(StyledButton)`
   background: royalblue;
   color: white;
@@ -50,13 +54,17 @@ const isLogin = false;
 // 동적 라우팅 -> switch를 이용해서 NotFound(default)페이지 표현하기
 function App() {
   return (
+    <>
+    <root.div>
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+
+    </root.div>
     <div className={styles["App"]}>
       <GlobalStyle />
       <header className={styles["header"]}>
         <img src={logo2} className={styles["logo"]} alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
         <a
           className={styles["link"]}
           href="https://reactjs.org"
@@ -91,6 +99,7 @@ function App() {
         </Switch>
       </BrowserRouter>
     </div>
+    </>
   );
 }
 
