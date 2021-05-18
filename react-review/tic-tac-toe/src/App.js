@@ -17,6 +17,12 @@ import StyledA from "./components/StyledA";
 import root from 'react-shadow'; // module.css, styled-component, shadow 전부 css를 독립적으로 사용하는 기능
 // import A from "./components/A";
 import A from "./components/ReverseA";
+import { Col, Row } from "antd";
+import "antd/dist/antd.css";
+
+import ContextAPI from "./components/ContextAPI";
+import ContextAPI2 from "./components/ContextAPI2";
+import ContextAPI3 from "./components/ContextAPI3";
 
 
 const PrimaryStyledButton = styled(StyledButton)`
@@ -67,16 +73,21 @@ function App() {
       <GlobalStyle />
       <header className={styles["header"]}>
         <img src={logo2} className={styles["logo"]} alt="logo" />
-        <a
-          className={styles["link"]}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <A />
 
+        <Row >
+          <Col >
+            <A />
+          </Col>
+          <Col >
+            <ContextAPI >consumer를 이용한 방법</ContextAPI>
+          </Col>
+          <Col >
+            <ContextAPI2 >class를 이용한 방법</ContextAPI2>
+          </Col>
+          <Col >
+            <ContextAPI3 >useContext를 이용한 방법</ContextAPI3>
+          </Col>
+        </Row>
         {/* <button>global</button>
         <Button>Button</Button>
         <StyledButton>버튼</StyledButton>
@@ -85,7 +96,7 @@ function App() {
         <StyledButton as='a' href='/'>버튼</StyledButton>
         <StyledButton as={UppercaseButton} href='/'>button</StyledButton>
         <StyledMyButton>button</StyledMyButton>
-        <StyledA href='https://google.com'> 구구구구글</StyledA> */}
+      <StyledA href='https://google.com'> 구구구구글</StyledA> */}
       </header>
       <BrowserRouter>
         <Links />
