@@ -15,6 +15,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import StyledA from "./components/StyledA";
 
 import root from 'react-shadow'; // module.css, styled-component, shadow 전부 css를 독립적으로 사용하는 기능
+// import A from "./components/A";
+import A from "./components/ReverseA";
 
 
 const PrimaryStyledButton = styled(StyledButton)`
@@ -73,7 +75,9 @@ function App() {
         >
           Learn React
         </a>
-        <button>global</button>
+        <A />
+
+        {/* <button>global</button>
         <Button>Button</Button>
         <StyledButton>버튼</StyledButton>
         <StyledButton primary>버튼</StyledButton>
@@ -81,7 +85,7 @@ function App() {
         <StyledButton as='a' href='/'>버튼</StyledButton>
         <StyledButton as={UppercaseButton} href='/'>button</StyledButton>
         <StyledMyButton>button</StyledMyButton>
-        <StyledA href='https://google.com'> 구구구구글</StyledA>
+        <StyledA href='https://google.com'> 구구구구글</StyledA> */}
       </header>
       <BrowserRouter>
         <Links />
