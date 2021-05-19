@@ -20,9 +20,5 @@ export function completeTodo(index) {
   }
 }
 
-export function showAll() {
-  return { type: SHOW_ALL };
-}
-export function showComplete() {
-  return { type: SHOW_COMPLETE };
-}
+export const showAll = () => ({ type: SHOW_ALL });
+export const showComplete = () =>({ type: SHOW_COMPLETE });

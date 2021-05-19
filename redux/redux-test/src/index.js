@@ -1,22 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'antd/dist/antd.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
-import { addTodo, completeTodo, showComplete } from './redux/actions';
+import ReduxContext from './contexts/ReduxContext';
+// import { addTodo, completeTodo, showComplete } from './redux/actions';
 
-const unsubscribe = store.subscribe(() => {
-  console.log(store.getState());
-}); // return 값이 함수가 제거 되는 형태이므로 (unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//   console.log(store.getState());
+// }); 
 
-store.dispatch(addTodo('할일'));
-store.dispatch(completeTodo(0));
-store.dispatch(showComplete());
+// store.dispatch(addTodo('할일'));
+// store.dispatch(completeTodo(0));
+// store.dispatch(showComplete());
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReduxContext.Provider value={store}>
+      <App />
+    </ReduxContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
