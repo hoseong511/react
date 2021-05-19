@@ -3,6 +3,7 @@ import './App.css';
 import {Row, Col} from 'antd';
 import TodoListContainer from './containers/TodoListContainer';
 import TodoFormContainer from './containers/TodoFormContainer';
+import UserListContainer from './containers/UserListContainer';
 
 function App() {
   return (
@@ -10,6 +11,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Row gutter={100}>
+          <Col >
+            <UserListContainer />
+          </Col>
           <Col >
             <TodoListContainer />
           </Col>
