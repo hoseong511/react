@@ -3,6 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from './redux/store';
+import { addTodo } from './redux/actions';
+
+const unsubscribe = store.subscribe(() => {
+  console.log(store.getState());
+}); // return 값이 함수가 제거 되는 형태이므로 (unsubscribe)
+
+store.dispatch(addTodo('coding'));
+store.dispatch(addTodo('coding'));
+store.dispatch(addTodo('coding'));
+unsubscribe();
+store.dispatch(addTodo('coding'));
+store.dispatch(addTodo('coding'));
+console.log(store.getState());
 
 ReactDOM.render(
   <React.StrictMode>
