@@ -1,4 +1,10 @@
 # React 제대로 배워보기
 ## 데모
-<a href="https://hoseong511.github.io/react-redux/react-base/gugudan/">구구단 페이지</a>
-<a href="https://hoseong511.github.io/react-redux/react-base/kketmalitki-hooks/">끝말잇기</a>
+- gugudan ([ demo ](https://hoseong511.github.io/react-redux/react-base/gugudan/))
+- wordRelay ([ demo ](https://hoseong511.github.io/react-redux/react-base/kketmalitki-hooks/))
+- numberBaseball ([ demo ](https://hoseong511.github.io/react-redux/react-base/baseball/))
+- rockScissorPaper ([ demo ](https://hoseong511.github.io/react-redux/react-base/rsp/))
+- responseCheck ([ demo ](https://hoseong511.github.io/react-redux/react-base/response/))
+- lotto ([ demo ](https://hoseong511.github.io/react-redux/react-base/lotto/))
+- ticTacToe ([ demo ](https://hoseong511.github.io/react-redux/react-base/tictactoc/))
+- mineSearch ([ demo ](https://hoseong511.github.io/react-redux/react-base/mine/))
