@@ -2,6 +2,7 @@
   "name": "react-hooks-concept",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://hoseong511.github.io/react-redux/react-hooks-concept",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
