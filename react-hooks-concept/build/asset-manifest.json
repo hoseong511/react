@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-redux/react-hooks-concept/build/static/css/main.9d5b29c0.chunk.css",
+    "main.js": "/react-redux/react-hooks-concept/build/static/js/main.bddc798e.chunk.js",
+    "main.js.map": "/react-redux/react-hooks-concept/build/static/js/main.bddc798e.chunk.js.map",
+    "runtime-main.js": "/react-redux/react-hooks-concept/build/static/js/runtime-main.7fc33e71.js",
+    "runtime-main.js.map": "/react-redux/react-hooks-concept/build/static/js/runtime-main.7fc33e71.js.map",
+    "static/js/2.07f1ba8f.chunk.js": "/react-redux/react-hooks-concept/build/static/js/2.07f1ba8f.chunk.js",
+    "static/js/2.07f1ba8f.chunk.js.map": "/react-redux/react-hooks-concept/build/static/js/2.07f1ba8f.chunk.js.map",
+    "static/js/3.4dd0ea72.chunk.js": "/react-redux/react-hooks-concept/build/static/js/3.4dd0ea72.chunk.js",
+    "static/js/3.4dd0ea72.chunk.js.map": "/react-redux/react-hooks-concept/build/static/js/3.4dd0ea72.chunk.js.map",
+    "index.html": "/react-redux/react-hooks-concept/build/index.html",
+    "static/css/main.9d5b29c0.chunk.css.map": "/react-redux/react-hooks-concept/build/static/css/main.9d5b29c0.chunk.css.map",
+    "static/js/2.07f1ba8f.chunk.js.LICENSE.txt": "/react-redux/react-hooks-concept/build/static/js/2.07f1ba8f.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/react-redux/react-hooks-concept/build/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7fc33e71.js",
+    "static/js/2.07f1ba8f.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.bddc798e.chunk.js"
+  ]
+}
