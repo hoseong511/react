@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const ADD_TODO = "ADD_TODO";
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const SHOW_ALL = 'SHOW_ALL';
@@ -13,3 +15,16 @@ export const showComplete = () =>({ type: SHOW_COMPLETE });
 export const getUsersStart = () => ({ type: GET_USERS_START })
 export const getUsersSuccess = (data) => ({ type: GET_USERS_SUCCESS, data })
 export const getUsersFail = (error) => ({ type: GET_USERS_FAIL, error })
+
+export const getUsersThunk = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(getUsersStart());
+      const res = await axios.get('https://api.github.com/users')
+      dispatch(getUsersSuccess(res.data));
+    } catch (error) {
+      console.error(error);
+      dispatch(getUsersFail(error));
+    }
+  }
+}
