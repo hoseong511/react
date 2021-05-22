@@ -1,6 +1,5 @@
-import { HYDRATE } from 'next-redux-wrapper'
+import { HYDRATE } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
-
 import user from './user';
 import post from './post';
 
@@ -10,13 +9,12 @@ const rootReducer = combineReducers({
     switch (action.type) {
       case HYDRATE: // ssr을 위한 HYDRATE!! 그래서 index에서 선언
         console.log('hydrate-------------------\n', HYDRATE, action);
-        return { ...state, ...action.payload};
+        return { ...state, ...action.payload };
       default:
         return state;
-    } 
+    }
   },
   user,
   post,
 });
-
 export default rootReducer;

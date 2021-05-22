@@ -5,13 +5,17 @@ import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput'; // custom hooks
 import Mylayout from '../components/MyLayout';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpRequestAction } from '../reducers/user'
 
 const ErrorMessage = styled.div`
 color: red; 
 `;
 
 const Signup = () => {
-  const [ id, onChangeId ] = useInput('');
+  const dispatch = useDispatch();
+  const {isSigningUp} = useSelector(state=>state.user)
+  const [ email, onChangeEmail ] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -35,7 +39,7 @@ const Signup = () => {
     if (!term) {
       return setTermError(true);
     }
-    console.log(id, nickname, password);
+    dispatch(signUpRequestAction,{email, nickname, password})
   }, [password, passwordCheck, term]);
 
   return (
@@ -43,11 +47,11 @@ const Signup = () => {
       <Head>
           <title>회원가입 | NodeBird</title>
       </Head>
-      <Form onFinish={onSubmit}>
+      <Form onFinish={onSubmit} >
         <div>
-          <label htmlFor="user-id">아이디</label>
+          <label htmlFor="user-email">이메일</label>
           <br />
-          <Input name="user-id" value={id} required onChange={onChangeId} />
+          <Input name="user-email" type='email' value={email} required onChange={onChangeEmail} />
         </div>
         <div>
           <label htmlFor="user-nick">닉네임</label>
@@ -71,7 +75,7 @@ const Signup = () => {
           </Checkbox>
           {termError && <ErrorMessage>위 사항에 동의하셔야 가입 가능합니다</ErrorMessage>}
           <div style={{ marginTop: 10}}>
-            <Button type="primary" htmlType="submit">가입하기</Button>
+            <Button type="primary" htmlType="submit" loading={isSigningUp}>가입하기</Button>
           </div>
 
         </div>

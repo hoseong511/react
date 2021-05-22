@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Dropdown, Row, Col, Input, Modal, Button } from "antd";
+import { Layout, Menu, Dropdown, Row, Col, Input } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { createGlobalStyle } from "styled-components";
@@ -7,7 +7,6 @@ import { useSelector } from "react-redux"; // react랑 redux를 연결
 import UserProfile from "./UserProfile";
 import styles from "./MyLayout.module.css";
 import PropTypes from 'prop-types'
-import LoginForm from "./LoginForm";
 import LoginButton from "./LoginButton";
 const Global = createGlobalStyle`
   .ant-row {
@@ -26,12 +25,7 @@ const Global = createGlobalStyle`
 
 const Mylayout = ({ children }) => {
   const { Header, Content, Footer } = Layout;
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const [visible, setVisible] = React.useState(false);
-
-  const showModal = () => {
-    setVisible(true);
-  };
+  const me = useSelector((state) => state.user.me);
 
   return (
     <>
@@ -62,9 +56,9 @@ const Mylayout = ({ children }) => {
                   overlay={
                     <Menu>
                       <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
-                      {isLoggedIn && (<Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>)}
-                      {isLoggedIn || (<Menu.Item key="signup"><Link href="/signup"><a>signUp</a></Link></Menu.Item>)}
-                      {isLoggedIn ? (<Menu.Item key="logout"><UserProfile /></Menu.Item>) 
+                      {me && (<Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>)}
+                      {me || (<Menu.Item key="signup"><Link href="/signup"><a>signUp</a></Link></Menu.Item>)}
+                      {me ? (<Menu.Item key="logout"><UserProfile /></Menu.Item>) 
                                   : (
                                   <Menu.Item key="login">
                                     <LoginButton />

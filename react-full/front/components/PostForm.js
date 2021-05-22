@@ -1,22 +1,26 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Button, Form, Input } from "antd";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useInput from "../hooks/useInput";
 import { addPostRequest } from "../reducers/post";
 
 const PostForm = () => {
-  const { imagePaths } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const [text, setText] = useState("");
+  const { imagePaths, postAdded } = useSelector((state) => state.post);
   const imageInput = useRef(); // dom의 요소에 접근하기위한 통로
+  const [text, onChangeText,setText] = useInput("");
+
+  useEffect(() => {
+    if (postAdded) {
+      setText('');
+    }
+  }, [postAdded]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPostRequest());
-    setText("");
-  }, []);
-  const onChangeText = useCallback((e) => {
-    setText(e.target.value);
-  }, []);
+    dispatch(addPostRequest(text));
+  }, [text]);
+  
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);

@@ -37,7 +37,7 @@ export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS'; 
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE'; 
 
-export const signInRequestAction = data => ({ type: SIGN_UP_REQUEST, data });
+export const signUpRequestAction = data => ({ type: SIGN_UP_REQUEST, data });
 export const signOutRequestAction = data => ({ type: SIGN_OUT_REQUEST, data });
 export const loginRequestAction = data => ({ type: LOG_IN_REQUEST, data });
 export const logoutRequestAction = data => ({ type: LOG_OUT_REQUEST, data });
