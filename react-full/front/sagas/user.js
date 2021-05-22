@@ -1,6 +1,6 @@
 import { all, delay, fork, put, takeLatest } from "@redux-saga/core/effects";
 import axios from "axios";
-import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS } from "../reducers/user";
+import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from "../reducers/user";
 
 // saga는 테스트 시 log확인이 유용하다. 
 function logInAPI(data) {
@@ -8,17 +8,16 @@ function logInAPI(data) {
 }
 function* logIn(action) {
   try {
-    console.log(action.data);
     yield delay(1000);
     // const result = yield call(logInAPI, action.data,) // call은 비동기처리, fork는 동기처리
     yield put({ // dispatch
       type: LOG_IN_SUCCESS,
-      data: {...action.data, nickname: 'HoSeong'}
+      data: action.data,
     })
   } catch (error) {
     yield put({
       type: LOG_IN_FAILURE,
-      data: error.response.data,
+      error: error.response.data,
     })
   }
 }
@@ -37,7 +36,26 @@ function* logOut() {
   } catch (error) {
     yield put({
       type: LOG_OUT_FAILURE,
-      data: error.response.data,
+      error: error.response.data,
+    })
+  }
+}
+function signUpAPI() {
+  return axios.post('/api/signUp');
+}
+
+function* signUp() {
+  try {
+    // const result = yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
+    yield delay(1000);
+    yield put({
+      type: SIGN_UP_SUCCESS,
+      // data: result.data
+    })
+  } catch (error) {
+    yield put({
+      type: SIGN_UP_FAILURE,
+      error: error.response.data,
     })
   }
 }
@@ -47,10 +65,14 @@ function* watchLogIn() {
 function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
+function* watchSignUp() {
+  yield takeLatest(SIGN_UP_REQUEST, signUp);
+}
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
-    fork(watchLogOut)
+    fork(watchLogOut),
+    fork(watchSignUp),
   ])
 }
 // takeEvery보다는 takeLatest를 적용해야 만약에 여러번 호출되었을 시 마지막 요청만 한 번 처리된다.

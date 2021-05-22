@@ -26,12 +26,17 @@ export const initialState = {
     },]
   }],
   imagePaths: [],
+  postAdding: false,
   postAdded: false,
+  error: null,
 }
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const addPostRequest = data => ({ type: ADD_POST_REQUEST, data })
 
 const dummyPost = { // 데이터를 구성한 후 화면??
@@ -43,9 +48,7 @@ const dummyPost = { // 데이터를 구성한 후 화면??
   },
   Images: [],
   Comments: [], 
-
 }
-
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -53,21 +56,42 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         mainPosts: [dummyPost,...state.mainPosts],
-        postAdded: true
+        postAdding: true,
       }
     case ADD_POST_SUCCESS:
       return {
         ...state,
         mainPosts: [dummyPost,...state.mainPosts],
-        postAdded: true
+        postAdding: false,
+        postAdded: true,
       }
     case ADD_POST_FAILURE:
       return {
         ...state,
         mainPosts: [dummyPost,...state.mainPosts],
-        postAdded: true
+        postAdding: false,
+        error: action.error,
       }
-
+    case ADD_COMMENT_REQUEST:
+      return {
+        ...state,
+        mainPosts: [dummyPost,...state.mainPosts],
+        postAdding: true,
+      }
+    case ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        mainPosts: [dummyPost,...state.mainPosts],
+        postAdding: false,
+        postAdded: true,
+      }
+    case ADD_COMMENT_FAILURE:
+      return {
+        ...state,
+        mainPosts: [dummyPost,...state.mainPosts],
+        postAdding: false,
+        error: action.error,
+      }
     default:
       return state;
   }
