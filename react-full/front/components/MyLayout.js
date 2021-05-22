@@ -1,11 +1,13 @@
 import React from "react";
-import { Layout, Menu, Dropdown, Row, Col, Input } from "antd";
+import { Layout, Menu, Dropdown, Row, Col, Input, Modal, Button } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { createGlobalStyle } from "styled-components";
 import { useSelector } from "react-redux"; // react랑 redux를 연결
 import UserProfile from "./UserProfile";
 import styles from "./MyLayout.module.css";
+import PropTypes from 'prop-types'
+import LoginForm from "./LoginForm";
 const Global = createGlobalStyle`
   .ant-row {
     margin-right: 0 !important;
@@ -23,16 +25,21 @@ const Global = createGlobalStyle`
 
 const Mylayout = ({ children }) => {
   const { Header, Content, Footer } = Layout;
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
 
   return (
     <>
       <Global />
       <Layout>
         <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-          <div className="inner">
+          <div className={styles['inner']}>
             <Row justify={"start"}>
-              <Col flex="50px">
+              <Col xs={5} md={6}>
                 <Link href="/">
                   <img
                     src="./sun.png"
@@ -41,7 +48,7 @@ const Mylayout = ({ children }) => {
                   />
                 </Link>
               </Col>
-              <Col flex="auto">
+              <Col xs={14} md={12}>
                 <Input.Search
                   placeholder="input search text"
                   allowClear
@@ -49,48 +56,30 @@ const Mylayout = ({ children }) => {
                   style={{ verticalAlign: "middle" }}
                 />
               </Col>
-              <Col flex="auto">
+              <Col xs={5} md={6} style={{textAlign: 'right'}}>
                 <Dropdown
                   overlay={
                     <Menu>
-                      <Menu.Item key="home">
-                        <Link href="/">
-                          <a>Home</a>
-                        </Link>
-                      </Menu.Item>
-                      {isLogin && (
-                        <Menu.Item key="profile">
-                          <Link href="/profile">
-                            <a>My profile</a>
-                          </Link>
-                        </Menu.Item>
-                      )}
-                      {isLogin || (
-                        <Menu.Item key="signup">
-                          <Link href="/signup">
-                            <a>signUp</a>
-                          </Link>
-                        </Menu.Item>
-                      )}
-                      {isLogin ? (
-                        <Menu.Item key="logout">
-                          <UserProfile />
-                        </Menu.Item>
-                      ) : (
-                        <Menu.Item key="login">
-                          <Link href="/login">
-                            <a>Login</a>
-                          </Link>
-                        </Menu.Item>
-                      )}
+                      <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
+                      {isLoggedIn && (<Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>)}
+                      {isLoggedIn || (<Menu.Item key="signup"><Link href="/signup"><a>signUp</a></Link></Menu.Item>)}
+                      {isLoggedIn ? (<Menu.Item key="logout"><UserProfile /></Menu.Item>) 
+                                  : (
+                                  <Menu.Item key="login">
+                                    <Button type="primary" onClick={showModal}>
+                                      Login
+                                    </Button>
+                                    <Modal
+                                      title="Title"
+                                      visible={visible}
+                                      footer={null}
+                                    ><LoginForm />
+                                    </Modal>
+                                  </Menu.Item>)}
                     </Menu>
                   }
-                  trigger={["click"]}
-                >
-                  <a
-                    className="ant-dropdown-link"
-                    onClick={(e) => e.preventDefault()}
-                  >
+                  trigger={["click"]} >
+                  <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
                     <UserOutlined style={{ color: "white" }} /> &nbsp;
                     <DownOutlined style={{ color: "white" }} />
                   </a>
@@ -112,6 +101,10 @@ const Mylayout = ({ children }) => {
       </Layout>
     </>
   );
+};
+
+Mylayout.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Mylayout;

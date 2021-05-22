@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   index: (state = {}, action) => {
     switch (action.type) {
       case HYDRATE: // ssr을 위한 HYDRATE!! 그래서 index에서 선언
-        console.log(HYDRATE, action);
+        console.log('hydrate-------------------\n', HYDRATE, action);
         return { ...state, ...action.payload};
       default:
         return state;

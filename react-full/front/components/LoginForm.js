@@ -3,10 +3,9 @@ import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput';
-import { useDispatch } from 'react-redux';
-
-import { loginAction } from '../reducers/user';
-import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginRequestAction } from '../reducers/user';
+// import { useRouter } from 'next/router';
 const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
@@ -17,22 +16,16 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { isLoggingIn } = useSelector((state) => state.user);
   const [ id, onChangeId ] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const history = useRouter();
-// NEXT.js에 onFinish 기능에는 e.preventdefault가 내장 되어 있다.
+  // const history = useRouter();
+
   const onSubmitForm = useCallback(() => {
     console.log(id, password);
-    dispatch(loginAction({ id, password }));
-    setTimeout(() => {
-      history.push('/');
-    }, 500);
-    
-    // setIsLoggedIn(true);
+    dispatch(loginRequestAction({ id, password }));
+    // setTimeout(() => history.push('/'), 500);
   },[id, password]);
-
-  //useMemo를 이용한 스타일
-  // const style = useMemo(() => ({ marginTop: 10 }), []); // onClick과 같은 방식으로 style={style}"
 
   return (
     <>
@@ -52,16 +45,12 @@ const LoginForm = () => {
               onChange={onChangePassword}
               required
               />
-
         </div>
         <ButtonWrapper>
-          <Button type="primary" htmlType="submit" loading={false}>
-            로그인
-          </Button>
+          <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
           <Link href="/signup"><a>회원가입</a></Link>
         </ButtonWrapper>
       </FormWrapper>
-
     </>
   );
 }

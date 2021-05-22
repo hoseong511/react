@@ -4,7 +4,6 @@ import Head from "next/head";
 import "antd/dist/antd.css";
 import "../public/style.scss";
 import withReduxSaga from 'next-redux-saga';
-
 import wrapper from "../store/configureStore";
 
 const App = ({ Component }) => {

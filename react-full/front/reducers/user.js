@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 export const initialState = {
-  isLogin: false,
+  isLoggingIn: false, // 로그인 시도 중
+  isLoggedIn: false, 
+  isLoggingOut: false, // 로그아웃 시도 중
   me: null,
   signUpData: {},
   loginData: {}
@@ -60,17 +62,43 @@ export const logoutFailureAction = (data) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOG_IN':
+    case 'LOG_IN_REQUEST':
+      console.log('reducer login request');
       return {
         ...state,
-        isLogin: true,
+        isLoggingIn: true,
         me: action.data,
       }
-    case 'LOG_OUT':
+    case 'LOG_IN_SUCCESS':
       return {
         ...state,
-        isLogin: false,
+        isLoggingIn: false,
+        isLoggedIn: true,
+        me: action.data,
+      }
+    case 'LOG_IN_FAILURE':
+      return {
+        ...state,
+        isLoggingIn: false,
+        isLoggedIn: false,
+        me: action.data,
+      }
+    case 'LOG_OUT_REQUEST':
+      return {
+        ...state,
+        isLoggingOut: false,
+      }
+    case 'LOG_OUT_SUCCESS':
+      return {
+        ...state,
+        isLoggingOut: false,
+        isLoggedIn: false,
         me: null,
+      }
+    case 'LOG_OUT_FAILURE':
+      return {
+        ...state,
+        isLoggingOut: false,
       }
     default:
       return state;

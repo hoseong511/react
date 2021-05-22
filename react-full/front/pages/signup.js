@@ -4,7 +4,7 @@ import { Form, Input, Checkbox, Button } from 'antd';
 import AppLayout from '../components/AppLayout';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput'; // custom hooks
-import Mylayout from '../components/MyLayout';
+// import Mylayout from '../components/MyLayout';
 
 const ErrorMessage = styled.div`
 color: red; 
@@ -40,7 +40,7 @@ const Signup = () => {
   }, [password, passwordCheck, term]);
 
   return (
-    <Mylayout>
+    <AppLayout>
       <Head>
           <title>회원가입 | NodeBird</title>
       </Head>
@@ -77,7 +77,7 @@ const Signup = () => {
 
         </div>
       </Form>
-    </Mylayout>
+    </AppLayout>
   )
 };
 
