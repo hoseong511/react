@@ -2,7 +2,7 @@
 import { Button, Form, Input } from "antd";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../reducers/post";
+import { addPostRequest } from "../reducers/post";
 
 const PostForm = () => {
   const { imagePaths } = useSelector((state) => state.post);
@@ -11,7 +11,7 @@ const PostForm = () => {
   const imageInput = useRef(); // dom의 요소에 접근하기위한 통로
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost);
+    dispatch(addPostRequest());
     setText("");
   }, []);
   const onChangeText = useCallback((e) => {

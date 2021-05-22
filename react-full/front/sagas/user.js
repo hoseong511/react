@@ -1,5 +1,6 @@
 import { all, delay, fork, put, takeLatest } from "@redux-saga/core/effects";
 import axios from "axios";
+import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS } from "../reducers/user";
 
 // saga는 테스트 시 log확인이 유용하다. 
 function logInAPI(data) {
@@ -7,16 +8,16 @@ function logInAPI(data) {
 }
 function* logIn(action) {
   try {
-    console.log('saga login request');
+    console.log(action.data);
     yield delay(1000);
     // const result = yield call(logInAPI, action.data,) // call은 비동기처리, fork는 동기처리
     yield put({ // dispatch
-      type: "LOG_IN_SUCCESS",
+      type: LOG_IN_SUCCESS,
       data: {...action.data, nickname: 'HoSeong'}
     })
   } catch (error) {
     yield put({
-      type: 'LOG_IN_FAILURE',
+      type: LOG_IN_FAILURE,
       data: error.response.data,
     })
   }
@@ -30,21 +31,21 @@ function* logOut() {
     // const result = yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
     yield delay(1000);
     yield put({
-      type: "LOG_OUT_SUCCESS",
+      type: LOG_OUT_SUCCESS,
       // data: result.data
     })
   } catch (error) {
     yield put({
-      type: 'LOG_OUT_FAILURE',
+      type: LOG_OUT_FAILURE,
       data: error.response.data,
     })
   }
 }
 function* watchLogIn() {
-  yield takeLatest("LOG_IN_REQUEST", logIn); 
+  yield takeLatest(LOG_IN_REQUEST, logIn); 
 } 
 function* watchLogOut() {
-  yield takeLatest("LOG_OUT_REQUEST", logOut);
+  yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 export default function* userSaga() {
   yield all([

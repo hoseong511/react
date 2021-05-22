@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import Head from 'next/head';
 import { Form, Input, Checkbox, Button } from 'antd';
-import AppLayout from '../components/AppLayout';
+// import AppLayout from '../components/AppLayout';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput'; // custom hooks
-// import Mylayout from '../components/MyLayout';
+import Mylayout from '../components/MyLayout';
 
 const ErrorMessage = styled.div`
 color: red; 
@@ -14,7 +14,6 @@ const Signup = () => {
   const [ id, onChangeId ] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
-  
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const onChangePasswordCheck = useCallback((e) => {
@@ -40,7 +39,7 @@ const Signup = () => {
   }, [password, passwordCheck, term]);
 
   return (
-    <AppLayout>
+    <Mylayout>
       <Head>
           <title>회원가입 | NodeBird</title>
       </Head>
@@ -77,7 +76,7 @@ const Signup = () => {
 
         </div>
       </Form>
-    </AppLayout>
+    </Mylayout>
   )
 };
 

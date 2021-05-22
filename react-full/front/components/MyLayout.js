@@ -8,6 +8,7 @@ import UserProfile from "./UserProfile";
 import styles from "./MyLayout.module.css";
 import PropTypes from 'prop-types'
 import LoginForm from "./LoginForm";
+import LoginButton from "./LoginButton";
 const Global = createGlobalStyle`
   .ant-row {
     margin-right: 0 !important;
@@ -66,15 +67,7 @@ const Mylayout = ({ children }) => {
                       {isLoggedIn ? (<Menu.Item key="logout"><UserProfile /></Menu.Item>) 
                                   : (
                                   <Menu.Item key="login">
-                                    <Button type="primary" onClick={showModal}>
-                                      Login
-                                    </Button>
-                                    <Modal
-                                      title="Title"
-                                      visible={visible}
-                                      footer={null}
-                                    ><LoginForm />
-                                    </Modal>
+                                    <LoginButton />
                                   </Menu.Item>)}
                     </Menu>
                   }

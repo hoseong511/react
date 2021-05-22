@@ -22,7 +22,6 @@ const LoginForm = () => {
   // const history = useRouter();
 
   const onSubmitForm = useCallback(() => {
-    console.log(id, password);
     dispatch(loginRequestAction({ id, password }));
     // setTimeout(() => history.push('/'), 500);
   },[id, password]);

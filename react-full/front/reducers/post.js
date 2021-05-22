@@ -29,10 +29,10 @@ export const initialState = {
   postAdded: false,
 }
 
-const ADD_POST = 'ADD_POST'; // 상수로 정리할 경우 오타걱정없다
-export const addPost = {
-  type: ADD_POST,
-}
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const addPostRequest = data => ({ type: ADD_POST_REQUEST, data })
 
 const dummyPost = { // 데이터를 구성한 후 화면??
   id:2,
@@ -49,7 +49,19 @@ const dummyPost = { // 데이터를 구성한 후 화면??
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_POST:
+    case ADD_POST_REQUEST:
+      return {
+        ...state,
+        mainPosts: [dummyPost,...state.mainPosts],
+        postAdded: true
+      }
+    case ADD_POST_SUCCESS:
+      return {
+        ...state,
+        mainPosts: [dummyPost,...state.mainPosts],
+        postAdded: true
+      }
+    case ADD_POST_FAILURE:
       return {
         ...state,
         mainPosts: [dummyPost,...state.mainPosts],

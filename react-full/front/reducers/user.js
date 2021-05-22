@@ -1,104 +1,85 @@
-import axios from 'axios';
 
 export const initialState = {
   isLoggingIn: false, // 로그인 시도 중
   isLoggedIn: false, 
   isLoggingOut: false, // 로그아웃 시도 중
   me: null,
+  visible: false,
   signUpData: {},
   loginData: {}
 };
-// thunk -> dispatch를 한번에 할 수 있게 해준다. saga는 throttle 기능도 제공한다. 
-export const loginAction = (data) => {
-  return (dispatch, getState) => {
-    const state = getState();
-    dispatch(loginRequestAction());
-    axios.post('/api/login')
-      .then((res) => {
-        dispatch(loginSuccessAction(res.data));
-      })
-      .catch((err) => {
-        dispatch(loginFailureAction(err));
-      })
-  }
-}
 
-export const loginRequestAction = (data) => {
-  return {
-    type: 'LOG_IN_REQUEST',
-    data
-  };
-};
-export const loginSuccessAction = (data) => {
-  return {
-    type: 'LOG_IN_SUCCESS',
-    data
-  };
-};
-export const loginFailureAction = (data) => {
-  return {
-    type: 'LOG_IN_Faulure',
-    data
-  };
-};
-export const logoutRequestAction = (data) => {
-  return {
-    type: 'LOG_OUT_REQUEST',
-    data
-  };
-};
-export const logoutSuccessAction = (data) => {
-  return {
-    type: 'LOG_OUT_SUCCESS',
-    data
-  };
-};
-export const logoutFailureAction = (data) => {
-  return {
-    type: 'LOG_OUT_FAILURE',
-    data
-  };
-};
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+export const VISIBLE_ON = 'VISIBLE_ON';
+export const VISIBLE_OFF = 'VISIBLE_OFF';
+
+export const loginRequestAction = data => ({ type: LOG_IN_REQUEST, data });
+export const logoutRequestAction = data => ({ type: LOG_OUT_REQUEST, data });
+export const visibleOn = data => ({ type:VISIBLE_ON, data });
+export const visibleOff = data => ({ type:VISIBLE_OFF, data });
+
+const dummyUser = data => ({
+  ...data,
+  nickname: '호호',
+  id: 1,
+  Posts: [],
+  Followings: [],
+  Followers: [].
+})
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOG_IN_REQUEST':
-      console.log('reducer login request');
+    case LOG_IN_REQUEST:
       return {
         ...state,
         isLoggingIn: true,
         me: action.data,
       }
-    case 'LOG_IN_SUCCESS':
+    case LOG_IN_SUCCESS:
       return {
         ...state,
         isLoggingIn: false,
         isLoggedIn: true,
-        me: action.data,
+        me: dummyUser(action.data),
       }
-    case 'LOG_IN_FAILURE':
+    case LOG_IN_FAILURE:
       return {
         ...state,
         isLoggingIn: false,
         isLoggedIn: false,
         me: action.data,
       }
-    case 'LOG_OUT_REQUEST':
+    case LOG_OUT_REQUEST:
       return {
         ...state,
         isLoggingOut: false,
       }
-    case 'LOG_OUT_SUCCESS':
+    case LOG_OUT_SUCCESS:
       return {
         ...state,
         isLoggingOut: false,
         isLoggedIn: false,
         me: null,
       }
-    case 'LOG_OUT_FAILURE':
+    case LOG_OUT_FAILURE:
       return {
         ...state,
         isLoggingOut: false,
+      }
+    case VISIBLE_ON:
+      return {
+        ...state,
+        visible: true,
+      }
+    case VISIBLE_OFF:
+      return {
+        ...state,
+        visible: false,
       }
     default:
       return state;
