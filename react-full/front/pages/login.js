@@ -1,8 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope */
 import UserProfile from '../components/UserProfile';
 import LoginForm from '../components/LoginForm';
 
 import { useSelector } from 'react-redux'; // react랑 redux를 연결
-import AppLayout from '../components/AppLayout';
 import Mylayout from '../components/MyLayout';
 
 const Login = () => {

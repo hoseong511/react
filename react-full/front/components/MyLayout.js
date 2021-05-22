@@ -28,7 +28,6 @@ const Mylayout = ({ children }) => {
   return (
     <>
       <Global />
-
       <Layout>
         <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
           <div className="inner">

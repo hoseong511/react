@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -6,7 +6,7 @@ import useInput from '../hooks/useInput';
 import { useDispatch } from 'react-redux';
 
 import { loginAction } from '../reducers/user';
-
+import { useRouter } from 'next/router';
 const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
@@ -19,11 +19,14 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const [ id, onChangeId ] = useInput('');
   const [password, onChangePassword] = useInput('');
-
+  const history = useRouter();
 // NEXT.js에 onFinish 기능에는 e.preventdefault가 내장 되어 있다.
   const onSubmitForm = useCallback(() => {
     console.log(id, password);
     dispatch(loginAction({ id, password }));
+    setTimeout(() => {
+      history.push('/');
+    }, 500);
     
     // setIsLoggedIn(true);
   },[id, password]);
