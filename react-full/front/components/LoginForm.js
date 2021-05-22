@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
-import useInput from '../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
+import useInput from '../hooks/useInput';
 import { loginRequestAction } from '../reducers/user';
 // import { useRouter } from 'next/router';
 const ButtonWrapper = styled.div`
@@ -12,38 +12,37 @@ const ButtonWrapper = styled.div`
 
 const FormWrapper = styled(Form)`
   padding: 10px;
-`// styled컴포넌트를 ssr에 설정을 해놓지 않아서 처음 화면에서는 적용되지 않은 상태로 보여진다
+`;// styled컴포넌트를 ssr에 설정을 해놓지 않아서 처음 화면에서는 적용되지 않은 상태로 보여진다
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const { isLoggingIn } = useSelector((state) => state.user);
-  const [ email, onChangeEmail ] = useInput('');
+  const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   // const history = useRouter();
 
   const onSubmitForm = useCallback(() => {
     dispatch(loginRequestAction({ email, password }));
-    // setTimeout(() => history.push('/'), 500);
-  },[email, password]);
+  }, [email, password]);
 
   return (
     <>
       <FormWrapper onFinish={onSubmitForm}>
         <div>
           <label htmlFor="user-email">이메일</label>
-          <br/>
-          <Input name="user-email" type="email" value={email} onChange={onChangeEmail} required/>
+          <br />
+          <Input name="user-email" type="email" value={email} onChange={onChangeEmail} required />
         </div>
         <div>
           <label htmlFor="user-password">비밀번호</label>
           <br />
-          <Input 
-              name="user-password" 
-              type="password"
-              value={password}
-              onChange={onChangePassword}
-              required
-              />
+          <Input
+            name="user-password"
+            type="password"
+            value={password}
+            onChange={onChangePassword}
+            required
+          />
         </div>
         <ButtonWrapper>
           <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
@@ -52,7 +51,6 @@ const LoginForm = () => {
       </FormWrapper>
     </>
   );
-}
-
+};
 
 export default LoginForm;

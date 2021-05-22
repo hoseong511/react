@@ -8,40 +8,43 @@ import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
 
 const PostCard = ({ post }) => {
-  const [liked, setLiked ] = useState(false);
+  const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const onToggleLike = useCallback(() => {
     setLiked(!liked);
-  }, [liked]);               // 이렇게 하니깐 조금더 이해된거 같다
+  }, [liked]); // 이렇게 하니깐 조금더 이해된거 같다
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prev) => !prev);
   }, []);
-  
-  // const { me } = useSelector((state) => state.user); // 
+
+  // const { me } = useSelector((state) => state.user); //
   // const id = me?.id; // 옵셔널 체이닝,
-  const id = useSelector((state) => state.user.me?.id); // 
+  const id = useSelector((state) => state.user.me?.id); //
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
-        cover={ post.Images[0] && <PostImages images={post.Images} />}
+        cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" />,
-          liked 
+          liked
             ? <HeartTwoTone twoToneColor="red" key="heart" onClick={onToggleLike} />
             : <HeartOutlined key="heart" onClick={onToggleLike} />,
-          <MessageOutlined key="comment" onClick={onToggleComment}/>,
-          <Popover key="more" content={(
-            <Button.Group>
-              {id && post.User.id === id ? (
-                <>
-                  <Button>수정</Button>
-                  <Button type="danger">삭제</Button>
-                </>
-              ) :<Button>신고</Button> }
-            </Button.Group>
-          )}>
+          <MessageOutlined key="comment" onClick={onToggleComment} />,
+          <Popover
+            key="more"
+            content={(
+              <Button.Group>
+                {id && post.User.id === id ? (
+                  <>
+                    <Button>수정</Button>
+                    <Button type="danger">삭제</Button>
+                  </>
+                ) : <Button>신고</Button> }
+              </Button.Group>
+          )}
+          >
             <EllipsisOutlined />
-          </Popover>
+          </Popover>,
         ]}
       >
         <Card.Meta
@@ -52,28 +55,28 @@ const PostCard = ({ post }) => {
       </Card>
       {commentFormOpened && (
         <div>
-          <CommentForm post={post}/>
+          <CommentForm post={post} />
           <List
-          header={`${post.Comments.length}개의 댓글`}
-          itemLayout="horizontal"
-          dataSource={post.Comments}
-          renderItem={(item) => (
-            <li>
-              <Comment
-                author={item.User.nickname}
-                avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
-                content={item.content}
-              />
-            </li>
-          )}
-           />
+            header={`${post.Comments.length}개의 댓글`}
+            itemLayout="horizontal"
+            dataSource={post.Comments}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.User.nickname}
+                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  content={item.content}
+                />
+              </li>
+            )}
+          />
         </div>
       )}
       {/* <CommentForm />
       <Comments /> */}
     </div>
   );
-}
+};
 
 PostCard.propTypes = {
   post: PropTypes.shape({

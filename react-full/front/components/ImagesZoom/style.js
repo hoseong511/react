@@ -38,7 +38,6 @@ export const SlickWrapper = styled.div`
   background: #090909;
 `;
 
-
 export const Indicator = styled.div`
   text-align: center;
   
