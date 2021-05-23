@@ -40,6 +40,8 @@ export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_SUCCESS';
 export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
 export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
 export const signUpRequestAction = (data) => ({ type: SIGN_UP_REQUEST, data });
 export const signOutRequestAction = (data) => ({ type: SIGN_OUT_REQUEST, data });
@@ -53,9 +55,9 @@ export const changeNicknameRequestAction = (data) => ({ type: CHANGE_NICKNAME_RE
 
 const dummyUser = (data) => ({
   ...data,
-  nickname: '호호',
+  nickname: '제로초',
   id: 1,
-  Posts: [],
+  Posts: [{ id: 1 }],
   Followings: [{ nickname: '부기초1'}, { nickname: '부기초2'}, { nickname: '부기초3'}],
   Followers: [{ nickname: '부기초1'}, { nickname: '부기초2'}, { nickname: '부기초3'}],
 });
@@ -133,6 +135,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         isNickChanging: false,
         error: action.error,
+      };
+    case ADD_POST_TO_ME:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Posts: [{ id: action.data }, ...state.me.Posts],
+        },
+      };
+    case REMOVE_POST_OF_ME:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Posts: state.me.Posts.filter((v) => v.id !== action.data),
+        },
       };
     case VISIBLE_ON:
       return {

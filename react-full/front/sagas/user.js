@@ -1,6 +1,6 @@
 import { all, delay, fork, put, takeLatest } from '@redux-saga/core/effects';
 import axios from 'axios';
-import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from '../reducers/user';
+import { CHANGE_NICKNAME_FAILURE, CHANGE_NICKNAME_REQUEST, CHANGE_NICKNAME_SUCCESS, LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS } from '../reducers/user';
 
 // saga는 테스트 시 log확인이 유용하다.
 function logInAPI(data) {
@@ -59,6 +59,25 @@ function* signUp() {
     });
   }
 }
+function changeNickAPI() {
+  return axios.post('/api/signUp');
+}
+
+function* changeNick() {
+  try {
+    // const result = yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
+    yield delay(1000);
+    yield put({
+      type: CHANGE_NICKNAME_SUCCESS,
+      // data: result.data
+    });
+  } catch (error) {
+    yield put({
+      type: CHANGE_NICKNAME_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -69,7 +88,7 @@ function* watchSignUp() {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
 function* watchNick() {
-  yield takeLatest(SIGN_UP_REQUEST, signUp);
+  yield takeLatest(CHANGE_NICKNAME_REQUEST, changeNick);
 }
 export default function* userSaga() {
   yield all([

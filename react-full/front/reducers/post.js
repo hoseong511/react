@@ -33,6 +33,8 @@ export const initialState = {
   imagePaths: [],
   postAdding: false,
   postAdded: false,
+  postRemoving: false,
+  postRemoved: false,
   commentAdding: false,
   commentAdded: false,
   error: null,
@@ -41,6 +43,9 @@ export const initialState = {
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
@@ -48,8 +53,8 @@ export const addPostRequest = (data) => ({ type: ADD_POST_REQUEST, data });
 export const addCommentRequest = (data) => ({ type: ADD_COMMENT_REQUEST, data });
 
 const dummyPost = (data) => ({ // 데이터를 구성한 후 화면??
-  id: shortid.generate(),
-  content: data,
+  id: data.id,
+  content: data.content,
   User: {
     id: 1,
     nickname: '제로초',
@@ -110,6 +115,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         commentAdding: false,
+        error: action.error,
+      };
+    case REMOVE_POST_REQUEST:
+      return {
+        ...state,
+        postRemoving: true,
+        postRemoved: false,
+      };
+    case REMOVE_POST_SUCCESS: {
+      return {
+        ...state,
+        mainPosts: state.mainPosts.filter((v) => v.id === action.data),
+        postRemoving: false,
+        postRemoved: true,
+      };
+    }
+    case REMOVE_POST_FAILURE:
+      return {
+        ...state,
+        postRemoving: false,
         error: action.error,
       };
     default:
