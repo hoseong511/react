@@ -12,6 +12,7 @@ const PostForm = () => {
   const [text, onChangeText, setText] = useInput('');
 
   useEffect(() => {
+    console.log(postAdded);
     if (postAdded) {
       setText('');
     }

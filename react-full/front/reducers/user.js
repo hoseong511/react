@@ -8,6 +8,8 @@ export const initialState = {
   isfollowing: false, // 팔로우 시도중
   isfollowed: false,
   isUnfollowing: false, // 언팔 시도중
+  isNickChanging: false, // 닉네임 변경 시도 중
+  isNickChanged: false,
   me: null,
   error: null,
   visible: false,
@@ -35,6 +37,9 @@ export const FOLLOW_FAILURE = 'FOLLOW_FAILURE';
 export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
+export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
 
 export const signUpRequestAction = (data) => ({ type: SIGN_UP_REQUEST, data });
 export const signOutRequestAction = (data) => ({ type: SIGN_OUT_REQUEST, data });
@@ -44,14 +49,15 @@ export const visibleOn = (data) => ({ type: VISIBLE_ON, data });
 export const visibleOff = (data) => ({ type: VISIBLE_OFF, data });
 export const followRequestAction = (data) => ({ type: FOLLOW_REQUEST, data });
 export const unFollowRequestAction = (data) => ({ type: UNFOLLOW_REQUEST, data });
+export const changeNicknameRequestAction = (data) => ({ type: CHANGE_NICKNAME_REQUEST, data });
 
 const dummyUser = (data) => ({
   ...data,
   nickname: '호호',
   id: 1,
   Posts: [],
-  Followings: [],
-  Followers: [],
+  Followings: [{ nickname: '부기초1'}, { nickname: '부기초2'}, { nickname: '부기초3'}],
+  Followers: [{ nickname: '부기초1'}, { nickname: '부기초2'}, { nickname: '부기초3'}],
 });
 
 const reducer = (state = initialState, action) => {
@@ -95,7 +101,7 @@ const reducer = (state = initialState, action) => {
     case LOG_OUT_REQUEST:
       return {
         ...state,
-        isLoggingOut: false,
+        isLoggingOut: true,
       };
     case LOG_OUT_SUCCESS:
       return {
@@ -108,6 +114,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggingOut: false,
+        error: action.error,
+      };
+    case CHANGE_NICKNAME_REQUEST:
+      return {
+        ...state,
+        isNickChanging: true,
+      };
+    case CHANGE_NICKNAME_SUCCESS:
+      return {
+        ...state,
+        isNickChanging: false,
+        isNickChanged: true,
+        me: action.data,
+      };
+    case CHANGE_NICKNAME_FAILURE:
+      return {
+        ...state,
+        isNickChanging: false,
         error: action.error,
       };
     case VISIBLE_ON:

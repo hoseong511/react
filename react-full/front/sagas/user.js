@@ -68,11 +68,15 @@ function* watchLogOut() {
 function* watchSignUp() {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
+function* watchNick() {
+  yield takeLatest(SIGN_UP_REQUEST, signUp);
+}
 export default function* userSaga() {
   yield all([
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchSignUp),
+    fork(watchNick),
   ]);
 }
 // takeEvery보다는 takeLatest를 적용해야 만약에 여러번 호출되었을 시 마지막 요청만 한 번 처리된다.
