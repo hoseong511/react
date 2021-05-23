@@ -53,10 +53,7 @@ const Mylayout = ({ children }) => {
               <Col xs={5} md={6} style={{ textAlign: 'right' }}>
                 <Dropdown
                   overlay={
-                    isLoggedIn ? <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
-                               :
-                    
-                      
+                                      
                     <Menu>
                       <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
                       {isLoggedIn && (<Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>)}
