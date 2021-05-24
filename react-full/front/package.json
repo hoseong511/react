@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next -p 3001",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "build": "next build",
+    "export": "next export"
   },
   "keywords": [],
   "author": "hoseong511",
