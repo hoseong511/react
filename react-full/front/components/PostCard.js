@@ -14,7 +14,7 @@ const CardWrapper = styled.div`
   margin-botton: 20px;
 `;
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, measure }) => {
   const id = useSelector((state) => state.user.me?.id); //
   const dispatch = useDispatch();
   const { postRemoving } = useSelector((state) => state.post);
@@ -34,7 +34,7 @@ const PostCard = ({ post }) => {
   return (
     <CardWrapper key={post.id}>
       <Card
-        cover={post.Images[0] && <PostImages images={post.Images} />}
+        cover={post.Images[0] && <PostImages images={post.Images} measure ={measure} />}
         actions={[
           <RetweetOutlined key="retweet" />,
           liked
@@ -100,6 +100,7 @@ PostCard.propTypes = {
     Comments: PropTypes.arrayOf(PropTypes.object),
     Images: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
+  measure: PropTypes.number.isRequired,
 };
 
 export default PostCard;

@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import ImagesZoom from './ImagesZoom';
 
-const PostImages = ({ images }) => {
+const PostImages = ({ images, measure }) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
 
   const onZoom = useCallback(() => setShowImagesZoom(true), []);
@@ -13,7 +13,7 @@ const PostImages = ({ images }) => {
   if (images.length === 1) {
     return (
       <>
-        <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} />
+        <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} onLoad={measure}/>
         {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
@@ -21,8 +21,8 @@ const PostImages = ({ images }) => {
   if (images.length === 2) {
     return (
       <>
-        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[0].src} alt={images[0].src} onClick={onZoom} />
-        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[1].src} alt={images[1].src} onClick={onZoom} />
+        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[0].src} alt={images[0].src} onClick={onZoom} onLoad={measure}/>
+        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[1].src} alt={images[1].src} onClick={onZoom} onLoad={measure}/>
         {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
 
       </>
@@ -31,7 +31,7 @@ const PostImages = ({ images }) => {
   return (
     <>
       <div>
-        <img role="presentation" style={{ width: '50%' }} src={images[1].src} alt={images[1].src} onClick={onZoom} />
+        <img role="presentation" style={{ width: '50%' }} src={images[1].src} alt={images[1].src} onClick={onZoom} onLoad={measure}/>
         <div
           role="presentation"
           style={{ display: 'inline-block', width: '50%', textAlign: 'center', verticalAlign: 'middle' }}
@@ -49,6 +49,8 @@ const PostImages = ({ images }) => {
 
 PostImages.propTypes = {
   images: PropTypes.arrayOf(PropTypes.object),
+  measure: PropTypes.number.isRequired,
+
 };
 
 export default PostImages;
