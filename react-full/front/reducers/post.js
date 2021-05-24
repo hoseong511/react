@@ -86,7 +86,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_POST_SUCCESS:
         draft.postLoading = false;
         draft.postLoadded = true;
-        draft.mainPosts = action.data.concat(draft.mainPosts); // 무한스크롤링을 구현
+        draft.mainPosts = draft.mainPosts.concat(action.data); // 무한스크롤링을 구현
         draft.hasMorePosts = draft.mainPosts.length < 50;
         break;
       case LOAD_POST_FAILURE:
