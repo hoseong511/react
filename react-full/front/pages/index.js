@@ -50,21 +50,24 @@ const Home = () => {
   return (
     <Mylayout>
       {isLoggedIn && <PostForm />}
-      
-      <AutoSizer>
-          {({ width, height }) => (
-              <List
-                  height={height}
-                  width={width}
-                  overscanRowCount={0}
-                  rowCount={mainPosts.length}
-                  rowHeight={cache.rowHeight}
-                  rowRenderer={rowRenderer}
-                  deferredMeasurementCache={cache}
-              />
+      <WindowScroller>
+          {({ height, scrollTop, isScrolling, onChildScroll }) => (
+              <AutoSizer disableHeight>
+                  {({ width }) => (
+                      <List
+                          autoHeight
+                          height={height}
+                          width={width}
+                          overscanRowCount={0}
+                          rowCount={mainPosts.length}
+                          rowHeight={cache.rowHeight}
+                          rowRenderer={rowRenderer}
+                          deferredMeasurementCache={cache}
+                      />
+                  )}
+              </AutoSizer>
           )}
-      </AutoSizer>
-
+      </WindowScroller>
       
       {/** 절대 index를 key로 설정하지 말자->데이터가 변경되는 경우를 생각해보자 */}
     </Mylayout>
