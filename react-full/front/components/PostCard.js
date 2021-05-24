@@ -9,12 +9,13 @@ import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
 import { removePostRequest } from '../reducers/post';
+import FollowButton from './FollowButton';
 
 const CardWrapper = styled.div`
   margin-botton: 20px;
 `;
 
-const PostCard = ({ post, measure }) => {
+const PostCard = ({ post }) => {
   const id = useSelector((state) => state.user.me?.id); //
   const dispatch = useDispatch();
   const { postRemoving } = useSelector((state) => state.post);
@@ -34,7 +35,7 @@ const PostCard = ({ post, measure }) => {
   return (
     <CardWrapper key={post.id}>
       <Card
-        cover={post.Images[0] && <PostImages images={post.Images} measure ={measure} />}
+        cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key="retweet" />,
           liked
@@ -57,6 +58,7 @@ const PostCard = ({ post, measure }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
+        // extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
@@ -100,7 +102,6 @@ PostCard.propTypes = {
     Comments: PropTypes.arrayOf(PropTypes.object),
     Images: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  measure: PropTypes.number.isRequired,
 };
 
 export default PostCard;

@@ -134,18 +134,7 @@ const reducer = (state = initialState, action) => {
         post.Comments.unshift(dummyComment(action.data.content));
         draft.commentAdding = false;
         draft.commentAdded = true;
-        break;
-        // const postIndex = state.mainPosts.findIndex( v => v.id === action.data.postId);
-        // const post = { ...state.mainPosts[postIndex] };
-        // post.Comments = [dummyComment(action.data.content), ...post.Comments];
-        // const mainPosts = [...state.mainPosts];
-        // mainPosts[postIndex] = post;
-        // return {
-        //   ...state,
-        //   mainPosts,
-        //   commentAdding: false,
-        //   commentAdded: true,
-        // };
+        break;        
       }
       case ADD_COMMENT_FAILURE:
         draft.commentAdding = false;

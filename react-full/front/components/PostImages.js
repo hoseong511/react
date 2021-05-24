@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import ImagesZoom from './ImagesZoom';
 
-const PostImages = ({ images, measure }) => {
+const PostImages = ({ images }) => {
   const [showImagesZoom, setShowImagesZoom] = useState(false);
 
   const onZoom = useCallback(() => setShowImagesZoom(true), []);
@@ -13,7 +13,7 @@ const PostImages = ({ images, measure }) => {
   if (images.length === 1) {
     return (
       <>
-        <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} onLoad={measure}/>
+        <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} />
         {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
@@ -21,8 +21,8 @@ const PostImages = ({ images, measure }) => {
   if (images.length === 2) {
     return (
       <>
-        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[0].src} alt={images[0].src} onClick={onZoom} onLoad={measure}/>
-        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[1].src} alt={images[1].src} onClick={onZoom} onLoad={measure}/>
+        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[0].src} alt={images[0].src} onClick={onZoom} />
+        <img role="presentation" style={{ overflow: 'hidden', width: '50%', display: 'inline-block' }} src={images[1].src} alt={images[1].src} onClick={onZoom} />
         {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
 
       </>
@@ -49,7 +49,6 @@ const PostImages = ({ images, measure }) => {
 
 PostImages.propTypes = {
   images: PropTypes.arrayOf(PropTypes.object),
-  measure: PropTypes.number.isRequired,
 
 };
 

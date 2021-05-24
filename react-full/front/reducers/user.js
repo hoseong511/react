@@ -7,8 +7,8 @@ export const initialState = {
   isLoggingIn: false, // 로그인 시도 중
   isLoggedIn: false,
   isLoggingOut: false, // 로그아웃 시도 중
-  isfollowing: false, // 팔로우 시도중
-  isfollowed: false,
+  isFollowing: false, // 팔로우 시도중
+  isFollowed: false,
   isUnfollowing: false, // 언팔 시도중
   isNickChanging: false, // 닉네임 변경 시도 중
   isNickChanged: false,
@@ -126,26 +126,42 @@ const reducer = (state = initialState, action) => {
         draft.isNickChanged = false;
         draft.error = action.error;
         break;
+      case FOLLOW_REQUEST:
+        draft.isFollowing = true;
+        draft.isFollowed = false;
+        draft.error = null;
+        break;
+      case FOLLOW_SUCCESS:
+        draft.isFollowing = false;
+        draft.isFollowed = true;
+        draft.me.Followings.push({ id: action.data })
+        break;
+      case FOLLOW_FAILURE:
+        draft.isFollowing = false;
+        draft.isFollowed = false;
+        draft.error = action.error;
+        break;
+      case UNFOLLOW_REQUEST:
+        draft.isUnFollowing = true;
+        draft.isFollowed = true;
+        draft.error = null;
+        break;
+      case UNFOLLOW_SUCCESS:
+        draft.isUnFollowing = false;
+        draft.isFollowed = false;
+        draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data);
+        break;
+      case UNFOLLOW_FAILURE:
+        draft.isUnFollowing = false;
+        draft.isFollowed = true;
+        draft.error = action.error;
+        break;
       case ADD_POST_TO_ME:
         draft.me.Posts.unshift({ id: action.data });
         break;
-        // return {
-        //   ...state,
-        //   me: {
-        //     ...state.me,
-        //     Posts: [{ id: action.data }, ...state.me.Posts],
-        //   },
-        // };
       case REMOVE_POST_OF_ME:
         draft.me.Posts = draft.me.Posts.filter((v) => v.id !== action.data);
         break;
-        // return {
-        //   ...state,
-        //   me: {
-        //     ...state.me,
-        //     Posts: state.me.Posts.filter((v) => v.id !== action.data),
-        //   },
-        // };
       case VISIBLE_ON:
         draft.visible = true;
         break;
