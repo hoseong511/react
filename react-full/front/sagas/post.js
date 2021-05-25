@@ -31,7 +31,6 @@ function* addPost(action) {
   try {
     // const result = yield call(addPostAPI, action.data)
     console.log(action.data);
-    yield delay(1000);
     const id = shortid.generate();
     yield put({
       type: ADD_POST_SUCCESS,

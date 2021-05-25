@@ -34,16 +34,14 @@ function* logIn(action) {
   }
 }
 function logOutAPI() {
-  return axios.post('/api/logout');
+  return axios.post('/user/logout');
 }
 
 function* logOut() {
   try {
-    // const result = yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
-    yield delay(1000);
+    yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
     yield put({
       type: LOG_OUT_SUCCESS,
-      // data: result.data
     });
   } catch (error) {
     yield put({

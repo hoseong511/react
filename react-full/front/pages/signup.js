@@ -46,14 +46,14 @@ const Signup = () => {
 
   useEffect(() => {
     if (me && me.id) {
-      Router.push('/');
+      Router.replace('/'); // replace는 뒤로가기 허용 x
     }
   }, [me && me.id]);
   
 
   useEffect(() => {
     if (isSignedUp) {
-      Router.push('/');
+      Router.replace('/');
     }
   }, [isSignedUp]);
 
