@@ -7,13 +7,15 @@ import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import Mylayout from '../components/MyLayout';
 import { loadPostRequest } from '../reducers/post';
+import { loadMyInfoRequest } from '../reducers/user';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { mainPosts, hasMorePosts, postLoading } = useSelector((state) => state.post);
-  
+   
   useEffect(() => {
+    dispatch(loadMyInfoRequest());
     dispatch(loadPostRequest());
   }, []);
   

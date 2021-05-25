@@ -1,6 +1,8 @@
 import produce from 'immer';
 
 export const initialState = {
+  loadingUser: false,
+  loadedUser: false,
   isSigningUp: false, // 회원가입 중
   isSignedUp: false,
   isSigningOut: false, // 회원 탈퇴중
@@ -19,9 +21,9 @@ export const initialState = {
   loginData: {},
 };
 
-export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
-export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
-export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
@@ -57,22 +59,31 @@ export const visibleOff = (data) => ({ type: VISIBLE_OFF, data });
 export const followRequestAction = (data) => ({ type: FOLLOW_REQUEST, data });
 export const unFollowRequestAction = (data) => ({ type: UNFOLLOW_REQUEST, data });
 export const changeNicknameRequestAction = (data) => ({ type: CHANGE_NICKNAME_REQUEST, data });
+export const loadMyInfoRequest = (data) => ({ type: LOAD_MY_INFO_REQUEST, data });
 
-const dummyUser = (data) => ({
-  ...data,
-  nickname: 'HoHo',
-  id: 1,
-  Posts: [{ id: 1 }],
-  Followings: [{ nickname: '부기초1'}, { nickname: '부기초2'}, { nickname: '부기초3'}],
-  Followers: [{ nickname: '부기초1'}, { nickname: '부기초2'}, { nickname: '부기초3'}],
-});
+
 
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_MY_INFO_REQUEST:
+        draft.loadingUser = true;
+        draft.loadedUser = false;
+        draft.actionError = null;
+        break;
+      case LOAD_MY_INFO_SUCCESS:
+        draft.loadingUser = false;
+        draft.loadedUser = true;
+        draft.me = action.data;
+        break;
+      case LOAD_MY_INFO_FAILURE:
+        draft.loadingUser = false;
+        draft.loadedUser = false;
+        draft.actionError = action.error;
+        break;
       case SIGN_UP_REQUEST:
         draft.isSigningUp = true;
-        draft.isSigningUp = false;
+        draft.isSignedUp = false;
         draft.actionError = null;
         break;
       case SIGN_UP_SUCCESS:

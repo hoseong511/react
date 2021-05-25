@@ -7,6 +7,9 @@ import {
   FOLLOW_FAILURE, 
   FOLLOW_REQUEST, 
   FOLLOW_SUCCESS, 
+  LOAD_MY_INFO_FAILURE, 
+  LOAD_MY_INFO_REQUEST, 
+  LOAD_MY_INFO_SUCCESS, 
   LOG_IN_FAILURE, 
   LOG_IN_REQUEST, 
   LOG_IN_SUCCESS, 
@@ -16,6 +19,23 @@ import {
   SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, UNFOLLOW_FAILURE, UNFOLLOW_REQUEST, UNFOLLOW_SUCCESS } from '../reducers/user';
 
 // saga는 테스트 시 log확인이 유용하다.
+function loadUserAPI(data) {
+  return axios.get('/user', data);
+}
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data,) // call은 비동기처리, fork는 동기처리
+    yield put({ // dispatch
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
 function logInAPI(data) {
   return axios.post('/user/login', data);
 }
@@ -126,6 +146,9 @@ function* unFollow(action) {
     });
   }
 }
+function* watchLoadUser() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadUser);
+}
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
 }
@@ -146,6 +169,7 @@ function* watchUnFollow() {
 }
 export default function* userSaga() {
   yield all([
+    fork(watchLoadUser),
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchSignUp),
