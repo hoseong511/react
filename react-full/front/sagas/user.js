@@ -1,4 +1,4 @@
-import { all, delay, fork, put, takeLatest } from '@redux-saga/core/effects';
+import { all, delay, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
 import { 
   CHANGE_NICKNAME_FAILURE, 
@@ -53,22 +53,23 @@ function* logOut() {
     });
   }
 }
-function signUpAPI() {
-  return axios.post('/api/signUp');
+function signUpAPI(data) {
+  return axios.post('http://localhost:3065/user', data);
 }
 
-function* signUp() {
+function* signUp(action) {
   try {
-    // const result = yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
-    yield delay(1000);
+    console.log(action.data);
+    const result = yield call(signUpAPI, action.data) // call은 비동기처리, fork는 동기처리
+    console.log(result);
     yield put({
       type: SIGN_UP_SUCCESS,
-      // data: result.data
+      data: result.data
     });
   } catch (error) {
     yield put({
       type: SIGN_UP_FAILURE,
-      error: error.response.data,
+      error: error,
     });
   }
 }
@@ -124,7 +125,7 @@ function* unFollow(action) {
   } catch (error) {
     yield put({
       type: UNFOLLOW_FAILURE,
-      error: error.response.data,
+      error: error,
     });
   }
 }

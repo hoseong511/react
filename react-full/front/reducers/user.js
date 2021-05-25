@@ -13,7 +13,7 @@ export const initialState = {
   isNickChanging: false, // 닉네임 변경 시도 중
   isNickChanged: false,
   me: null,
-  error: null,
+  actionError: null,
   visible: false,
   signUpData: {},
   loginData: {},
@@ -70,7 +70,7 @@ const reducer = (state = initialState, action) => {
       case SIGN_UP_REQUEST:
         draft.isSigningUp = true;
         draft.isSigningUp = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case SIGN_UP_SUCCESS:
         draft.isSigningUp = false;
@@ -80,7 +80,7 @@ const reducer = (state = initialState, action) => {
       case SIGN_UP_FAILURE:
         draft.isSigningUp = false;
         draft.isSignedUp = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case LOG_IN_REQUEST:
         draft.isLoggingIn = true;
@@ -94,27 +94,27 @@ const reducer = (state = initialState, action) => {
       case LOG_IN_FAILURE:
         draft.isLoggingIn = false;
         draft.isLoggedIn = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case LOG_OUT_REQUEST:
         draft.isLoggingOut = true;
-        draft.isLoggedOut = false;
-        draft.error = null;
+        draft.isLoggedin = false;
+        draft.actionError = null;
         break;
       case LOG_OUT_SUCCESS:
         draft.isLoggingOut = false;
-        draft.isLoggedOut = true;
+        draft.isLoggedin = false;
         draft.me = null;
         break;
       case LOG_OUT_FAILURE:
         draft.isLoggingOut = false;
-        draft.isLoggedOut = false;
-        draft.error = action.error;
+        draft.isLoggedin = false;
+        draft.actionError = action.error;
         break;
       case CHANGE_NICKNAME_REQUEST:
         draft.isNickChanging = true;
         draft.isNickChanged = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case CHANGE_NICKNAME_SUCCESS:
         draft.isNickChanging = false;
@@ -124,12 +124,12 @@ const reducer = (state = initialState, action) => {
       case CHANGE_NICKNAME_FAILURE:
         draft.isNickChanging = false;
         draft.isNickChanged = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case FOLLOW_REQUEST:
         draft.isFollowing = true;
         draft.isFollowed = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case FOLLOW_SUCCESS:
         draft.isFollowing = false;
@@ -139,12 +139,12 @@ const reducer = (state = initialState, action) => {
       case FOLLOW_FAILURE:
         draft.isFollowing = false;
         draft.isFollowed = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case UNFOLLOW_REQUEST:
         draft.isUnFollowing = true;
         draft.isFollowed = true;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case UNFOLLOW_SUCCESS:
         draft.isUnFollowing = false;
@@ -154,7 +154,7 @@ const reducer = (state = initialState, action) => {
       case UNFOLLOW_FAILURE:
         draft.isUnFollowing = false;
         draft.isFollowed = true;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case ADD_POST_TO_ME:
         draft.me.Posts.unshift({ id: action.data });

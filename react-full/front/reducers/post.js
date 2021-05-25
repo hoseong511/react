@@ -14,7 +14,7 @@ export const initialState = {
   postRemoved: false,
   commentAdding: false,
   commentAdded: false,
-  error: null,
+  actionError: null,
 };
 export const generateDummyPost = (number) => Array(number).fill().map(() => ({
   id: shortid.generate(),
@@ -81,7 +81,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_POST_REQUEST:
         draft.postLoading = true;
         draft.postLoadded = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case LOAD_POST_SUCCESS:
         draft.postLoading = false;
@@ -92,12 +92,12 @@ const reducer = (state = initialState, action) => {
       case LOAD_POST_FAILURE:
         draft.postLoading = false;
         draft.postLoadded = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case ADD_POST_REQUEST:
         draft.postAdding = true;
         draft.postAdded = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case ADD_POST_SUCCESS:
         draft.postAdding = false;
@@ -107,12 +107,12 @@ const reducer = (state = initialState, action) => {
       case ADD_POST_FAILURE:
         draft.postAdding = false;
         draft.postAdded = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       case REMOVE_POST_REQUEST:
         draft.postRemoving = true;
         draft.postRemoved = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case REMOVE_POST_SUCCESS:
         draft.postRemoving = false;
@@ -122,12 +122,12 @@ const reducer = (state = initialState, action) => {
       case REMOVE_POST_FAILURE:
         draft.postRemoving = false;
         draft.postRemoved = false;
-        draft.error = action.arror;
+        draft.actionError = action.arror;
         break;
       case ADD_COMMENT_REQUEST:
         draft.commentAdding = true;
         draft.commentAdded = false;
-        draft.error = null;
+        draft.actionError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
         const post = draft.mainPosts.find((v) => v.id === action.data.postId);
@@ -139,7 +139,7 @@ const reducer = (state = initialState, action) => {
       case ADD_COMMENT_FAILURE:
         draft.commentAdding = false;
         draft.commentAdded = false;
-        draft.error = action.error;
+        draft.actionError = action.error;
         break;
       default:
         break;

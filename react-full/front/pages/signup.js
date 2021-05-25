@@ -16,7 +16,7 @@ color: red;
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { isSigningUp, me } = useSelector((state) => state.user);
+  const { isSigningUp, me, isSignedUp, actionError } = useSelector((state) => state.user);
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -45,10 +45,23 @@ const Signup = () => {
   }, [password, passwordCheck, term]);
 
   useEffect(() => {
-    if (me) {
+    if (me && me.id) {
       Router.push('/');
     }
-  }, [me]);
+  }, [me && me.id]);
+  
+
+  useEffect(() => {
+    if (isSignedUp) {
+      Router.push('/');
+    }
+  }, [isSignedUp]);
+
+  useEffect(() => {
+    if (actionError) {
+      alert(actionError);
+    }
+  }, [actionError])
 
   return (
     <Mylayout>

@@ -10,7 +10,7 @@ import { loadPostRequest } from '../reducers/post';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
   const { mainPosts, hasMorePosts, postLoading } = useSelector((state) => state.post);
   
   useEffect(() => {
@@ -33,7 +33,7 @@ const Home = () => {
  
   return (
     <Mylayout>
-      {isLoggedIn && <PostForm />}
+      {me && <PostForm />}
       {mainPosts.map((post) => <PostCard key={post.id} post={post} />)}
     </Mylayout>
   );
