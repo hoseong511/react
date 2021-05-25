@@ -28,52 +28,52 @@ const Global = createGlobalStyle`
 
 const Mylayout = ({ children }) => {
   const { Header, Content, Footer } = Layout;
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
 
   return (
     <>
       <Global />
       <Layout>
-        <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-          <div className={styles['inner']}>
-            <Row justify="start">
-              <Col xs={5} md={6}>
-                <Link href="/">
-                  <img src="./sun.png" className={styles["logo"]} alt="sun" />
-                </Link>
-              </Col>
-              <Col xs={14} md={12}>
-                <Input.Search
-                  placeholder="input search text"
-                  allowClear
-                  size="default"
-                  style={{ verticalAlign: "middle" }}
-                />
-              </Col>
-              <Col xs={5} md={6} style={{ textAlign: 'right' }}>
-                <Dropdown
-                  overlay={
-                    isLoggedIn ? <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
-                               :
-                    
-                      
-                    <Menu>
-                      <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
-                      {isLoggedIn && (<Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>)}
-                      {isLoggedIn || (<Menu.Item key="signup"><Link href="/signup"><a>signUp</a></Link></Menu.Item>)}
-                      {isLoggedIn ? (<Menu.Item key="logout"><UserProfile /></Menu.Item>) 
-                          : (<Menu.Item key="login"><LoginButton /></Menu.Item>)}
-                    </Menu>
+        <Header className={styles['inner']} style={{ position: "fixed", zIndex: 1, width: "100%" }}>
+          <Row justify="start">
+            <Col xs={5} md={6}>
+              <Link href="/">
+                <img src="./sun.png" className={styles["logo"]} alt="sun" />
+              </Link>
+            </Col>
+            <Col xs={14} md={12}>
+              <Input.Search
+                placeholder="input search text"
+                allowClear
+                size="default"
+                style={{ verticalAlign: "middle" }}
+              />
+            </Col>
+            <Col xs={5} md={6} style={{ textAlign: 'right' }}>
+              <Dropdown
+                overlay={
+                      <Menu>
+                        {me ? (<>
+                                <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
+                                <Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>
+                                <Menu.Item key="logout"><UserProfile /></Menu.Item>
+                              </>)
+                            : (<>
+                                <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
+                                <Menu.Item key="signup"><Link href="/signup"><a>signUp</a></Link></Menu.Item>
+                                <Menu.Item key="login"><LoginButton /></Menu.Item>
+                              </>)
+                        }
+                      </Menu>
                   }
-                  trigger={["click"]}>
-                  <a onClick={(e) => {e.preventDefault()}} className="ant-dropdown-link" >
-                    <UserOutlined style={{ color: "white" }} /> &nbsp;
-                    <DownOutlined style={{ color: "white" }} />
-                  </a>
-                </Dropdown>
-              </Col>
-            </Row>
-          </div>
+                trigger={["click"]}>
+                <a onClick={(e) => {e.preventDefault()}} className="ant-dropdown-link" >
+                  <UserOutlined style={{ color: "white" }} /> &nbsp;
+                  <DownOutlined style={{ color: "white" }} />
+                </a>
+              </Dropdown>
+            </Col>
+          </Row>
         </Header>
         <Content className="site-layout">
           <Row>

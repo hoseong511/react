@@ -1,13 +1,13 @@
 .inner {
   color: white;
   font-size: larger;
-  & .logo {
+  .logo {
     color: white;
-    & img {
+    img {
       height: 22px;
     }
   }
-  & .ant-dropdown-link {
+  .ant-dropdown-link {
     position: absolute;
     right: 5px;
   }
@@ -24,8 +24,8 @@
 
 .site-layout {
   padding: 0 50px;
-  margin-top: 64px;
-  & .site-layout-background {
+  margin-top: 100px;
+  .site-layout-background {
     background: #fff;
     padding: 24px;
     min-height: 380px;
