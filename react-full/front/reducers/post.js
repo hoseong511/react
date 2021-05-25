@@ -56,25 +56,6 @@ export const addPostRequest = (data) => ({ type: ADD_POST_REQUEST, data });
 export const addCommentRequest = (data) => ({ type: ADD_COMMENT_REQUEST, data });
 export const removePostRequest = (data) => ({ type: REMOVE_POST_REQUEST, data });
 
-const dummyPost = (data) => ({ // 데이터를 구성한 후 화면??
-  id: data.id,
-  content: data.content,
-  User: {
-    id: 1,
-    nickname: 'Ho',
-  },
-  Images: [],
-  Comments: [],
-});
-const dummyComment = (data) => ({
-  id: shortid.generate(),
-  content: data,
-  User: {
-    id: 1,
-    nickname: 'Ho',
-  },
-});
-
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
@@ -102,7 +83,7 @@ const reducer = (state = initialState, action) => {
       case ADD_POST_SUCCESS:
         draft.postAdding = false;
         draft.postAdded = true;
-        draft.mainPosts.unshift(dummyPost(action.data));
+        draft.mainPosts.unshift(action.data);
         break;
       case ADD_POST_FAILURE:
         draft.postAdding = false;
@@ -130,10 +111,10 @@ const reducer = (state = initialState, action) => {
         draft.actionError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
-        post.Comments.unshift(dummyComment(action.data.content));
         draft.commentAdding = false;
         draft.commentAdded = true;
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Comments.unshift(action.data);
         break;        
       }
       case ADD_COMMENT_FAILURE:

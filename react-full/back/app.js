@@ -20,8 +20,8 @@ db.sequelize.sync()
 passportConfig();
 
 app.use(cors({
-  origin: '*', // 'https://yourdomain.com'
-  // credentials: false, 
+  origin: true, // 'https://yourdomain.com' or true해도 가능
+  credentials: true, 
 }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,22 +40,6 @@ app.get('/', (req, res) => {
 
 app.get('/api', (req, res) => {
   res.send('hello api');
-});
-
-app.get('/api/posts', (req, res) => {
-  res.json([
-    { id: 1, content: 'hello'},
-    { id: 2, content: 'hello2'},
-    { id: 3, content: 'hello3'},
-  ]);
-});
-
-app.post('/api/post', (req, res) => {
-  res.json({ id: 1, content: 'hello' });
-})
-
-app.delete('/api/post', (req, res) => {
-  res.json({ id: 1 });
 });
 
 app.use('/post', postRouter);
