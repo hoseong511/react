@@ -1,9 +1,41 @@
-const http = require('http');
-const server = http.createServer((req, res) => {
-  console.log(req.url, req.method);
-  res.write('<h1> hi </h1>');
-  res.end("hello node");
+const express = require('express');
+const postRouter = require('./routs/post');
+const app =express();
+
+app.get('/', (req, res) => {
+  res.send('hello express');
 });
-server.listen(3065, () => {
-  console.log('서버 실행 중 ');
+
+app.get('/api', (req, res) => {
+  res.send('hello api');
+});
+
+app.get('/api/posts', (req, res) => {
+  res.json([
+    { id: 1, content: 'hello'},
+    { id: 2, content: 'hello2'},
+    { id: 3, content: 'hello3'},
+  ]);
+});
+
+app.post('/api/post', (req, res) => {
+  res.json({ id: 1, content: 'hello' });
 })
+
+app.delete('/api/post', (req, res) => {
+  res.json({ id: 1 });
+});
+
+app.use('/post', postRouter);
+
+app.listen(3065, () => {
+  console.log('서버 실행 중');
+})
+/**
+ * get 가져오기
+ * post 생성하기
+ * put
+ * delete
+ * patch
+ * option
+ */
