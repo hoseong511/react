@@ -1,9 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Form, Input, Checkbox, Button } from 'antd';
 // import AppLayout from '../components/AppLayout';
+import Router from 'next/router';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+
 import useInput from '../hooks/useInput'; // custom hooks
 import Mylayout from '../components/MyLayout';
 import { signUpRequestAction } from '../reducers/user';
@@ -14,7 +16,7 @@ color: red;
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { isSigningUp } = useSelector((state) => state.user);
+  const { isSigningUp, me, isSignedUp, actionError } = useSelector((state) => state.user);
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -41,6 +43,25 @@ const Signup = () => {
     }
     dispatch(signUpRequestAction({ email, nickname, password }));
   }, [password, passwordCheck, term]);
+
+  useEffect(() => {
+    if (me && me.id) {
+      Router.replace('/'); // replace는 뒤로가기 허용 x
+    }
+  }, [me && me.id]);
+  
+
+  useEffect(() => {
+    if (isSignedUp) {
+      Router.replace('/');
+    }
+  }, [isSignedUp]);
+
+  useEffect(() => {
+    if (actionError) {
+      alert(actionError);
+    }
+  }, [actionError])
 
   return (
     <Mylayout>

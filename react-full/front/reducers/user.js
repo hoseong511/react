@@ -1,20 +1,29 @@
+import produce from 'immer';
+
 export const initialState = {
+  loadingUser: false,
+  loadedUser: false,
   isSigningUp: false, // 회원가입 중
   isSignedUp: false,
   isSigningOut: false, // 회원 탈퇴중
   isLoggingIn: false, // 로그인 시도 중
   isLoggedIn: false,
   isLoggingOut: false, // 로그아웃 시도 중
-  isfollowing: false, // 팔로우 시도중
-  isfollowed: false,
+  isFollowing: false, // 팔로우 시도중
+  isFollowed: false,
   isUnfollowing: false, // 언팔 시도중
+  isNickChanging: false, // 닉네임 변경 시도 중
+  isNickChanged: false,
   me: null,
-  error: null,
+  actionError: null,
   visible: false,
   signUpData: {},
   loginData: {},
 };
 
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
@@ -35,6 +44,11 @@ export const FOLLOW_FAILURE = 'FOLLOW_FAILURE';
 export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
+export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
 export const signUpRequestAction = (data) => ({ type: SIGN_UP_REQUEST, data });
 export const signOutRequestAction = (data) => ({ type: SIGN_OUT_REQUEST, data });
@@ -44,85 +58,134 @@ export const visibleOn = (data) => ({ type: VISIBLE_ON, data });
 export const visibleOff = (data) => ({ type: VISIBLE_OFF, data });
 export const followRequestAction = (data) => ({ type: FOLLOW_REQUEST, data });
 export const unFollowRequestAction = (data) => ({ type: UNFOLLOW_REQUEST, data });
+export const changeNicknameRequestAction = (data) => ({ type: CHANGE_NICKNAME_REQUEST, data });
+export const loadMyInfoRequest = (data) => ({ type: LOAD_MY_INFO_REQUEST, data });
 
-const dummyUser = (data) => ({
-  ...data,
-  nickname: '호호',
-  id: 1,
-  Posts: [],
-  Followings: [],
-  Followers: [],
-});
+
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SIGN_UP_REQUEST:
-      return {
-        ...state,
-        isSigningUp: true,
-      };
-    case SIGN_UP_SUCCESS:
-      return {
-        ...state,
-        isSigningUp: false,
-        isSignedUp: true,
-        me: dummyUser(action.data),
-      };
-    case SIGN_UP_FAILURE:
-      return {
-        ...state,
-        isSigningUp: false,
-        error: action.error,
-      };
-    case LOG_IN_REQUEST:
-      return {
-        ...state,
-        isLoggingIn: true,
-      };
-    case LOG_IN_SUCCESS:
-      return {
-        ...state,
-        isLoggingIn: false,
-        isLoggedIn: true,
-        me: dummyUser(action.data),
-      };
-    case LOG_IN_FAILURE:
-      return {
-        ...state,
-        isLoggingIn: false,
-        error: action.error,
-      };
-    case LOG_OUT_REQUEST:
-      return {
-        ...state,
-        isLoggingOut: false,
-      };
-    case LOG_OUT_SUCCESS:
-      return {
-        ...state,
-        isLoggingOut: false,
-        isLoggedIn: false,
-        me: null,
-      };
-    case LOG_OUT_FAILURE:
-      return {
-        ...state,
-        isLoggingOut: false,
-        error: action.error,
-      };
-    case VISIBLE_ON:
-      return {
-        ...state,
-        visible: true,
-      };
-    case VISIBLE_OFF:
-      return {
-        ...state,
-        visible: false,
-      };
-    default:
-      return state;
-  }
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case LOAD_MY_INFO_REQUEST:
+        draft.loadingUser = true;
+        draft.loadedUser = false;
+        draft.actionError = null;
+        break;
+      case LOAD_MY_INFO_SUCCESS:
+        draft.loadingUser = false;
+        draft.loadedUser = true;
+        draft.me = action.data;
+        break;
+      case LOAD_MY_INFO_FAILURE:
+        draft.loadingUser = false;
+        draft.loadedUser = false;
+        draft.actionError = action.error;
+        break;
+      case SIGN_UP_REQUEST:
+        draft.isSigningUp = true;
+        draft.isSignedUp = false;
+        draft.actionError = null;
+        break;
+      case SIGN_UP_SUCCESS:
+        draft.isSigningUp = false;
+        draft.isSignedUp = true;
+        draft.me = null;
+        break;
+      case SIGN_UP_FAILURE:
+        draft.isSigningUp = false;
+        draft.isSignedUp = false;
+        draft.actionError = action.error;
+        break;
+      case LOG_IN_REQUEST:
+        draft.isLoggingIn = true;
+        draft.isLoggedIn = false;
+        break;
+      case LOG_IN_SUCCESS:
+        draft.isLoggingIn = false;
+        draft.isLoggedIn = true;
+        draft.me = action.data;
+        break;
+      case LOG_IN_FAILURE:
+        draft.isLoggingIn = false;
+        draft.isLoggedIn = false;
+        draft.actionError = action.error;
+        break;
+      case LOG_OUT_REQUEST:
+        draft.isLoggingOut = true;
+        draft.isLoggedin = false;
+        draft.actionError = null;
+        break;
+      case LOG_OUT_SUCCESS:
+        draft.isLoggingOut = false;
+        draft.isLoggedin = false;
+        draft.me = null;
+        break;
+      case LOG_OUT_FAILURE:
+        draft.isLoggingOut = false;
+        draft.isLoggedin = false;
+        draft.actionError = action.error;
+        break;
+      case CHANGE_NICKNAME_REQUEST:
+        draft.isNickChanging = true;
+        draft.isNickChanged = false;
+        draft.actionError = null;
+        break;
+      case CHANGE_NICKNAME_SUCCESS:
+        draft.isNickChanging = false;
+        draft.isNickChanged = true;
+        draft.me = action.data;
+        break;
+      case CHANGE_NICKNAME_FAILURE:
+        draft.isNickChanging = false;
+        draft.isNickChanged = false;
+        draft.actionError = action.error;
+        break;
+      case FOLLOW_REQUEST:
+        draft.isFollowing = true;
+        draft.isFollowed = false;
+        draft.actionError = null;
+        break;
+      case FOLLOW_SUCCESS:
+        draft.isFollowing = false;
+        draft.isFollowed = true;
+        draft.me.Followings.push({ id: action.data })
+        break;
+      case FOLLOW_FAILURE:
+        draft.isFollowing = false;
+        draft.isFollowed = false;
+        draft.actionError = action.error;
+        break;
+      case UNFOLLOW_REQUEST:
+        draft.isUnFollowing = true;
+        draft.isFollowed = true;
+        draft.actionError = null;
+        break;
+      case UNFOLLOW_SUCCESS:
+        draft.isUnFollowing = false;
+        draft.isFollowed = false;
+        draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data);
+        break;
+      case UNFOLLOW_FAILURE:
+        draft.isUnFollowing = false;
+        draft.isFollowed = true;
+        draft.actionError = action.error;
+        break;
+      case ADD_POST_TO_ME:
+        draft.me.Posts.unshift({ id: action.data });
+        break;
+      case REMOVE_POST_OF_ME:
+        draft.me.Posts = draft.me.Posts.filter((v) => v.id !== action.data);
+        break;
+      case VISIBLE_ON:
+        draft.visible = true;
+        break;
+      case VISIBLE_OFF:
+        draft.visible = false;
+        break;
+      default:
+        break;
+    }
+  });
 };
 
 export default reducer;

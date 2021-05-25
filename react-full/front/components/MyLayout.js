@@ -28,7 +28,7 @@ const Global = createGlobalStyle`
 
 const Mylayout = ({ children }) => {
   const { Header, Content, Footer } = Layout;
-  const { me } = useSelector((state) => state.user);
+  const { isLoggedIn, me } = useSelector((state) => state.user);
 
   return (
     <>

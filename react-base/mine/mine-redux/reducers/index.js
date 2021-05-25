@@ -1,5 +1,34 @@
 import React from 'react';
 
+const plantMine = (row, cell, mine) => {
+  console.log(row, cell, mine);
+  const candidate = Array(row * cell).fill().map((arr, i) => {
+    return i;
+  });
+  const shuffle = [];
+  while (candidate.length > row * cell - mine) {
+    const chosen = candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0];
+    shuffle.push(chosen);
+  }
+  const data = [];
+  for (let i = 0; i < row; i++) {
+    const rowData = [];
+    data.push(rowData);
+    for (let j = 0; j < cell; j++) {
+      rowData.push(CODE.NORMAL);
+    }
+  }
+
+  for (let k = 0; k < shuffle.length; k++) {
+    const ver = Math.floor(shuffle[k] / cell);
+    const hor = shuffle[k] % cell;
+    data[ver][hor] = CODE.MINE;
+  }
+
+  console.log(data);
+  return data;
+};
+
 const initialState = {
   tableData: [],
   data: {
@@ -12,6 +41,22 @@ const initialState = {
   halted: false,
   opened_count: 0,
 }
+
+export const START_GAME = 'START_GAME';
+export const OPEN_CELL = 'OPEN_CELL';
+export const CLICK_MINE = 'CLICK_MINE';
+export const NORMALIZE_CELL = 'NORMALIZE_CELL';
+export const FLAG_CELL = 'FLAG_CELL';
+export const QUESTION_CELL = 'QUESTION_CELL';
+export const INCREMENT_TIMER = 'INCREMENT_TIMER';
+
+export const timerAction = () => {
+  return {
+    type: INCREMENT_TIMER,
+  }
+};
+
+
 
 
 const rootReducer = (state=initialState, action) => {

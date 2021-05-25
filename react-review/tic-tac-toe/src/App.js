@@ -18,7 +18,6 @@ import root from 'react-shadow'; // module.css, styled-component, shadow 전부 
 // import A from "./components/A";
 import A from "./components/ReverseA";
 import { Col, Row } from "antd";
-import "antd/dist/antd.css";
 
 import ContextAPI from "./components/ContextAPI";
 import ContextAPI2 from "./components/ContextAPI2";
@@ -74,9 +73,9 @@ function App() {
       <header className={styles["header"]}>
         <img src={logo2} className={styles["logo"]} alt="logo" />
 
-        <Row >
+        <Row >컴포넌트통신
           <Col >
-            <A />
+            <A >props를 전달하기</A>
           </Col>
           <Col >
             <ContextAPI >consumer를 이용한 방법</ContextAPI>
@@ -88,31 +87,31 @@ function App() {
             <ContextAPI3 >useContext를 이용한 방법</ContextAPI3>
           </Col>
         </Row>
-        {/* <button>global</button>
-        <Button>Button</Button>
-        <StyledButton>버튼</StyledButton>
-        <StyledButton primary>버튼</StyledButton>
-        <PrimaryStyledButton >버튼</PrimaryStyledButton>
-        <StyledButton as='a' href='/'>버튼</StyledButton>
-        <StyledButton as={UppercaseButton} href='/'>button</StyledButton>
-        <StyledMyButton>button</StyledMyButton>
-      <StyledA href='https://google.com'> 구구구구글</StyledA> */}
+        <BrowserRouter>
+          <Row >
+            <Col>
+              <Links />
+            </Col>
+            <Col>
+              <NavLinks />
+            </Col>
+            <Col >
+              <Switch>
+                <Route
+                  path="/login"
+                  render={() => (isLogin ? <Redirect to="/" /> : <Login />)}
+                />
+                <Route path="/profile/:id" component={Profile} />
+                <Route path="/profile" component={Profile} />
+                <Route path="/about" component={About} />
+                <Route path="/" exact component={Home} />
+                <Route component={NotFound} />
+              </Switch>
+            </Col>
+
+          </Row>
+        </BrowserRouter>
       </header>
-      <BrowserRouter>
-        <Links />
-        <NavLinks />
-        <Switch>
-          <Route
-            path="/login"
-            render={() => (isLogin ? <Redirect to="/" /> : <Login />)}
-          />
-          <Route path="/profile/:id" component={Profile} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/about" component={About} />
-          <Route path="/" exact component={Home} />
-          <Route component={NotFound} />
-        </Switch>
-      </BrowserRouter>
     </div>
     </>
   );

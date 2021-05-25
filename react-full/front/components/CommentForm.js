@@ -7,7 +7,7 @@ import useInput from '../hooks/useInput';
 
 const CommentForm = ({ post }) => {
   const id = useSelector((state) => state.user.me?.id);
-  const { commentAdded } = useSelector((state) => state.post);
+  const { commentAdded, commentAdding } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
 
@@ -25,7 +25,7 @@ const CommentForm = ({ post }) => {
     <Form onFinish={onSubmitComment}>
       <Form.Item>
         <Input.TextArea value={commentText} onChange={onChangeCommentText} rows={4} />
-        <Button type="primary" htmlType="submit">삐약</Button>
+        <Button type="primary" htmlType="submit" loading={commentAdding}>삐약</Button>
       </Form.Item>
     </Form>
   );

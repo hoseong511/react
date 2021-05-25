@@ -1,100 +1,131 @@
-// 리덕스 중심으로
+import shortid from 'shortid';
+import produce from 'immer';
+import faker from 'faker';
+
 export const initialState = {
-  mainPosts: [{
-    id: 1,
-    User: { // User, Images, Comments는 다른 정보들과 합져 보내기 때문에 대문자로 작성한다.
-      id: 1,
-      nickname: '제로초',
-    },
-    content: '첫 번째 게시글 #해시태그 #익스프레스',
-    Images: [{
-      src: 'https://images.unsplash.com/photo-1620413808828-0e577e22d131?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=335&q=80',
-    }, {
-      src: 'https://images.unsplash.com/photo-1620421680010-0766ff230392?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=335&q=80',
-    }],
-    Comments: [{
-      User: {
-        nickname: 'nero',
-      },
-      content: '와와~~,',
-    }, {
-      User: {
-        nickname: 'hero',
-      },
-      content: 'ㅎㅎㅎㅎㅎ',
-    }],
-  }],
+  mainPosts: [],
   imagePaths: [],
+  hasMorePosts: true,
+  postLoading: false,
+  postLoaded: false,
   postAdding: false,
   postAdded: false,
+  postRemoving: false,
+  postRemoved: false,
   commentAdding: false,
   commentAdded: false,
-  error: null,
+  actionError: null,
 };
+export const generateDummyPost = (number) => Array(number).fill().map(() => ({
+  id: shortid.generate(),
+  User: {
+    id: shortid.generate(),
+    nickname: faker.name.findName(),
+  },
+  content: faker.lorem.paragraph(),
+  Images: [{
+    src: faker.image.image(),
+  }],
+  Comments: [{
+    User: {
+      id: shortid.generate(),
+      nickname: faker.name.findName(),
+    },
+    content: faker.lorem.sentence(),
+  }],
+}));
 
+// initialState.mainPosts = initialState.mainPosts.concat(
+//   // 
+// );
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+export const loadPostRequest = (data) => ({ type: LOAD_POST_REQUEST, data });
 export const addPostRequest = (data) => ({ type: ADD_POST_REQUEST, data });
 export const addCommentRequest = (data) => ({ type: ADD_COMMENT_REQUEST, data });
-
-const dummyPost = { // 데이터를 구성한 후 화면??
-  id: 2,
-  content: '더미데이터입니다.!',
-  User: {
-    id: 1,
-    nickname: 'hoho',
-  },
-  Images: [],
-  Comments: [],
-};
+export const removePostRequest = (data) => ({ type: REMOVE_POST_REQUEST, data });
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_POST_REQUEST:
-      return {
-        ...state,
-        postAdding: true,
-      };
-    case ADD_POST_SUCCESS:
-      return {
-        ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
-        postAdding: false,
-        postAdded: true,
-      };
-    case ADD_POST_FAILURE:
-      return {
-        ...state,
-        postAdding: false,
-        error: action.error,
-      };
-    case ADD_COMMENT_REQUEST:
-      return {
-        ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
-        commentAdding: true,
-      };
-    case ADD_COMMENT_SUCCESS:
-      return {
-        ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
-        commentAdding: false,
-        commentAdded: true,
-      };
-    case ADD_COMMENT_FAILURE:
-      return {
-        ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
-        commentAdding: false,
-        error: action.error,
-      };
-    default:
-      return state;
-  }
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case LOAD_POST_REQUEST:
+        draft.postLoading = true;
+        draft.postLoadded = false;
+        draft.actionError = null;
+        break;
+      case LOAD_POST_SUCCESS:
+        draft.postLoading = false;
+        draft.postLoadded = true;
+        draft.mainPosts = draft.mainPosts.concat(action.data); // 무한스크롤링을 구현
+        draft.hasMorePosts = draft.mainPosts.length < 50;
+        break;
+      case LOAD_POST_FAILURE:
+        draft.postLoading = false;
+        draft.postLoadded = false;
+        draft.actionError = action.error;
+        break;
+      case ADD_POST_REQUEST:
+        draft.postAdding = true;
+        draft.postAdded = false;
+        draft.actionError = null;
+        break;
+      case ADD_POST_SUCCESS:
+        draft.postAdding = false;
+        draft.postAdded = true;
+        draft.mainPosts.unshift(action.data);
+        break;
+      case ADD_POST_FAILURE:
+        draft.postAdding = false;
+        draft.postAdded = false;
+        draft.actionError = action.error;
+        break;
+      case REMOVE_POST_REQUEST:
+        draft.postRemoving = true;
+        draft.postRemoved = false;
+        draft.actionError = null;
+        break;
+      case REMOVE_POST_SUCCESS:
+        draft.postRemoving = false;
+        draft.postRemoved = true;
+        draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data)
+        break;
+      case REMOVE_POST_FAILURE:
+        draft.postRemoving = false;
+        draft.postRemoved = false;
+        draft.actionError = action.arror;
+        break;
+      case ADD_COMMENT_REQUEST:
+        draft.commentAdding = true;
+        draft.commentAdded = false;
+        draft.actionError = null;
+        break;
+      case ADD_COMMENT_SUCCESS: {
+        draft.commentAdding = false;
+        draft.commentAdded = true;
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Comments.unshift(action.data);
+        break;        
+      }
+      case ADD_COMMENT_FAILURE:
+        draft.commentAdding = false;
+        draft.commentAdded = false;
+        draft.actionError = action.error;
+        break;
+      default:
+        break;
+    }
+  });
 };
 
 export default reducer;
