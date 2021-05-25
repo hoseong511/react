@@ -17,15 +17,14 @@ import {
 
 // saga는 테스트 시 log확인이 유용하다.
 function logInAPI(data) {
-  return axios.post('/api/login', data);
+  return axios.post('/user/login', data);
 }
 function* logIn(action) {
   try {
-    yield delay(1000);
-    // const result = yield call(logInAPI, action.data,) // call은 비동기처리, fork는 동기처리
+    const result = yield call(logInAPI, action.data,) // call은 비동기처리, fork는 동기처리
     yield put({ // dispatch
       type: LOG_IN_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
   } catch (error) {
     yield put({
@@ -54,7 +53,7 @@ function* logOut() {
   }
 }
 function signUpAPI(data) {
-  return axios.post('http://localhost:3065/user', data);
+  return axios.post('/user', data);
 }
 
 function* signUp(action) {
@@ -69,7 +68,7 @@ function* signUp(action) {
   } catch (error) {
     yield put({
       type: SIGN_UP_FAILURE,
-      error: error,
+      error: error.response.data,
     });
   }
 }

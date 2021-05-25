@@ -1,11 +1,16 @@
-{
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+module.exports = {
   "development": {
     "username": "root",
     "password": "qwer1234",
     "database": "react-nodebird",
     "host": "127.0.0.1",
     "port": "3307",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "log": false
   },
   "test": {
     "username": "root",

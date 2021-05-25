@@ -75,7 +75,7 @@ const reducer = (state = initialState, action) => {
       case SIGN_UP_SUCCESS:
         draft.isSigningUp = false;
         draft.isSignedUp = true;
-        draft.me = dummyUser(action.data);
+        draft.me = null;
         break;
       case SIGN_UP_FAILURE:
         draft.isSigningUp = false;
@@ -89,7 +89,7 @@ const reducer = (state = initialState, action) => {
       case LOG_IN_SUCCESS:
         draft.isLoggingIn = false;
         draft.isLoggedIn = true;
-        draft.me = dummyUser(action.data);
+        draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
         draft.isLoggingIn = false;
