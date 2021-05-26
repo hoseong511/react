@@ -76,7 +76,6 @@ function signUpAPI(data) {
 
 function* signUp(action) {
   try {
-    console.log(action.data);
     const result = yield call(signUpAPI, action.data) // call은 비동기처리, fork는 동기처리
     console.log(result);
     yield put({
@@ -90,17 +89,17 @@ function* signUp(action) {
     });
   }
 }
-function changeNickAPI() {
-  return axios.post('/api/signUp');
+function changeNickAPI(data) {
+  return axios.patch('/user/nickname', {nickname:data});
 }
 
-function* changeNick() {
+function* changeNick(action) {
   try {
-    // const result = yield call(logOutAPI) // call은 비동기처리, fork는 동기처리
-    yield delay(1000);
+    console.log(action.data);
+    const result = yield call(changeNickAPI, action.data); 
     yield put({
       type: CHANGE_NICKNAME_SUCCESS,
-      // data: result.data
+      data: result.data,
     });
   } catch (error) {
     yield put({

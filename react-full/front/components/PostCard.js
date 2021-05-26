@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Card, Popover, List, Comment, Avatar } from 'antd';
 import { RetweetOutlined, HeartOutlined, EllipsisOutlined, MessageOutlined, HeartTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
 import { LIKE_POST_REQUEST, removePostRequest, UNLIKE_POST_REQUEST } from '../reducers/post';
+import FollowButton from './FollowButton';
 
 const CardWrapper = styled.div`
   margin-botton: 20px;
@@ -17,8 +18,10 @@ const CardWrapper = styled.div`
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const { postRemoving } = useSelector((state) => state.post);
+  const { me } = useSelector((state) => state.user);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
-  
+
+   
   const onLike = useCallback(() => {
     dispatch({
       type: LIKE_POST_REQUEST,
@@ -68,7 +71,7 @@ const PostCard = ({ post }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
-        // extra={id && <FollowButton post={post} />}
+        extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}

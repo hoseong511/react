@@ -5,24 +5,6 @@ const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-// router.get('/', async (req, res, next) => { // GET /post
-//   try {
-//     const fullPost = await Post.findAll({
-//       include: [{
-//         model: Image,
-//       }, {
-//         model: Comment,
-//       }, {
-//         model: User,
-//         attributes: ['id', 'nickname']
-//       }]
-//     })
-//     res.status(201).json(fullPost);
-//   } catch (error) {
-//     console.error(error);
-//     next(error);
-//   }
-// });
 router.post('/', isLoggedIn, async (req, res, next) => { // POST /post
   try {
     const post = await Post.create({
@@ -54,6 +36,19 @@ router.post('/', isLoggedIn, async (req, res, next) => { // POST /post
     next(error);
   }
 });
+
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
+  try {
+    await Post.destroy({
+      where: { id: req.params.postId },
+      UserId: req.user.id,
+    });
+    res.status(200).json({ PostId: parseInt(req.params.postId, 10) })
+  } catch (error) {
+    console.error(error);
+    next(error)
+  }
+})
 
 router.post('/:postId/comment', isLoggedIn, async (req, res, next) => { // POST /post
   try {
@@ -89,9 +84,7 @@ router.patch('/:postId/like', isLoggedIn, async (req, res, next) => { // PATCH /
     if (!post) {
       return res.status(403).send('게시글이 존재하지 않습니다.')
     }
-    console.log(post);
-    const post2 = await post.addLikers(req.user.id);
-    console.log(post2);
+    await post.addLikers(req.user.id);
     res.json({ postId: post.id, UserId: req.user.id})
   } catch (error) {
     console.error(error);
@@ -104,7 +97,6 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => { // DELETE
     if (!post) {
       return res.status(403).send('게시글이 존재하지 않습니다.')
     }
-    console.log(post);
     await post.removeLikers(req.user.id);
     res.json({ postId: post.id, UserId: req.user.id})
   } catch (error) {

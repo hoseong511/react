@@ -45,21 +45,24 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete(`/post/${data.postId}/comment`, data);
+  return axios.delete(`/post/${data}`);
 }
 function* removePost(action) {
   try {
-    const result = yield call(removePostAPI, action.data)
     console.log(action.data);
+    const result = yield call(removePostAPI, action.data)
+    console.log(result);
+
     yield put({
       type: REMOVE_POST_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
     yield put({
       type: REMOVE_POST_OF_ME,
-      data: action.data,
+      data: result.data,
     });
   } catch (error) {
+    console.error(error)
     yield put({
       type: REMOVE_POST_FAILURE,
       error: error.response.data,
@@ -129,7 +132,7 @@ function* watchLoadPost() {
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 }
-function* watchRemovePost() {
+function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 function* watchLikePost() {
@@ -138,7 +141,7 @@ function* watchLikePost() {
 function* watchUnLikePost() {
   yield takeLatest(UNLIKE_POST_REQUEST, unLikePost);
 }
-function* watchAddComment() {
+function* watchRemovePost() {
   yield takeLatest(REMOVE_POST_REQUEST, removePost);
 }
 export default function* postSaga() {
