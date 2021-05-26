@@ -1,6 +1,4 @@
-import shortid from 'shortid';
 import produce from 'immer';
-import faker from 'faker';
 
 export const initialState = {
   mainPosts: [],
@@ -12,20 +10,34 @@ export const initialState = {
   postAdded: false,
   postRemoving: false,
   postRemoved: false,
+  postLiking: false,
+  postLiked: false,
+  postUnLiking: false,
+  postUnLiked: false,
   commentAdding: false,
   commentAdded: false,
   actionError: null,
+  test:[],
 };
 
 export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
 export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
 export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
+export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
+export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS';
+export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE';
+export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
+export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
+export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
+
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
@@ -53,6 +65,7 @@ const reducer = (state = initialState, action) => {
         draft.postLoadded = false;
         draft.actionError = action.error;
         break;
+
       case ADD_POST_REQUEST:
         draft.postAdding = true;
         draft.postAdded = false;
@@ -68,6 +81,7 @@ const reducer = (state = initialState, action) => {
         draft.postAdded = false;
         draft.actionError = action.error;
         break;
+
       case REMOVE_POST_REQUEST:
         draft.postRemoving = true;
         draft.postRemoved = false;
@@ -83,16 +97,55 @@ const reducer = (state = initialState, action) => {
         draft.postRemoved = false;
         draft.actionError = action.arror;
         break;
+
+      case LIKE_POST_REQUEST:
+        draft.postLiking = true;
+        draft.postLiked = false;
+        draft.actionError = null;
+        break;
+      case LIKE_POST_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === parseInt(action.data.postId, 10))
+        post.Likers.push({ id: action.data.UserId })
+        // draft.test.push(false) reducer돌때에 자료형확인은 이런식으로 확인하자
+        // draft.test.push(post)
+        draft.postLiking = false;
+        draft.postLiked = true;
+        break;
+      }
+      case LIKE_POST_FAILURE:
+        draft.postLiking = false;
+        draft.postLiked = false;
+        draft.actionError = action.arror;
+        break;
+
+      case UNLIKE_POST_REQUEST:
+        draft.postUnLiking = true;
+        draft.postUnLiked = false;
+        draft.actionError = null;
+        break;
+      case UNLIKE_POST_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === parseInt(action.data.postId, 10))
+        post.Likers = post.Likers.filter((v) => v.id !== action.data.UserId)
+        draft.postUnLiking = false;
+        draft.postUnLiked = true;
+        break;
+      }
+      case UNLIKE_POST_FAILURE:
+        draft.postUnLiking = false;
+        draft.postUnLiked = false;
+        draft.actionError = action.arror;
+        break;
+
       case ADD_COMMENT_REQUEST:
         draft.commentAdding = true;
         draft.commentAdded = false;
         draft.actionError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        draft.commentAdding = false;
-        draft.commentAdded = true;
         const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
         post.Comments.unshift(action.data);
+        draft.commentAdding = false;
+        draft.commentAdded = true;
         break;        
       }
       case ADD_COMMENT_FAILURE:

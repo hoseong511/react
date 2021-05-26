@@ -8,22 +8,29 @@ import Link from 'next/link';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
-import { removePostRequest } from '../reducers/post';
-import FollowButton from './FollowButton';
+import { LIKE_POST_REQUEST, removePostRequest, UNLIKE_POST_REQUEST } from '../reducers/post';
 
 const CardWrapper = styled.div`
   margin-botton: 20px;
 `;
 
 const PostCard = ({ post }) => {
-  const id = useSelector((state) => state.user.me?.id); //
   const dispatch = useDispatch();
   const { postRemoving } = useSelector((state) => state.post);
-  const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
-  const onToggleLike = useCallback(() => {
-    setLiked(!liked);
-  }, [liked]); 
+  
+  const onLike = useCallback(() => {
+    dispatch({
+      type: LIKE_POST_REQUEST,
+      data: post.id
+    })
+  }, []); 
+  const onUnLike = useCallback(() => {
+    dispatch({
+      type: UNLIKE_POST_REQUEST,
+      data: post.id
+    })
+  }, []); 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prev) => !prev);
   }, []);
@@ -31,7 +38,10 @@ const PostCard = ({ post }) => {
     console.log(e.current);
     dispatch(removePostRequest(post.id));
   }, []);
-
+  
+  const id = useSelector((state) => state.user.me?.id); //
+  const liked = post.Likers.find((v) => v.id === id);
+  
   return (
     <CardWrapper key={post.id}>
       <Card
@@ -39,8 +49,8 @@ const PostCard = ({ post }) => {
         actions={[
           <RetweetOutlined key="retweet" />,
           liked
-            ? <HeartTwoTone twoToneColor="red" key="heart" onClick={onToggleLike} />
-            : <HeartOutlined key="heart" onClick={onToggleLike} />,
+            ? <HeartTwoTone twoToneColor="red" key="heart" onClick={onUnLike} />
+            : <HeartOutlined key="heart" onClick={onLike} />,
           <MessageOutlined key="comment" onClick={onToggleComment} />,
           <Popover
             key="ellipsis"
@@ -101,6 +111,7 @@ PostCard.propTypes = {
     createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(PropTypes.object),
     Images: PropTypes.arrayOf(PropTypes.object),
+    Likers: PropTypes.arrayOf(PropTypes.object)
   }).isRequired,
 };
 

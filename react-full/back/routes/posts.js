@@ -8,23 +8,27 @@ router.get('/', async (req, res, next) => {
     const posts = await Post.findAll({
       limit: 10,
       order: [
-        ['createdAt', "DESC"],
-        [Comment, 'createdAt', 'DESC']
-      ],
+              ['createdAt', "DESC"],
+              [Comment, 'createdAt', 'DESC']
+            ],
       include: [{
         model: User,
         attributes: ['id', 'nickname']
-      }, {
-        model: Image,
-      }, {
-        model: Comment,
-        include: [{
-          model: User,
-          attributes: ['id', 'nickname']
-        }]
-      }]
+        }, {
+          model: User, // 좋아요 누른 사람
+          as: 'Likers',
+          attributes: ['id']
+        }, {
+          model: Image,
+        }, {
+          model: Comment,
+          include: [{
+            model: User,
+            attributes: ['id', 'nickname'],
+          }]
+        }],
+      })
       // offset: 10 이거는 게시물이 추가 삭제되었을 시 누락되는 게시물이 발생
-    })
     res.status(200).json(posts)
   } catch (error) {
     console.error(error);
