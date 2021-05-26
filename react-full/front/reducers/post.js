@@ -16,28 +16,6 @@ export const initialState = {
   commentAdded: false,
   actionError: null,
 };
-export const generateDummyPost = (number) => Array(number).fill().map(() => ({
-  id: shortid.generate(),
-  User: {
-    id: shortid.generate(),
-    nickname: faker.name.findName(),
-  },
-  content: faker.lorem.paragraph(),
-  Images: [{
-    src: faker.image.image(),
-  }],
-  Comments: [{
-    User: {
-      id: shortid.generate(),
-      nickname: faker.name.findName(),
-    },
-    content: faker.lorem.sentence(),
-  }],
-}));
-
-// initialState.mainPosts = initialState.mainPosts.concat(
-//   // 
-// );
 
 export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';

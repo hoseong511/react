@@ -5,6 +5,24 @@ const { isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
+router.get('/', async (req, res, next) => { // GET /post
+  try {
+    const fullPost = await Post.findAll({
+      include: [{
+        model: Image,
+      }, {
+        model: Comment,
+      }, {
+        model: User,
+        attributes: ['id', 'nickname']
+      }]
+    })
+    res.status(201).json(fullPost);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 router.post('/', isLoggedIn, async (req, res, next) => { // POST /post
   try {
     const post = await Post.create({
@@ -17,8 +35,13 @@ router.post('/', isLoggedIn, async (req, res, next) => { // POST /post
         model: Image,
       }, {
         model: Comment,
+        include: [{
+          model: User,
+          attributes: ['id', 'nickname']
+        }]
       }, {
         model: User,
+        attributes: ['id', 'nickname']
       }]
     })
     res.status(201).json(fullPost);
@@ -38,14 +61,15 @@ router.post('/:postID/comment', isLoggedIn, async (req, res, next) => { // POST 
     }
     const comment = await Comment.create({
       content: req.body.content,
-      PostId: req.params.postID,
+      PostId: parseInt(req.params.postID, 10),
       UserId: req.user.id,
     })
     // console.log(comment);
     const responseComment = await Comment.findOne({
-      where: { id: comment.dataValues.id },
+      where: { id: comment.id },
       include: [{
         model: User,
+        attributes: ['id', 'nickname'],
       }]
     }, )
     res.status(201).json(responseComment)
