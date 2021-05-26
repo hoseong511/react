@@ -17,6 +17,7 @@ export const initialState = {
   commentAdding: false,
   commentAdded: false,
   actionError: null,
+  reset: false,
   test:[],
 };
 
@@ -41,6 +42,9 @@ export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+export const RESET_MAIN_POST = 'RESET_MAIN_POST';
+
 export const loadPostRequest = (data) => ({ type: LOAD_POST_REQUEST, data });
 export const addPostRequest = (data) => ({ type: ADD_POST_REQUEST, data });
 export const addCommentRequest = (data) => ({ type: ADD_COMMENT_REQUEST, data });
@@ -152,6 +156,10 @@ const reducer = (state = initialState, action) => {
         draft.commentAdding = false;
         draft.commentAdded = false;
         draft.actionError = action.error;
+        break;
+      case RESET_MAIN_POST:
+        draft.reset = true;
+        draft.mainPosts = []
         break;
       default:
         break;

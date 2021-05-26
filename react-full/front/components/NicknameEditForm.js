@@ -3,6 +3,8 @@ import { Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHANGE_NICKNAME_REQUEST } from '../reducers/user';
 import useInput from '../hooks/useInput';
+import Router from 'next/router';
+import { loadPostRequest } from '../reducers/post'
 
 const NicknameEditForm = () => {
   const { me } = useSelector((state) => state.user);
@@ -14,6 +16,7 @@ const NicknameEditForm = () => {
       type: CHANGE_NICKNAME_REQUEST,
       data: nickname
     })
+    Router.replace('/')
   }, [nickname]);
   
   return (

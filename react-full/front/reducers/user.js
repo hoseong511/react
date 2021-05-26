@@ -87,7 +87,6 @@ const reducer = (state = initialState, action) => {
         draft.isSigningUp = false;
         draft.isSignedUp = true;
         draft.me = null;
-        draft.visible = true;
         break;
       case SIGN_UP_FAILURE:
         draft.isSigningUp = false;
@@ -146,7 +145,7 @@ const reducer = (state = initialState, action) => {
       case FOLLOW_SUCCESS:
         draft.isFollowing = false;
         draft.isFollowed = true;
-        draft.me.Followings.push({ id: action.data })
+        draft.me.Followings.push({ id: action.data.UserId })
         break;
       case FOLLOW_FAILURE:
         draft.isFollowing = false;
@@ -161,7 +160,7 @@ const reducer = (state = initialState, action) => {
       case UNFOLLOW_SUCCESS:
         draft.isUnFollowing = false;
         draft.isFollowed = false;
-        draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data);
+        draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data.UserId);
         break;
       case UNFOLLOW_FAILURE:
         draft.isUnFollowing = false;

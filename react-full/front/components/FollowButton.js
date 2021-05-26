@@ -10,11 +10,15 @@ const FollowButton = ({ post }) => {
   const isFollow = me?.Followings.find((v) => v.id === post.User.id)
   const onFollow = useCallback(() => {
     if (isFollow) {
-      dispatch(unFollowRequestAction({ data: post.User.id }));
+      dispatch(unFollowRequestAction(post.User.id));
     } else {
-      dispatch(followRequestAction({ data: post.User.id }));
+      dispatch(followRequestAction(post.User.id));
     }
   }, [isFollow]);
+
+  if (post.User.id === me.id) {
+    return null;
+  }
   return (
     <Button loading={isFollowing || isUnFollowing} onClick={onFollow}>
       {isFollow ? '언팔로우' : '팔로우'}
