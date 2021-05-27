@@ -1,10 +1,16 @@
 .inner {
   vertical-align: middle;
 }
-
+.drop {
+  position: relative;
+}
+.drop__menu {
+  position: 'fixed';
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .logo {
+    cursor: pointer;
     width: 35px;
     height: 35px;
     animation: App-logo-spin infinite 20s linear;

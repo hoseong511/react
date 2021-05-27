@@ -7,6 +7,12 @@ import {
   FOLLOW_FAILURE, 
   FOLLOW_REQUEST, 
   FOLLOW_SUCCESS, 
+  LOAD_FOLLOWERS_FAILURE, 
+  LOAD_FOLLOWERS_REQUEST, 
+  LOAD_FOLLOWERS_SUCCESS, 
+  LOAD_FOLLOWINGS_FAILURE, 
+  LOAD_FOLLOWINGS_REQUEST, 
+  LOAD_FOLLOWINGS_SUCCESS, 
   LOAD_MY_INFO_FAILURE, 
   LOAD_MY_INFO_REQUEST, 
   LOAD_MY_INFO_SUCCESS, 
@@ -16,6 +22,9 @@ import {
   LOG_OUT_FAILURE, 
   LOG_OUT_REQUEST, 
   LOG_OUT_SUCCESS, 
+  REMOVE_FOLLOWER_FAILURE, 
+  REMOVE_FOLLOWER_REQUEST, 
+  REMOVE_FOLLOWER_SUCCESS, 
   SIGN_UP_FAILURE, 
   SIGN_UP_REQUEST, 
   SIGN_UP_SUCCESS, 
@@ -121,20 +130,59 @@ function* changeNick(action) {
     });
   }
 }
+
+function loadFollowerAPI(data) {
+  return axios.get(`/user/followers`, data);
+}
+function* loadFollowers(action) {
+  try {
+    const result = yield call(loadFollowerAPI, action.data) // call은 비동기처리, fork는 동기처리
+    yield put({
+      type: LOAD_FOLLOWERS_SUCCESS,
+      data: result.data
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: LOAD_FOLLOWERS_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
+
+function loadFollowingsAPI(data) {
+  return axios.get(`/user/followings`, data);
+}
+function* loadFollowings(action) {
+  try {
+    const result = yield call(loadFollowingsAPI, action.data) // call은 비동기처리, fork는 동기처리
+    yield put({
+      type: LOAD_FOLLOWINGS_SUCCESS,
+      data: result.data
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_FOLLOWINGS_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
+
 function followAPI(data) {
   return axios.patch(`/user/${data}/follow`);
 }
 function* follow(action) {
   try {
-    const result = yield call(followAPI, action.data) // call은 비동기처리, fork는 동기처리
+    console.log(action.data);
+    const result = yield call(followAPI, action.data) 
     yield put({
       type: FOLLOW_SUCCESS,
-      data: result.data
+      data: result.data,
     });
   } catch (error) {
     yield put({
       type: FOLLOW_FAILURE,
-      error: error.response.data,
+      error: error,
     });
   }
 }
@@ -157,6 +205,30 @@ function* unFollow(action) {
     });
   }
 }
+function removeFollowerAPI(data) {
+  return axios.delete(`/user/follower/${data}`);
+}
+function* removeFollower(action) {
+  try {
+    console.log(action.data);
+    const result = yield call(removeFollowerAPI, action.data) 
+    yield put({
+      type: REMOVE_FOLLOWER_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: REMOVE_FOLLOWER_FAILURE,
+      error: error,
+    });
+  }
+}
+function* watchLoadFollower() {
+  yield takeLatest(LOAD_FOLLOWERS_REQUEST, loadFollowers);
+}
+function* watchLoadFollowings() {
+  yield takeLatest(LOAD_FOLLOWINGS_REQUEST, loadFollowings);
+}
 function* watchLoadUser() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadUser);
 }
@@ -178,23 +250,20 @@ function* watchFollow() {
 function* watchUnFollow() {
   yield takeLatest(UNFOLLOW_REQUEST, unFollow);
 }
+function* watchRemoveFollow() {
+  yield takeLatest(REMOVE_FOLLOWER_REQUEST, removeFollower);
+}
 export default function* userSaga() {
   yield all([
+    fork(watchLoadFollower),
+    fork(watchLoadFollowings),
     fork(watchLoadUser),
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchSignUp),
     fork(watchNick),
     fork(watchUnFollow),
+    fork(watchRemoveFollow),
     fork(watchFollow),
   ]);
 }
-// takeEvery보다는 takeLatest를 적용해야 만약에 여러번 호출되었을 시 마지막 요청만 한 번 처리된다.
-// 동시 로딩 중인 상황에서 마지막으로 들어온 것만 남기고 로딩 중인 job을 제거한다
-/**
-    그런데 서버에 보내는 요청을 제어하지는 못한다.
- * 연속 두번으로 보내는 경우 두번 다 백엔드 서버에서 처리 후 2번 응답을 하는데
- * 프론트 서버가 들어온 응답중 마지막 응답만 처리를 하겠다는 의미이다.
- * 그래서 요청을 제어하는 throttle도 있다.
- * throttle("LOG_IN", logIn, 2000)
-*/

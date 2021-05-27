@@ -52,9 +52,9 @@ const Mylayout = ({ children }) => {
               </Col>
               <Col xs={5} md={6} style={{ textAlign: 'right' }}>
                 <Dropdown
+                  className={styles['drop']}
                   overlay={
-                                      
-                    <Menu>
+                    <Menu className={styles['drop__menu']}>
                       {me ? (<>
                               <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
                               <Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>

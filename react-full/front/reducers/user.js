@@ -9,6 +9,12 @@ export const initialState = {
   isLoggingIn: false, // 로그인 시도 중
   isLoggedIn: false,
   isLoggingOut: false, // 로그아웃 시도 중
+  isLoadingFollowers: false,
+  isLoadedFollowers: false,
+  isLoadingFollowings: false,
+  isLoadedFollowers: false,
+  isRemovingFollower: false,
+  isRemovedFollower: false,
   isFollowing: false, // 팔로우 시도중
   isFollowed: false,
   isUnfollowing: false, // 언팔 시도중
@@ -38,12 +44,27 @@ export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 export const VISIBLE_ON = 'VISIBLE_ON';
 export const VISIBLE_OFF = 'VISIBLE_OFF';
+
+export const LOAD_FOLLOWERS_REQUEST = 'LOAD_FOLLOWERS_REQUEST';
+export const LOAD_FOLLOWERS_SUCCESS = 'LOAD_FOLLOWERS_SUCCESS';
+export const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
+
+export const LOAD_FOLLOWINGS_REQUEST = 'LOAD_FOLLOWINGS_REQUEST';
+export const LOAD_FOLLOWINGS_SUCCESS = 'LOAD_FOLLOWINGS_SUCCESS';
+export const LOAD_FOLLOWINGS_FAILURE = 'LOAD_FOLLOWINGS_FAILURE';
+
 export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
 export const FOLLOW_SUCCESS = 'FOLLOW_SUCCESS';
 export const FOLLOW_FAILURE = 'FOLLOW_FAILURE';
+
+export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
+export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
+export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
+
 export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
 export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
 export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
+
 export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
 export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
 export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
@@ -137,6 +158,39 @@ const reducer = (state = initialState, action) => {
         draft.isNickChanged = false;
         draft.actionError = action.error;
         break;
+        
+      case LOAD_FOLLOWERS_REQUEST:
+        draft.isLoadingFollowers = true;
+        draft.isLoadedFollowers = false;
+        draft.actionError = null;
+        break;
+      case LOAD_FOLLOWERS_SUCCESS:
+        draft.isLoadingFollowers = false;
+        draft.isLoadedFollowers = true;
+        draft.me.Followers = action.data;
+        break;
+      case LOAD_FOLLOWERS_FAILURE:
+        draft.isLoadingFollowers = false;
+        draft.isLoadedFollowers = false;
+        draft.actionError = action.error;
+        break;
+
+      case LOAD_FOLLOWINGS_REQUEST:
+        draft.isLoadingFollowers = true;
+        draft.isLoadedFollowers = false;
+        draft.actionError = null;
+        break;
+      case LOAD_FOLLOWINGS_SUCCESS:
+        draft.isLoadingFollowers = false;
+        draft.isLoadedFollowers = true;
+        draft.me.Followings = action.data;
+        break;
+      case LOAD_FOLLOWINGS_FAILURE:
+        draft.isLoadingFollowers = false;
+        draft.isLoadedFollowers = false;
+        draft.actionError = action.error;
+        break;
+
       case FOLLOW_REQUEST:
         draft.isFollowing = true;
         draft.isFollowed = false;
@@ -152,6 +206,23 @@ const reducer = (state = initialState, action) => {
         draft.isFollowed = false;
         draft.actionError = action.error;
         break;
+
+      case REMOVE_FOLLOWER_REQUEST:
+        draft.isRemovingFollower = true;
+        draft.isRemovedFollower = false;
+        draft.actionError = null;
+        break;
+      case REMOVE_FOLLOWER_SUCCESS:
+        draft.isRemovingFollower = false;
+        draft.isRemovedFollower  = false;
+        draft.me.Followers = draft.me.Followers.filter((v) => v.id !== action.data.UserId);
+        break;
+      case REMOVE_FOLLOWER_FAILURE:
+        draft.isRemovingFollower = false;
+        draft.isRemovedFollower = true;
+        draft.actionError = action.error;
+        break;
+        
       case UNFOLLOW_REQUEST:
         draft.isUnFollowing = true;
         draft.isFollowed = true;
