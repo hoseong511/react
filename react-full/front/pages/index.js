@@ -5,7 +5,9 @@ import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import Mylayout from '../components/MyLayout';
 import { loadPostRequest, LOAD_POST_REQUEST } from '../reducers/post';
-import { loadMyInfoRequest } from '../reducers/user';
+import { loadMyInfoRequest, LOAD_MY_INFO_REQUEST } from '../reducers/user';
+import { END } from 'redux-saga';
+import wrapper from '../store/configureStore';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -49,5 +51,16 @@ const Home = () => {
     </Mylayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
+  });
+  context.store.dispatch({
+    type: LOAD_POST_REQUEST,
+  });
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+})
 
 export default Home;
