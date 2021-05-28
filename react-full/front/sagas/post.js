@@ -1,8 +1,26 @@
 import { all, delay, fork, put, takeLatest, call } from 'redux-saga/effects';
 import axios from 'axios';
-import { ADD_COMMENT_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS, LIKE_POST_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LOAD_POST_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, REMOVE_POST_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, UNLIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS } from '../reducers/post';
+import { ADD_COMMENT_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS, LIKE_POST_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LOAD_POST_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, REMOVE_POST_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, UNLIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UPLOAD_IMAGES_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
+function uploadImagesAPI(data) {
+  return axios.post('/post/images', data);
+}
+function* uploadImages(action) {
+  try {
+    const result = yield call(uploadImagesAPI, action.data)
+    console.log(result);
+    yield put({
+      type: UPLOAD_IMAGES_SUCCESS,
+      data: result.data
+    });
+  } catch (error) {
+    yield put({
+      type: UPLOAD_IMAGES_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
 function loadPostAPI(data) {
   return axios.get('/posts', data);
 }
@@ -21,7 +39,7 @@ function* loadPost(action) {
   }
 }
 function addPostAPI(data) {
-  return axios.post('/post', { content: data });
+  return axios.post('/post', data );
 }
 
 function* addPost(action) {
@@ -126,6 +144,9 @@ function* addComment(action) {
     });
   }
 }
+function* watchUploadImages() {
+  yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
+}
 function* watchLoadPost() {
   yield takeLatest(LOAD_POST_REQUEST, loadPost); // throttle을 사용한다 하더라도 기능이 작동하기 전 요청 건은 제거하지 못한다.
 }
@@ -146,6 +167,7 @@ function* watchRemovePost() {
 }
 export default function* postSaga() {
   yield all([
+    fork(watchUploadImages),
     fork(watchLoadPost),
     fork(watchAddPost),
     fork(watchRemovePost),

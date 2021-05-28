@@ -4,6 +4,7 @@ const session = require('express-session')
 const passport = require('passport');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const path = require('path');
 
 const cookieParser = require('cookie-parser')
 const postRouter = require('./routes/post');
@@ -26,6 +27,7 @@ app.use(cors({
   origin: true, // 'https://yourdomain.com' or true해도 가능
   credentials: true, 
 }))
+app.use('/', express.static(path.join(__dirname, 'uploads'))); //프론트에서 '/' 로 접근하게한다.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
