@@ -7,9 +7,15 @@ import useInput from '../hooks/useInput';
 
 const CommentForm = ({ post }) => {
   const id = useSelector((state) => state.user.me?.id);
-  const { commentAdded, commentAdding } = useSelector((state) => state.post);
+  const { commentAdded, commentAdding, actionError } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
+
+  useEffect(() => {
+    if (actionError) {
+      alert(actionError)
+    }
+  }, [actionError])
 
   useEffect(() => {
     if (commentAdded) {
