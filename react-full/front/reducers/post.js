@@ -3,6 +3,8 @@ import produce from 'immer';
 export const initialState = {
   mainPosts: [],
   imagePaths: [],
+  retweetLoading: false,
+  retweetLoaded: false,
   hasMorePosts: true,
   imagesLoding: false,
   imagesLoaded: false,
@@ -52,6 +54,10 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
+export const RETWEET_REQUEST = 'RETWEET_REQUEST';
+export const RETWEET_SUCCESS = 'RETWEET_SUCCESS';
+export const RETWEET_FAILURE = 'RETWEET_FAILURE';
+
 export const RESET_MAIN_POST = 'RESET_MAIN_POST';
 
 export const loadPostRequest = (data) => ({ type: LOAD_POST_REQUEST, data });
@@ -65,6 +71,23 @@ const reducer = (state = initialState, action) => {
       case REMOVE_IMAGE:
         draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data );
         break;
+
+      case RETWEET_REQUEST:
+        draft.retweetLoading = true;
+        draft.retweetLoaded = false;
+        draft.actionError = null;
+        break;
+      case RETWEET_SUCCESS:
+        draft.retweetLoading = false;
+        draft.retweetLoaded = true;
+        draft.mainPosts.unshift(action.data);
+        break;
+      case RETWEET_FAILURE:
+        draft.retweetLoading = false;
+        draft.retweetLoaded = false;
+        draft.actionError = action.error;
+        break;
+
       case UPLOAD_IMAGES_REQUEST:
         draft.imagesLoding = true;
         draft.imagesLoadded = false;

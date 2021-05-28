@@ -12,8 +12,14 @@ import { loadMyInfoRequest } from '../reducers/user';
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainPosts, hasMorePosts, postLoading } = useSelector((state) => state.post);
-   
+  const { mainPosts, hasMorePosts, postLoading, actionError } = useSelector((state) => state.post);
+  
+  useEffect(() => {
+    if (actionError) {
+      alert(actionError);
+    }
+  }, [actionError])
+
   useEffect(() => {
     dispatch(loadMyInfoRequest());
     dispatch(loadPostRequest());
