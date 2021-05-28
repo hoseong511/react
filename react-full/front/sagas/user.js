@@ -16,6 +16,9 @@ import {
   LOAD_MY_INFO_FAILURE, 
   LOAD_MY_INFO_REQUEST, 
   LOAD_MY_INFO_SUCCESS, 
+  LOAD_USER_FAILURE, 
+  LOAD_USER_REQUEST, 
+  LOAD_USER_SUCCESS, 
   LOG_IN_FAILURE, 
   LOG_IN_REQUEST, 
   LOG_IN_SUCCESS, 
@@ -37,12 +40,12 @@ import { RESET_MAIN_POST } from '../reducers/post';
    
 
 // saga는 테스트 시 log확인이 유용하다.
-function loadUserAPI(data) {
-  return axios.get('/user', data);
+function loadMyinfoAPI() {
+  return axios.get('/user');
 }
-function* loadUser(action) {
+function* loadMyinfo() {
   try {
-    const result = yield call(loadUserAPI, action.data,) // call은 비동기처리, fork는 동기처리
+    const result = yield call(loadMyinfoAPI) // call은 비동기처리, fork는 동기처리
     yield put({ // dispatch
       type: LOAD_MY_INFO_SUCCESS,
       data: result.data,
@@ -50,6 +53,23 @@ function* loadUser(action) {
   } catch (error) {
     yield put({
       type: LOAD_MY_INFO_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
+function loadUserAPI(data) {
+  return axios.get(`/user/${data}`);
+}
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data) // call은 비동기처리, fork는 동기처리
+    yield put({ // dispatch
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_USER_FAILURE,
       error: error.response.data,
     });
   }
@@ -229,8 +249,11 @@ function* watchLoadFollower() {
 function* watchLoadFollowings() {
   yield takeLatest(LOAD_FOLLOWINGS_REQUEST, loadFollowings);
 }
+function* watchMyinfo() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyinfo);
+}
 function* watchLoadUser() {
-  yield takeLatest(LOAD_MY_INFO_REQUEST, loadUser);
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 function* watchLogIn() {
   yield takeLatest(LOG_IN_REQUEST, logIn);
@@ -257,6 +280,7 @@ export default function* userSaga() {
   yield all([
     fork(watchLoadFollower),
     fork(watchLoadFollowings),
+    fork(watchMyinfo),
     fork(watchLoadUser),
     fork(watchLogIn),
     fork(watchLogOut),

@@ -28,13 +28,12 @@ const Global = createGlobalStyle`
 
 const Mylayout = ({ children }) => {
   const { Header, Content, Footer } = Layout;
-  const { isLoggedIn, me } = useSelector((state) => state.user);
+  const { me } = useSelector((state) => state.user);
 
   return (
     <>
       <Global />
       <Layout>
-<<<<<<< HEAD
         <Header className={styles['inner']} style={{ position: "fixed", zIndex: 1, width: "100%" }}>
           <Row justify="start">
             <Col xs={5} md={6}>
@@ -63,33 +62,6 @@ const Mylayout = ({ children }) => {
                                 <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
                                 <Menu.Item key="signup"><Link href="/signup"><a>signUp</a></Link></Menu.Item>
                                 <Menu.Item key="login"><LoginButton /></Menu.Item>
-=======
-        <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
-          <div className={styles['inner']}>
-            <Row justify="start">
-              <Col xs={5} md={6}>
-                <Link href="/">
-                  <img src="./sun.png" className={styles["logo"]} alt="sun" />
-                </Link>
-              </Col>
-              <Col xs={14} md={12}>
-                <Input.Search
-                  placeholder="input search text"
-                  allowClear
-                  size="default"
-                  style={{ verticalAlign: "middle" }}
-                />
-              </Col>
-              <Col xs={5} md={6} style={{ textAlign: 'right' }}>
-                <Dropdown
-                  className={styles['drop']}
-                  overlay={
-                    <Menu className={styles['drop__menu']}>
-                      {me ? (<>
-                              <Menu.Item key="home"><Link href="/"><a>Home</a></Link></Menu.Item>
-                              <Menu.Item key="profile"><Link href="/profile"><a>My profile</a></Link></Menu.Item>
-                              <Menu.Item key="logout"><UserProfile /></Menu.Item>
->>>>>>> e5316b5c7fa3078505adef5877b8e34ebbd41898
                               </>)
                         }
                       </Menu>

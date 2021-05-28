@@ -8,7 +8,7 @@ import { loadPostRequest } from '../reducers/post'
 
 const NicknameEditForm = () => {
   const { me } = useSelector((state) => state.user);
-  const [nickname, onChangeNickname, setValue ] = useInput(me?.nickname || '');
+  const [nickname, onChangeNickname] = useInput(me?.nickname || '');
   const dispatch = useDispatch();
 
   const onSubmit = useCallback(() => {

@@ -8,6 +8,7 @@ import { loadPostRequest, LOAD_POST_REQUEST } from '../reducers/post';
 import { loadMyInfoRequest, LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import { END } from 'redux-saga';
 import wrapper from '../store/configureStore';
+import axios from 'axios';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,10 +21,10 @@ const Home = () => {
     }
   }, [actionError])
 
-  useEffect(() => {
-    dispatch(loadMyInfoRequest());
-    dispatch(loadPostRequest());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loadMyInfoRequest());
+  //   dispatch(loadPostRequest());
+  // }, []);
   
   useEffect(() => {
     function onScroll() {
@@ -53,6 +54,11 @@ const Home = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  } // 프론트에서 쿠키가 공유되는 문제를 해결하는 코드
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
   });
@@ -61,6 +67,6 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
-})
+});
 
 export default Home;
