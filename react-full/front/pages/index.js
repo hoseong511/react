@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import AppLayout from '../components/AppLayout';
-import { WindowScroller, CellMeasurer, CellMeasurerCache, AutoSizer, List } from 'react-virtualized';
-
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import Mylayout from '../components/MyLayout';
-import { loadPostRequest } from '../reducers/post';
+import { loadPostRequest, LOAD_POST_REQUEST } from '../reducers/post';
 import { loadMyInfoRequest } from '../reducers/user';
 
 const Home = () => {
@@ -29,7 +27,12 @@ const Home = () => {
     function onScroll() {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight-300) {
         if (hasMorePosts && !postLoading){
-          // dispatch(loadPostRequest());
+          const lastId = mainPosts[mainPosts.length - 1]?.id;
+          console.log(lastId);
+          dispatch({
+            type: LOAD_POST_REQUEST,
+            lastId
+          });
         }
       }
     }
@@ -37,7 +40,7 @@ const Home = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [hasMorePosts, postLoading]);
+  }, [hasMorePosts, postLoading, mainPosts]);
  
   return (
     <Mylayout>

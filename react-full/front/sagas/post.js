@@ -40,12 +40,12 @@ function* uploadImages(action) {
     });
   }
 }
-function loadPostAPI(data) {
-  return axios.get('/posts', data);
+function loadPostAPI(lastId) {
+  return axios.get(`/posts?lastId=${lastId || 0}`); // get에서 2번째 인수는 withCredential
 }
 function* loadPost(action) {
   try {
-    const result = yield call(loadPostAPI, action.data)
+    const result = yield call(loadPostAPI, action.lastId)
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data

@@ -113,7 +113,7 @@ const reducer = (state = initialState, action) => {
         draft.postLoading = false;
         draft.postLoadded = true;
         draft.mainPosts = draft.mainPosts.concat(action.data); // 무한스크롤링을 구현
-        draft.hasMorePosts = draft.mainPosts.length < 50;
+        draft.hasMorePosts = action.data.length === 10;
         break;
       case LOAD_POST_FAILURE:
         draft.postLoading = false;
