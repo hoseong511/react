@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-// import AppLayout from '../components/AppLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { END } from 'redux-saga';
+import axios from 'axios';
 
 import FollowList from '../components/FollowList';
 import NicknameEditForm from '../components/NicknameEditForm';
@@ -64,6 +64,6 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   context.store.dispatch(END);
   console.log('getSererSideProps end');
   await context.store.sagaTask.toPromise();
-})
+});
 
 export default Profile;

@@ -1,8 +1,6 @@
 import produce from 'immer';
 
 export const initialState = {
-  mainPosts: [],
-  imagePaths: [],
   retweetLoading: false,
   retweetLoaded: false,
   hasMorePosts: true,
@@ -10,6 +8,8 @@ export const initialState = {
   imagesLoaded: false,
   postLoading: false,
   postLoaded: false,
+  postsLoading: false,
+  postsLoaded: false,
   postAdding: false,
   postAdded: false,
   postRemoving: false,
@@ -22,6 +22,8 @@ export const initialState = {
   commentAdded: false,
   actionError: null,
   reset: false,
+  mainPosts: [],
+  imagePaths: [],
   test:[],
 };
 
@@ -33,6 +35,10 @@ export const REMOVE_IMAGE = 'REMOVE_IMAGE';
 export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+
+export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
+export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
+export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -118,6 +124,23 @@ const reducer = (state = initialState, action) => {
       case LOAD_POST_FAILURE:
         draft.postLoading = false;
         draft.postLoadded = false;
+        draft.actionError = action.error;
+        break;
+
+      case LOAD_POSTS_REQUEST:
+        draft.postsLoading = true;
+        draft.postsLoadded = false;
+        draft.actionError = null;
+        break;
+      case LOAD_POSTS_SUCCESS:
+        draft.postsLoading = false;
+        draft.postsLoadded = true;
+        draft.mainPosts = draft.mainPosts.concat(action.data); // 무한스크롤링을 구현
+        draft.hasMorePosts = action.data.length === 10;
+        break;
+      case LOAD_POSTS_FAILURE:
+        draft.postsLoading = false;
+        draft.postsLoadded = false;
         draft.actionError = action.error;
         break;
 

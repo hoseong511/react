@@ -6,6 +6,7 @@ import Router from 'next/router';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
+import axios from 'axios';
 
 import useInput from '../hooks/useInput'; // custom hooks
 import Mylayout from '../components/MyLayout';
@@ -118,10 +119,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   }
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
-  });
-  context.store.dispatch({
-    type: LOAD_POST_REQUEST,
-  });
+  });  
   context.store.dispatch(END);
   console.log('getSererSideProps end');
   await context.store.sagaTask.toPromise();
