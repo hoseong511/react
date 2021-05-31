@@ -1,6 +1,8 @@
 import produce from 'immer';
 
 export const initialState = {
+  loadingMyInfo: false,
+  loadedMyInfo: false,
   loadingUser: false,
   loadedUser: false,
   isSigningUp: false, // 회원가입 중
@@ -23,13 +25,17 @@ export const initialState = {
   me: null,
   actionError: null,
   visible: false,
-  signUpData: {},
-  loginData: {},
+  userInfo: false,
 };
+
+export const LOAD_USER_INFO_REQUEST = 'LOAD_USER_INFO_REQUEST';
+export const LOAD_USER_INFO_SUCCESS = 'LOAD_USER_INFO_SUCCESS';
+export const LOAD_USER_INFO_FAILURE = 'LOAD_USER_INFO_FAILURE';
 
 export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
 export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
 export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
+
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
@@ -99,6 +105,23 @@ const reducer = (state = initialState, action) => {
         draft.loadedUser = false;
         draft.actionError = action.error;
         break;
+
+      case LOAD_USER_INFO_REQUEST:
+        draft.loadingMyInfo = true;
+        draft.loadedMyInfo = false;
+        draft.actionError = null;
+        break;
+      case LOAD_USER_INFO_SUCCESS:
+        draft.loadingMyInfo = false;
+        draft.loadedMyInfo = true;
+        draft.userInfo = action.data;
+        break;
+      case LOAD_USER_INFO_FAILURE:
+        draft.loadingMyInfo = false;
+        draft.loadedMyInfo = false;
+        draft.actionError = action.error;
+        break;
+
       case SIGN_UP_REQUEST:
         draft.isSigningUp = true;
         draft.isSignedUp = false;

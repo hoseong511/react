@@ -1,12 +1,13 @@
 import { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import AppLayout from '../components/AppLayout';
+import axios from 'axios';
+import { END } from 'redux-saga';
+
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import Mylayout from '../components/MyLayout';
-import { loadPostRequest, LOAD_POST_REQUEST } from '../reducers/post';
-import { loadMyInfoRequest, LOAD_MY_INFO_REQUEST } from '../reducers/user';
-import { END } from 'redux-saga';
+import { LOAD_POST_REQUEST } from '../reducers/post';
+import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 
 const Home = () => {
@@ -19,11 +20,6 @@ const Home = () => {
       alert(actionError);
     }
   }, [actionError])
-
-  useEffect(() => {
-    dispatch(loadMyInfoRequest());
-    dispatch(loadPostRequest());
-  }, []);
   
   useEffect(() => {
     function onScroll() {
@@ -53,6 +49,13 @@ const Home = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  console.log('getServerSideProps start');
+  console.log(context.req.headers);  
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
   });
@@ -60,6 +63,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
     type: LOAD_POST_REQUEST,
   });
   context.store.dispatch(END);
+  console.log('getSererSideProps end');
   await context.store.sagaTask.toPromise();
 })
 

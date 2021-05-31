@@ -7,8 +7,6 @@ import wrapper from '../store/configureStore';
 
 const App = ({ Component }) => (
   <>
-    {' '}
-    {/** Next는 Provider로 알아서 감싸준다. */}
     <Head>
       <meta charSet="utf-8" />
       <title>NodeBird</title>
