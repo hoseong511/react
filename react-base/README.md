@@ -2,6 +2,9 @@
   - react: 17.0.2
   - babel: 7.13.16
   - webpack: 5.35.1 
+  - npm: 6.14.11
+  - node: 14.16.0
+  - nvm: 1.1.7
  
 ## contents
   - react api 이용 및 babel, webpack 설정하기
