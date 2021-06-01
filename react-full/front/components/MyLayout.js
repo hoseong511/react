@@ -4,6 +4,8 @@ import React from "react";
 import { Layout, Menu, Dropdown, Row, Col, Input } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import Image from 'next/image';
+
 import { createGlobalStyle } from 'styled-components';
 import { useSelector } from "react-redux"; // react랑 redux를 연결
 import PropTypes from 'prop-types';
@@ -38,7 +40,7 @@ const Mylayout = ({ children }) => {
           <Row justify="start">
             <Col xs={5} md={6}>
               <Link href="/">
-                <img src="./sun.png" className={styles["logo"]} alt="sun" />
+                <Image src="/sun.png" height={35} width={35} className={styles["logo"]} alt="sun" />
               </Link>
             </Col>
             <Col xs={14} md={12}>

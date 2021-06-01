@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 3001",
+    "dev": "next dev -p 3001",
     "lint": "eslint . --fix",
     "build": "next build",
     "export": "next export"
@@ -17,6 +17,7 @@
     "@popperjs/core": "^2.9.2",
     "antd": "^4.15.4",
     "axios": "^0.21.1",
+    "babel-plugin-styled-components": "^1.12.0",
     "css-loader": "^5.2.4",
     "faker": "^5.5.3",
     "immer": "^9.0.2",

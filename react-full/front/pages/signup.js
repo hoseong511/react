@@ -11,7 +11,6 @@ import axios from 'axios';
 import useInput from '../hooks/useInput'; // custom hooks
 import Mylayout from '../components/MyLayout';
 import { LOAD_MY_INFO_REQUEST, signUpRequestAction } from '../reducers/user';
-import { LOAD_POST_REQUEST } from '../reducers/post';
 import wrapper from '../store/configureStore';
 
 const ErrorMessage = styled.div`

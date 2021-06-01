@@ -24,6 +24,7 @@ export const initialState = {
   reset: false,
   mainPosts: [],
   imagePaths: [],
+  singlePost: null,
   test:[],
 };
 
@@ -118,8 +119,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_POST_SUCCESS:
         draft.postLoading = false;
         draft.postLoadded = true;
-        draft.mainPosts = draft.mainPosts.concat(action.data); // 무한스크롤링을 구현
-        draft.hasMorePosts = action.data.length === 10;
+        draft.singlePost = action.data; // 무한스크롤링을 구현
         break;
       case LOAD_POST_FAILURE:
         draft.postLoading = false;

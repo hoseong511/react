@@ -25,7 +25,7 @@ export const initialState = {
   me: null,
   actionError: null,
   visible: false,
-  userInfo: false,
+  userInfo: null,
 };
 
 export const LOAD_USER_INFO_REQUEST = 'LOAD_USER_INFO_REQUEST';
@@ -91,34 +91,34 @@ const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_MY_INFO_REQUEST:
-        draft.loadingUser = true;
-        draft.loadedUser = false;
-        draft.actionError = null;
-        break;
-      case LOAD_MY_INFO_SUCCESS:
-        draft.loadingUser = false;
-        draft.loadedUser = true;
-        draft.me = action.data;
-        break;
-      case LOAD_MY_INFO_FAILURE:
-        draft.loadingUser = false;
-        draft.loadedUser = false;
-        draft.actionError = action.error;
-        break;
-
-      case LOAD_USER_INFO_REQUEST:
         draft.loadingMyInfo = true;
         draft.loadedMyInfo = false;
         draft.actionError = null;
         break;
-      case LOAD_USER_INFO_SUCCESS:
+      case LOAD_MY_INFO_SUCCESS:
         draft.loadingMyInfo = false;
         draft.loadedMyInfo = true;
+        draft.me = action.data;
+        break;
+      case LOAD_MY_INFO_FAILURE:
+        draft.loadingMyInfo = false;
+        draft.loadedMyInfo = false;
+        draft.actionError = action.error;
+        break;
+
+      case LOAD_USER_INFO_REQUEST:
+        draft.loadingUser = true;
+        draft.loadedUser = false;
+        draft.actionError = null;
+        break;
+      case LOAD_USER_INFO_SUCCESS:
+        draft.loadingUser = false;
+        draft.loadedUser = true;
         draft.userInfo = action.data;
         break;
       case LOAD_USER_INFO_FAILURE:
-        draft.loadingMyInfo = false;
-        draft.loadedMyInfo = false;
+        draft.loadingUser = false;
+        draft.loadedUser = false;
         draft.actionError = action.error;
         break;
 

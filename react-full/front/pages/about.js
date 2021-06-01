@@ -6,7 +6,7 @@ import { END } from 'redux-saga';
 import { Avatar, Card } from 'antd';
 import MyLayout from '../components/MyLayout';
 import wrapper from '../store/configureStore';
-import { LOAD_USER_INFO_REQUEST, LOAD_USER_REQUEST } from '../reducers/user';
+import { LOAD_USER_INFO_REQUEST, LOAD_MY_INFO_REQUEST } from '../reducers/user';
 
 const About = () => {
   const { userInfo, me } = useSelector((state) => state.user);
@@ -53,6 +53,9 @@ export const getStaticProps = wrapper.getStaticProps(async (context) => {
   context.store.dispatch({
     type: LOAD_USER_INFO_REQUEST,
     data: 1,
+  });
+  context.store.dispatch({
+    type: LOAD_MY_INFO_REQUEST,
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();

@@ -38,6 +38,40 @@ const followAPI = (data) => axios.patch(`/user/${data}/follow`);
 const unFollowAPI = (data) => axios.delete(`/user/${data}/follow`);
 const removeFollowerAPI = (data) => axios.delete(`/user/follower/${data}`);
 
+// function loadMyinfoAPI(data) {
+//   return axios.get('/user', data);
+// } 
+// function loadUserAPI(data) {
+//   return axios.get(`/user/${data}`);
+// } 
+// function logInAPI(data) {
+//   return axios.post('/user/login', data);
+// } 
+// function logOutAPI() {
+//   return axios.post('/user/logout');
+// } 
+// function signUpAPI(data) {
+//   return axios.post('/user', data);
+// } 
+// function changeNickAPI(data) {
+//   return axios.patch('/user/nickname', {nickname:data});
+// } 
+// function loadFollowerAPI(data) {
+//   return axios.get(`/user/followers`, data);
+// } 
+// function loadFollowingsAPI(data) {
+//   return axios.get(`/user/followings`, data);
+// } 
+// function followAPI(data) {
+//   return axios.patch(`/user/${data}/follow`);
+// } 
+// function unFollowAPI(data) {
+//   return axios.delete(`/user/${data}/follow`);
+// } 
+// function removeFollowerAPI(data) {
+//   return axios.delete(`/user/follower/${data}`);
+// }
+
 function* loadMyinfo(action) {
   try {
     const result = yield call(loadMyinfoAPI, action.data) // call은 비동기처리, fork는 동기처리
@@ -46,9 +80,10 @@ function* loadMyinfo(action) {
       data: result.data,
     });
   } catch (error) {
+    console.log(error);
     yield put({
       type: LOAD_MY_INFO_FAILURE,
-      error: error.response.data,
+      error: error,
     });
   }
 }

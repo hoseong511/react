@@ -5,13 +5,13 @@ import 'antd/dist/antd.css';
 import '../public/style.scss';
 import wrapper from '../store/configureStore';
 
-const App = ({ Component }) => (
+const App = ({ Component, pageProps }) => (
   <>
     <Head>
       <meta charSet="utf-8" />
       <title>NodeBird</title>
     </Head>
-    <Component />
+    <Component {...pageProps}/>
   </>
 );
 
