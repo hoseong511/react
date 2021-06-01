@@ -1,12 +1,13 @@
 import { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import AppLayout from '../components/AppLayout';
+import axios from 'axios';
+import { END } from 'redux-saga';
+
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import Mylayout from '../components/MyLayout';
-import { loadPostRequest, LOAD_POST_REQUEST } from '../reducers/post';
-import { loadMyInfoRequest, LOAD_MY_INFO_REQUEST } from '../reducers/user';
-import { END } from 'redux-saga';
+import { LOAD_POSTS_REQUEST, LOAD_POST_REQUEST } from '../reducers/post';
+import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 import axios from 'axios';
 
@@ -20,11 +21,14 @@ const Home = () => {
       alert(actionError);
     }
   }, [actionError])
+<<<<<<< HEAD
 
   // useEffect(() => {
   //   dispatch(loadMyInfoRequest());
   //   dispatch(loadPostRequest());
   // }, []);
+=======
+>>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
   
   useEffect(() => {
     function onScroll() {
@@ -33,7 +37,7 @@ const Home = () => {
           const lastId = mainPosts[mainPosts.length - 1]?.id;
           console.log(lastId);
           dispatch({
-            type: LOAD_POST_REQUEST,
+            type: LOAD_POSTS_REQUEST,
             lastId
           });
         }
@@ -54,19 +58,30 @@ const Home = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+<<<<<<< HEAD
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   console.log(context.req);
   if (context.req && cookie) {
     axios.defaults.headers.Cookie = cookie;
   } // 프론트에서 쿠키가 공유되는 문제를 해결하는 코드
+=======
+  console.log('getServerSideProps start');
+  console.log(context.req.headers);  
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+>>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
   });
   context.store.dispatch({
-    type: LOAD_POST_REQUEST,
+    type: LOAD_POSTS_REQUEST,
   });
   context.store.dispatch(END);
+  console.log('getSererSideProps end');
   await context.store.sagaTask.toPromise();
 });
 
