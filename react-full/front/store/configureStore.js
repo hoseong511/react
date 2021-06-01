@@ -13,7 +13,8 @@ const loggerMiddleware = ({ dispatch, getState }) => (next) => (action) => {
 };
 // loggerMiddleware같이 커스텀하게 미들웨어를 만들 수 있다.
 
-const configureStore = () => {
+const configureStore = (context) => {
+  console.log(context);
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware, loggerMiddleware];
   const enhancer = process.env.NODE_ENV === 'production'

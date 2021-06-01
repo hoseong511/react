@@ -24,7 +24,7 @@ passportConfig();
 
 app.use(morgan('dev'));
 app.use(cors({
-  origin: true, // 'https://yourdomain.com' or true해도 가능
+  origin: ['http://192.168.0.9:3001', 'http://localhost:3001'], // 'https://yourdomain.com' or true해도 가능
   credentials: true, 
 }))
 app.use('/', express.static(path.join(__dirname, 'uploads'))); //프론트에서 '/' 로 접근하게한다.

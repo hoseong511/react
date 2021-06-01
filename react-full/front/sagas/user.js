@@ -51,9 +51,10 @@ function* loadMyinfo() {
       data: result.data,
     });
   } catch (error) {
+    console.error(error);
     yield put({
       type: LOAD_MY_INFO_FAILURE,
-      error: error.response.data,
+      error: error,
     });
   }
 }
@@ -68,9 +69,10 @@ function* loadUser(action) {
       data: result.data,
     });
   } catch (error) {
+    console.log(error);
     yield put({
       type: LOAD_USER_FAILURE,
-      error: error.response.data,
+      error: error,
     });
   }
 }

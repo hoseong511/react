@@ -56,6 +56,7 @@ const Home = () => {
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
+  console.log(context.req);
   if (context.req && cookie) {
     axios.defaults.headers.Cookie = cookie;
   } // 프론트에서 쿠키가 공유되는 문제를 해결하는 코드
