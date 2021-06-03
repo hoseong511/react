@@ -37,6 +37,14 @@ export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
 export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
 export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
+export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
+export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
+export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
+
+export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
+export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
+export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
+
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
@@ -119,7 +127,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_POST_SUCCESS:
         draft.postLoading = false;
         draft.postLoadded = true;
-        draft.singlePost = action.data; // 무한스크롤링을 구현
+        draft.singlePost = action.data; 
         break;
       case LOAD_POST_FAILURE:
         draft.postLoading = false;
@@ -127,17 +135,24 @@ const reducer = (state = initialState, action) => {
         draft.actionError = action.error;
         break;
 
+      case LOAD_USER_POSTS_REQUEST:
+      case LOAD_HASHTAG_POSTS_REQUEST:
       case LOAD_POSTS_REQUEST:
         draft.postsLoading = true;
         draft.postsLoadded = false;
         draft.actionError = null;
         break;
+
+      case LOAD_USER_POSTS_SUCCESS:
+      case LOAD_HASHTAG_POSTS_SUCCESS:
       case LOAD_POSTS_SUCCESS:
         draft.postsLoading = false;
         draft.postsLoadded = true;
         draft.mainPosts = draft.mainPosts.concat(action.data); // 무한스크롤링을 구현
         draft.hasMorePosts = action.data.length === 10;
         break;
+      case LOAD_USER_POSTS_FAILURE:
+      case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POSTS_FAILURE:
         draft.postsLoading = false;
         draft.postsLoadded = false;

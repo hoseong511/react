@@ -3,26 +3,24 @@ import axios from 'axios';
 import { ADD_COMMENT_FAILURE, ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS,
          ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS, 
          LIKE_POST_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, 
+         LOAD_HASHTAG_POSTS_FAILURE, 
+         LOAD_HASHTAG_POSTS_REQUEST, 
+         LOAD_HASHTAG_POSTS_SUCCESS, 
          LOAD_POSTS_FAILURE, LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, 
          LOAD_POST_FAILURE, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, 
+         LOAD_USER_POSTS_FAILURE, 
+         LOAD_USER_POSTS_REQUEST, 
+         LOAD_USER_POSTS_SUCCESS, 
          REMOVE_POST_FAILURE, REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, 
          RETWEET_FAILURE, RETWEET_REQUEST, RETWEET_SUCCESS, 
          UNLIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, 
          UPLOAD_IMAGES_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
-function* watchRetweet() { yield takeLatest(RETWEET_REQUEST, retweet); }
-function* watchUploadImages() { yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages); }
-function* watchLoadPost() { yield takeLatest(LOAD_POST_REQUEST, loadPost); }
-function* watchLoadPosts() { yield takeLatest(LOAD_POSTS_REQUEST, loadPosts); }// throttle을 사용한다 하더라도 기능이 작동하기 전 요청 건은 제거하지 못한다.
-function* watchAddPost() { yield takeLatest(ADD_POST_REQUEST, addPost); }
-function* watchAddComment() { yield takeLatest(ADD_COMMENT_REQUEST, addComment); }
-function* watchLikePost() { yield takeLatest(LIKE_POST_REQUEST, likePost); }
-function* watchUnLikePost() { yield takeLatest(UNLIKE_POST_REQUEST, unLikePost); }
-function* watchRemovePost() { yield takeLatest(REMOVE_POST_REQUEST, removePost); }
-
 const retweetAPI = (data) => axios.post(`/post/${data}/retweet`, );
 const uploadImagesAPI = (data) => axios.post('/post/images', data);
+const loadUserPostsAPI = (data, lastId) => axios.get(`/user/${data}/posts?lastId=${lastId}`); 
+const loadHashtagPostsAPI = (data, lastId) => axios.get(`/hashtag/${encodeURIComponent(data)}?lastId=${lastId || 0}}`); 
 const loadPostAPI = (data) => axios.get(`/post/${data}`); 
 const loadPostsAPI = (lastId) => axios.get(`/posts?lastId=${lastId || 0}`); // get에서 2번째 인수는 withCredential
 const addPostAPI = (data) => axios.post('/post', data );
@@ -30,16 +28,6 @@ const addCommentAPI = (data) => axios.post(`/post/${data.postId}/comment`, data)
 const removePostAPI = (data) => axios.delete(`/post/${data}`);
 const likePostAPI = (data) => axios.patch(`/post/${data}/like`);
 const unLikePostAPI = (data) => axios.delete(`/post/${data}/like`);
-
-// function retweetAPI (data) { return axios.post(`/post/${data}/retweet`, ); } 
-// function uploadImagesAPI (data) { return axios.post('/post/images', data); } 
-// function loadPostAPI (data) { return axios.get(`/post/${data}`); } 
-// function loadPostsAPI (lastId) { return axios.get(`/posts?lastId=${lastId || 0}`); } // get에서 2번째 인수는 withCredential} 
-// function addPostAPI (data) { return axios.post('/post', data ); } 
-// function addCommentAPI (data) { return axios.post(`/post/${data.postId}/comment`, data); } // POST /post/1/comment} 
-// function removePostAPI (data) { return axios.delete(`/post/${data}`); } 
-// function likePostAPI (data) { return axios.patch(`/post/${data}/like`); } 
-// function unLikePostAPI (data) { return axios.delete(`/post/${data}/like`); } 
 
 function* retweet(action) {
   try {
@@ -83,6 +71,34 @@ function* loadPost(action) {
   } catch (error) {
     yield put({
       type: LOAD_POST_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
+function* loadUserPosts(action) {
+  try {
+    const result = yield call(loadUserPostsAPI, action.data, action.lastId)
+    yield put({
+      type: LOAD_USER_POSTS_SUCCESS,
+      data: result.data
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_USER_POSTS_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
+function* loadHashtagPosts(action) {
+  try {
+    const result = yield call(loadHashtagPostsAPI, action.data, action.lastId)
+    yield put({
+      type: LOAD_HASHTAG_POSTS_SUCCESS,
+      data: result.data
+    });
+  } catch (error) {
+    yield put({
+      type: LOAD_HASHTAG_POSTS_FAILURE,
       error: error.response.data,
     });
   }
@@ -185,11 +201,24 @@ function* addComment(action) {
     });
   }
 }
+function* watchRetweet() { yield takeLatest(RETWEET_REQUEST, retweet); }
+function* watchUploadImages() { yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages); }
+function* watchLoadUserPosts() { yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts); }
+function* watchLoadHashtagPosts() { yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts); }
+function* watchLoadPost() { yield takeLatest(LOAD_POST_REQUEST, loadPost); }
+function* watchLoadPosts() { yield takeLatest(LOAD_POSTS_REQUEST, loadPosts); }// throttle을 사용한다 하더라도 기능이 작동하기 전 요청 건은 제거하지 못한다.
+function* watchAddPost() { yield takeLatest(ADD_POST_REQUEST, addPost); }
+function* watchAddComment() { yield takeLatest(ADD_COMMENT_REQUEST, addComment); }
+function* watchLikePost() { yield takeLatest(LIKE_POST_REQUEST, likePost); }
+function* watchUnLikePost() { yield takeLatest(UNLIKE_POST_REQUEST, unLikePost); }
+function* watchRemovePost() { yield takeLatest(REMOVE_POST_REQUEST, removePost); }
 
 export default function* postSaga() {
   yield all([
     fork(watchRetweet),
     fork(watchUploadImages),
+    fork(watchLoadUserPosts),
+    fork(watchLoadHashtagPosts),
     fork(watchLoadPost),
     fork(watchLoadPosts),
     fork(watchAddPost),

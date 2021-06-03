@@ -1,10 +1,11 @@
 const express = require('express');
 const { Op } = require('sequelize');
-const { Post, User, Image, Comment } = require('../models');
+
+const { Post, Hashtag, Image, Comment, User } = require('../models');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => { // GET /posts/
+router.get('/:hashtag', async (req, res, next) => { // GET /posts/
   try {
     const where = {}
     if (parseInt(req.query.lastId, 10)) {
@@ -18,6 +19,9 @@ router.get('/', async (req, res, next) => { // GET /posts/
               [Comment, 'createdAt', 'DESC']
             ],
       include: [{
+        model: Hashtag,
+        where: { content: decodeURIComponent(req.params.hashtag)},
+      },{
         model: User,
         attributes: ['id', 'nickname']
         }, {

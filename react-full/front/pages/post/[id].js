@@ -12,10 +12,16 @@ import { LOAD_POST_REQUEST } from '../../reducers/post';
 import MyLayout from '../../components/MyLayout';
 import PostCard from '../../components/PostCard';
 
+
+
 const Post = () => {
   const router = useRouter();
   const { id } = router.query;
   const { singlePost } = useSelector((state) => state.post);
+
+  if (router.isFallback) {
+    return <div>로딩중...</div>
+  }
 
   return (
     <>
@@ -37,9 +43,21 @@ const Post = () => {
   )
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+export async function getStaticPaths() {
+  // const result = await axios.get('/post/list');
+  return {
+    paths: [
+      { params: { id: '1' } },
+      { params: { id: '2' } },
+      { params: { id: '10' } },
+    ],
+    fallback: true,
+  }
+}
+
+export const getStaticProps = wrapper.getStaticProps(async (context) => {
   console.log('getServerSideProps start');
-  console.log(context.req.headers);  
+  // console.log(context.req.headers);  
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
