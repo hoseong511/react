@@ -40,7 +40,7 @@ const Mylayout = ({ children }) => {
           <Row justify="start">
             <Col xs={5} md={6}>
               <Link href="/">
-                <Image src="/sun.png" height={35} width={35} className={styles["logo"]} alt="sun" />
+                <img src="/sun.png" className={styles["logo"]} alt="sun" />
               </Link>
             </Col>
             <Col xs={14} md={12}>

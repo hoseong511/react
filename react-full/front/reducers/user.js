@@ -27,11 +27,7 @@ export const initialState = {
   me: null,
   actionError: null,
   visible: false,
-<<<<<<< HEAD
-  userInfo: false,
-=======
   userInfo: null,
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
 };
 
 export const LOAD_USER_INFO_REQUEST = 'LOAD_USER_INFO_REQUEST';
@@ -42,13 +38,10 @@ export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
 export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
 export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 
-<<<<<<< HEAD
 export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
-=======
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
@@ -104,7 +97,6 @@ const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_MY_INFO_REQUEST:
-<<<<<<< HEAD
         draft.loadingMyinfo = true;
         draft.loadedMyinfo = false;
         draft.actionError = null;
@@ -120,53 +112,24 @@ const reducer = (state = initialState, action) => {
         draft.actionError = action.error;
         break;
 
-      case LOAD_USER_REQUEST:
-=======
-        draft.loadingMyInfo = true;
-        draft.loadedMyInfo = false;
-        draft.actionError = null;
-        break;
-      case LOAD_MY_INFO_SUCCESS:
-        draft.loadingMyInfo = false;
-        draft.loadedMyInfo = true;
-        draft.me = action.data;
-        break;
-      case LOAD_MY_INFO_FAILURE:
-        draft.loadingMyInfo = false;
-        draft.loadedMyInfo = false;
-        draft.actionError = action.error;
-        break;
-
       case LOAD_USER_INFO_REQUEST:
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
         draft.loadingUser = true;
         draft.loadedUser = false;
         draft.actionError = null;
         break;
-<<<<<<< HEAD
-      case LOAD_USER_SUCCESS:
-=======
       case LOAD_USER_INFO_SUCCESS:
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
         draft.loadingUser = false;
         draft.loadedUser = true;
         draft.userInfo = action.data;
         break;
-<<<<<<< HEAD
-      case LOAD_USER_FAILURE:
-=======
       case LOAD_USER_INFO_FAILURE:
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
         draft.loadingUser = false;
         draft.loadedUser = false;
         draft.actionError = action.error;
         break;
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
       case SIGN_UP_REQUEST:
         draft.isSigningUp = true;
         draft.isSignedUp = false;

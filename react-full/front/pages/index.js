@@ -9,7 +9,6 @@ import Mylayout from '../components/MyLayout';
 import { LOAD_POSTS_REQUEST, LOAD_POST_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
-import axios from 'axios';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,14 +20,11 @@ const Home = () => {
       alert(actionError);
     }
   }, [actionError])
-<<<<<<< HEAD
 
   // useEffect(() => {
   //   dispatch(loadMyInfoRequest());
   //   dispatch(loadPostRequest());
   // }, []);
-=======
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
   
   useEffect(() => {
     function onScroll() {
@@ -58,22 +54,12 @@ const Home = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-<<<<<<< HEAD
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   console.log(context.req);
   if (context.req && cookie) {
     axios.defaults.headers.Cookie = cookie;
   } // 프론트에서 쿠키가 공유되는 문제를 해결하는 코드
-=======
-  console.log('getServerSideProps start');
-  console.log(context.req.headers);  
-  const cookie = context.req ? context.req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
->>>>>>> 92c32cacf7b0bf57550dc8cf16becf2cea4e2405
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
   });

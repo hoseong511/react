@@ -12,8 +12,6 @@ import PostCard from '../../components/PostCard';
 import wrapper from '../../store/configureStore';
 import AppLayout from '../../components/AppLayout';
 
-
-
 const User = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -87,9 +85,7 @@ const User = () => {
   );
 };
 
-
-
-export const getStaticProps = wrapper.getStaticProps(async (context) => {
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
