@@ -40,6 +40,7 @@ const removeFollowerAPI = (data) => axios.delete(`/user/follower/${data}`);
 
 function* loadMyinfo(action) {
   try {
+    // console.log(action.data);
     const result = yield call(loadMyinfoAPI, action.data) // call은 비동기처리, fork는 동기처리
     yield put({ // dispatch
       type: LOAD_MY_INFO_SUCCESS,
@@ -101,7 +102,6 @@ function* logOut() {
 function* signUp(action) {
   try {
     const result = yield call(signUpAPI, action.data) // call은 비동기처리, fork는 동기처리
-    console.log(result);
     yield put({
       type: SIGN_UP_SUCCESS,
       data: result.data
@@ -136,6 +136,7 @@ function* changeNick(action) {
 
 function* loadFollowers(action) {
   try {
+    // console.log(action.data);
     const result = yield call(loadFollowerAPI, action.data) // call은 비동기처리, fork는 동기처리
     yield put({
       type: LOAD_FOLLOWERS_SUCCESS,
@@ -152,6 +153,7 @@ function* loadFollowers(action) {
 
 function* loadFollowings(action) {
   try {
+    // console.log(action.data);
     const result = yield call(loadFollowingsAPI, action.data) // call은 비동기처리, fork는 동기처리
     yield put({
       type: LOAD_FOLLOWINGS_SUCCESS,

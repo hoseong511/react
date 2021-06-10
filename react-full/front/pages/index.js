@@ -20,12 +20,7 @@ const Home = () => {
       alert(actionError);
     }
   }, [actionError])
-
-  // useEffect(() => {
-  //   dispatch(loadMyInfoRequest());
-  //   dispatch(loadPostRequest());
-  // }, []);
-  
+   
   useEffect(() => {
     function onScroll() {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight-300) {

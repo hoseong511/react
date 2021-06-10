@@ -13,16 +13,7 @@ import { LOAD_POST_REQUEST } from '../reducers/post';
 import wrapper from '../store/configureStore';
 
 const Profile = () => {
-  const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  useEffect(() => {
-    dispatch({
-      type: LOAD_FOLLOWERS_REQUEST,
-    })
-    dispatch({
-      type: LOAD_FOLLOWINGS_REQUEST,
-    })
-  }, [])
 
   useEffect(() => {
     if (!(me && me.id)) {
@@ -59,8 +50,12 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
     type: LOAD_MY_INFO_REQUEST,
   });
   context.store.dispatch({
-    type: LOAD_POST_REQUEST,
+    type: LOAD_FOLLOWERS_REQUEST,
   });
+  context.store.dispatch({
+    type: LOAD_FOLLOWINGS_REQUEST,
+  });
+  
   context.store.dispatch(END);
   console.log('getSererSideProps end');
   await context.store.sagaTask.toPromise();

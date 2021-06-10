@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => { // GET /user
   try {
-    console.log(req.headers);
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
         where: { id: req.user.id },
@@ -39,9 +38,34 @@ router.get('/', async (req, res, next) => { // GET /user
     next(error);
   }
 });
+router.get('/followers', async (req, res, next) => { // GET /user/followers
+  try {
+    const user = await User.findOne({ where: { id: req.user.id }})
+    if (!user) {
+      res.status(403).send('없는 계정입니다.!')
+    }
+    const followers = await user.getFollowers();
+    res.status(200).json(followers)
+  } catch (error) {
+    console.error(error);
+    next(error)
+  }
+});
+router.get('/followings', async (req, res, next) => { // GET /user/followings
+  try {
+    const user = await User.findOne({ where: { id: req.user.id }})
+    if (!user) {
+      res.status(403).send('없는 계정입니다.!')
+    }
+    const followings = await user.getFollowings();
+    res.status(200).json(followings)
+  } catch (error) {
+    console.error(error);
+    next(error)
+  }
+});
 
 router.get('/:userId', async (req, res, next) => { // GET /user/1
-  console.log(req.headers)
   try {
       const fullUserWithoutPassword = await User.findOne({
         where: { id: req.params.userId },
@@ -211,7 +235,6 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => { // PATCH user/
 
 router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => { // PATCH /user/1/follow
   try {
-    console.log(req.params.userId);
     const user = await User.findOne({ where: { id: req.params.userId }})
     if (!user) {
       res.status(403).send('없는 계정입니다.!')
@@ -237,32 +260,7 @@ router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => { // DELE
     next(error)
   }
 });
-router.get('/followers', isLoggedIn, async (req, res, next) => { // GET /user/followers
-  try {
-    const user = await User.findOne({ where: { id: req.user.id }})
-    if (!user) {
-      res.status(403).send('없는 계정입니다.!')
-    }
-    const followers = await user.getFollowers();
-    res.status(200).json(followers)
-  } catch (error) {
-    console.error(error);
-    next(error)
-  }
-});
-router.get('/followings', isLoggedIn, async (req, res, next) => { // GET /user/followings
-  try {
-    const user = await User.findOne({ where: { id: req.user.id }})
-    if (!user) {
-      res.status(403).send('없는 계정입니다.!')
-    }
-    const followings = await user.getFollowings();
-    res.status(200).json(followings)
-  } catch (error) {
-    console.error(error);
-    next(error)
-  }
-});
+
 router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => { // DELETE /followings
   try {
     const user = await User.findOne({ where: { id: req.params.userId }})

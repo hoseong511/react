@@ -1,7 +1,7 @@
 - 제로초 강좌 [React Node Bird](https://www.inflearn.com/course/%EB%85%B8%EB%93%9C%EB%B2%84%EB%93%9C-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%A6%AC%EB%89%B4%EC%96%BC/#)를 보며 배운 React+Node fullstack 개발
 - sns 트위터 서비스의 기능을 따라 구현하여 만든 서비스이다.
 - next.js, node.js, mariadb를 활용한 동적(dynamic)웹페이지
-
+- 모바일에 최적화
 ---
 
 ## **demo**
