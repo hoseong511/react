@@ -1,18 +1,42 @@
 const path = require('path');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 //export
 module.exports = {
-  // 파일을 읽어들이기 시작하는 진입점
-  entry: './js/main.js',
-  output: {
-    // path: path.resolve(__dirname, 'dist'), // output의 path는 절대경로를 사용!
-    // filename: 'main.js', // default-> dist
-    clean: true
+  name: 'Project',
+  mode: 'development',
+  devtool: 'eval',
+  resolve: {
+    extensions: ['.js', '.jsx'], // 확장자 생략하기
+    alias: { // 경로 별칭
+      '~': path.join(__dirname, 'src'),
+      'assets': path.join(__dirname, 'src/assets')
+    }
   },
+  entry: {
+    app: ['./src/main.js']
+  },
+  
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: [
+          { 
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                ['@babel/preset-env', {
+                  debug: true,
+                }],
+                '@babel/preset-react'
+              ],
+             plugins: ['react-refresh/babel'] 
+            }
+          }
+        ],
+      },
       {
         test: /\.s?css$/,
         use: [
@@ -22,12 +46,6 @@ module.exports = {
           'sass-loader' // 1
         ]
       },
-      {
-        test: /\.js$/,
-        use: [
-          'babel-loader'
-        ]
-      }
     ]
   },
   plugins: [
@@ -38,9 +56,17 @@ module.exports = {
       patterns: [
         { from: 'static'}
       ]
-    })
+    }),
+    new ReactRefreshWebpackPlugin(),
   ],
+  output: {
+    path: path.join(__dirname, 'dist'), // output의 path는 절대경로를 사용!
+    filename: 'app.js', // default-> dist
+    clean: true
+  },
   devServer: {
-    host: 'localhost'
+    host: 'localhost',
+    port: 8089,
+    hot: true,
   }
 } 
