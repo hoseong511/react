@@ -6,6 +6,10 @@ module.exports = {
   name: 'Toy',
   resolve: {
     extensions: ['.js', '.jsx'], // 확장자 생략하기
+    alias: { // 경로 별칭
+      '~': path.join(__dirname, 'src'),
+      'assets': path.join(__dirname, 'src/assets')
+    },
   },
   entry: './src/main',
   output: {
@@ -42,6 +46,10 @@ module.exports = {
           'sass-loader' // 1
         ]
       },
+      {
+        test: /\.(png|jpe?g|gif|webp)$/,
+        use: 'file-loader'
+      }
     ]
   },
   plugins: [

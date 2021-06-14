@@ -11,15 +11,18 @@ Reactjs roadmap
   1. 상태관리   
   - useReducer
   - contextAPI
-- next
+- SSR 이용하기 (Nextjs)
 
 ## React-basic-applyCDN
-- cdn을 이용하기
+- [CDN](https://reactjs.org/docs/cdn-links.html)을 이용하기
 ## create-react-app
 ```cmd
 npx create-react-app [Project name]
+cd [Project name]
+npm run dev
 ```
 ## react-webpack-template 
+- React package on [npm](https://www.npmjs.com/package/react)
 - webpack.config.js, .babelrc.js, .postcssrc.js, .eslintrc.js 역할
 - vue3-webpack-template와 비슷한 구조의 template만들기
   ```cmd
