@@ -9,7 +9,7 @@
   - nvm: 1.1.7
  
 ## contents
-  - react api 이용 및 babel, webpack 설정하기
+  - react cdn 이용 및 babel, webpack 설정하기
   - class app extends React.Component 이용하기
   - const app = () => {}, hooks를 이용하기
   - react lifecycle (componentDidmount, componentDidUpdate, componentWillUnmount)

@@ -32,6 +32,6 @@
     "quotes": "off",
     "no-param-reassign": "off",
     "arrow-body-style": "off",
-    "max-len": 120
+    "max-len": 1
   }
 }

@@ -10,7 +10,7 @@ module.exports = {
   },
   // entry와 output이 중요
   entry: { // 입력
-    app: ['./client'] // , "./WordRelay.jsx"는 client에서 불러와지므로 따로 넣을 필요가 없다.
+    app: ['./main'] 
   },
 
   module: {
@@ -46,7 +46,7 @@ module.exports = {
   },
   devServer: {   
       publicPath: '/dist',
-      hot: true    
+      hot: true,
     }
   
 };

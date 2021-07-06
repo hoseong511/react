@@ -6,8 +6,8 @@ import "../public/style.scss";
 
 const menu = (
 <Menu >
-  <Menu.Item key="1">Home</Menu.Item>
-  <Menu.Item key="2">Profile</Menu.Item>
+  <Menu.Item key="1">Home1</Menu.Item>
+  <Menu.Item key="2">Profile2</Menu.Item>
   <Menu.Item key="3">Contact</Menu.Item>
   <Menu.Item key="3">LogIn</Menu.Item>
 </Menu>

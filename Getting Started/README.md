@@ -1,4 +1,4 @@
-Reactjs roadmap
+Reactjs Getting Started
 - 현재 서비스에 당장 적용하고 싶을 때
 - create-react-app으로 Reactjs를 사용하기
 - Reactjs 프로젝트를 원하는대로 설정하기
